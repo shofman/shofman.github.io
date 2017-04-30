@@ -1,0 +1,161 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Scott Hofman">
+    <link href="./css/header.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+    <link href="./css/travel.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="./favicon-128x128.png" sizes="128x128">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kurale" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/flag.css" />
+    <script src="./js/cover-photo-scroll.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li>
+          <img src="./favicon-128x128.png" alt="icon"/>
+        </li>
+        <li>Samples</li>
+        <li id="header-focus">Scott Hofman</li>
+        <li>About Me</li>
+      </ul>
+      <div class="transition"></div>
+      <div class="left-side"></div>
+      <div class="right-side"></div>
+    </header>
+    
+    <section class="about-me">
+      <h1>Hello!</h1>
+      <h3>My name is <strong>Scott Hofman</strong></h3>
+      <!-- <p>You've found my website. Check it out!</p> -->
+<!--       <a class="contact" href="file::///C:/User/Scoot/Documents/Websites/Personal/resume.html">See my resume here</a>
+      <span>or</span>
+      <div class="contact" onclick="showContactPage()">Send me a message</div> -->
+    </section>
+    <hr>
+    <section>
+      <h3>I like to code</h3>
+      <p class="code-header">Sometimes I write code in: </p>
+      <div class="code-spinner">
+        <div id="languages" class="scrollable-container">
+          <div class="stage">
+            <div class="shape">
+              <div data-item="Javascript" class="code item">Javascript</div>
+              <div data-item="PHP" class="code item">PHP</div>
+              <div data-item="C#" class="code item">C#</div>
+              <div data-item="Python" class="code item">Python</div>
+              <div data-item="Java" class="code item">Java</div>
+              <div data-item="SQL" class="code item">SQL</div>
+              <div data-item="Ruby" class="code item">Ruby</div>
+            </div>
+          </div>
+        </div>
+        <code><div class="display-code"></div></code>
+      </div>
+      <p class="code-cta">See more of my coding <a href="https://github.com/shofman">here</a></p>
+    </section>
+
+    <section class="cover-photo">
+      <div class="cover-photo-background" id="antarctica-background"></div>
+      <div class="cover-photo-image" id="antarctica"></div>
+      <div class="attribution">
+        <small>Antarctica 2016 - © Scott Hofman</small>
+      </div>
+    </section>
+
+    <section>
+      <h3>I like to travel</h3>
+      <p>Check out this interactive map showing the places I've been: </p>
+      <section class="controls">
+        <p class="map-toggle">
+          <input type="checkbox" id="orthographic" checked/>
+          <label for="orthographic">Globe view</label>
+        </p>
+        <p class="map-toggle">
+          <input type="checkbox" id="visited" checked/>
+          <label for="visited">Scott's Countries</label>
+        </p>
+      </section>
+      <div id="container"></div>
+      <div class="location-spinner">
+        <div id="locations" class="scrollable-container">
+          <div class="stage">
+            <div class="shape">
+              <div data-item="North America" class="continents item">North America</div>
+              <div data-item="Antarctica" class="continents item">Antarctica</div>
+              <div data-item="South America" class="continents item">South America</div>
+              <div data-item="Asia" class="continents item">Asia</div>
+              <div data-item="Oceania" class="continents item">Oceania</div>
+              <div data-item="Africa" class="continents item">Africa</div>
+              <div data-item="Europe" class="continents item">Europe</div>
+            </div>
+          </div>
+        </div>
+        <div class="location-display-wrapper">
+          <div class="header">Countries Visited<span class="footer">Bolded countries are where I have lived</span></div>
+          <div class="display-locations">
+            <ul class="f32 country-list"></ul>
+          </div>
+        </div>
+      </div>
+      <script src="./js/fetch-world-json.js"></script>
+      <script src="./js/world-map.js"></script>
+      <script type="text/javascript">
+          if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent))
+              document.write('<script src="./js/ie-threedimensional-fix.js"><\/script>');
+      </script>
+    </section>
+
+    <section class="cover-photo">
+      <div class="cover-photo-background" id="calgary-background"></div>
+      <div class="cover-photo-image" id="calgary"></div>
+      <div class="attribution">
+        <small>Downtown Calgary 2017 - © Scott Hofman</small>
+      </div>
+    </section>
+
+    <section class="people-say">
+      
+    </section>
+
+    <section class="contact-me">
+      <h3>Contact Me</h3>
+      <p>Here's how you can get ahold of me:</p>
+      <div class="contact-spinner">
+        <div id="contact" class="scrollable-container">
+          <div class="stage">
+            <div class="shape">
+              <div data-item="LinkedIn" class="contact item">LinkedIn<sub class="trademark">™</sub></div>
+              <div data-item="Email" class="contact item">Email</div>
+              <div data-item="Phone" class="contact item">Phone</div>
+              <div data-item="Skype" class="contact item">Skype<sub class="trademark">™</sub></div>
+              <div data-item="GitHub" class="contact item">GitHub</div>
+            </div>
+          </div>
+        </div>
+      <div class="display-contact-wrapper">
+        <div class="display-contact-details"></div>
+      </div>
+    </section>
+
+    <section>
+      <p>This <strong>fully responsive</strong> site was developed by me. If you like this, and want to see more</p>
+      <p>Please contact me or see my resume <a href="file::///C:/User/Scoot/Documents/Websites/Personal/resume.html">here</a></p>
+    </section>
+    <footer>
+      <section>
+        <p>© 2017 Scott Hofman</p>
+      </section>
+      <ul>
+        <li>
+          <img src="./favicon-128x128.png" alt="icon"/>
+        </li>
+      </ul>
+    </footer>
+  </body>
+</html>

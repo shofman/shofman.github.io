@@ -1,0 +1,103 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f3f0eb;
+}
+
+/* Responsive font sizes */
+h1 { 
+    font-family: 'Kurale', serif;
+    font-size: 16px;
+    color: #0d0d0d;
+    font-color: #0d0d0d;
+    font-weight: 500;
+} /* Older browsers */
+html { font-size: 14px; font-color: #0d0d0d; } /* Older browsers */
+@media screen and (min-width: 25em){
+  html { font-size: calc( 14px + (18 - 14) * (100vw - 360px) / (1200 - 360) ); }
+  h1 { font-size: calc( 16px + (24 - 16) * (100vw - 400px) / (800 - 400) ); }
+}
+
+header {
+    font-family: 'Kurale', serif;
+}
+
+@media only screen and (max-width: 500px) {
+    header li {
+        margin: 0 auto;
+    }
+
+    header ul > li:not(:first-child) {
+        display: none;
+    }
+
+    header ul {
+        flex-direction: column;
+    }
+}
+
+
+header li, footer li {
+    list-style: none;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    color: #f3f0eb;
+    padding: 20px 0;
+}
+
+footer li {
+    padding: 0;
+    flex-direction: row;
+}
+
+header li img, footer li img {
+    height: 60px;
+    width: 60px;
+}
+
+#header-focus {
+    flex: 4;
+}
+
+header ul, footer ul {
+    padding: 0 5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: rgba(34,34,34,1);
+    margin: 0;
+    font-weight: 600;
+    min-height: 70px;
+}
+
+.transition {
+    /*height: 20px;*/
+    background: linear-gradient(rgba(13,13,13,1), rgba(16,16,16,.5), rgba(34,34,34,0));
+}
+
+.left-side {
+    position: absolute;
+    width: 20px;
+    top: 0;
+    /*height: 100%;*/
+    z-index: 1;
+    background: linear-gradient(to right, rgba(13,13,13,1), rgba(16,16,16,.5), rgba(34,34,34,0));
+}
+
+.right-side {
+    position: absolute;
+    width: 20px;
+    top: 0;
+    right: 0;
+    /*height: 100%;*/
+    z-index: 1;
+    background: linear-gradient(to left, rgba(13,13,13,1), rgba(16,16,16,.5), rgba(34,34,34,0));
+}
+
+.current-trip-holder {
+    display: flex;
+    align-items: center;
+}
