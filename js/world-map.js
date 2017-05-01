@@ -4,40 +4,45 @@ let createMathObject = function() {
   let asRadians = Math.PI / 180;
   let asDegrees = 180 / Math.PI;
 
-  function dragRotate(rotationVector, δλ, δϕ) {
-    λ = rotationVector[0] * asRadians;
-    ϕ = rotationVector[1] * asRadians;
-    γ = rotationVector[2] * asRadians;
-    δλ = δλ * asRadians;
-    δϕ = δϕ * asRadians;
+  function dragRotate(rotationVector, deltaRoll, deltaPitch) {
+    let roll = rotationVector[0] * asRadians;
+    let pitch = rotationVector[1] * asRadians;
+    let yaw = rotationVector[2] * asRadians;
+    deltaRoll = deltaRoll * asRadians;
+    deltaPitch = deltaPitch * asRadians;
     
-    var sλ = Math.sin(λ), sϕ = Math.sin(ϕ), sγ = Math.sin(γ), 
-        sδλ = Math.sin(δλ), sδϕ = Math.sin(δϕ),
-        cλ = Math.cos(λ), cϕ = Math.cos(ϕ), cγ = Math.cos(γ), 
-        cδλ = Math.cos(δλ), cδϕ = Math.cos(δϕ);
+    let sinRoll = Math.sin(roll);
+    let sinPitch = Math.sin(pitch);
+    let sinYaw = Math.sin(yaw);
+    let cosRoll = Math.cos(roll);
+    let cosPitch = Math.cos(pitch);
+    let cosYaw = Math.cos(yaw);
 
-    var m00 = -sδλ * sλ * cϕ + (sγ * sλ * sϕ + cγ * cλ) * cδλ,
-        m01 = -sγ * cδλ * cϕ - sδλ * sϕ,
-        m02 = sδλ * cλ * cϕ - (sγ * sϕ * cλ - sλ * cγ) * cδλ,
-        m10 = - sδϕ * sλ * cδλ * cϕ - (sγ * sλ * sϕ + cγ * cλ) * sδλ * sδϕ - (sλ * sϕ * cγ - sγ * cλ) * cδϕ,
-        m11 = sδλ * sδϕ * sγ * cϕ - sδϕ * sϕ * cδλ + cδϕ * cγ * cϕ,
-        m12 = sδϕ * cδλ * cλ * cϕ + (sγ * sϕ * cλ - sλ * cγ) * sδλ * sδϕ + (sϕ * cγ * cλ + sγ * sλ) * cδϕ,
-        m20 = - sλ * cδλ * cδϕ * cϕ - (sγ * sλ * sϕ + cγ * cλ) * sδλ * cδϕ + (sλ * sϕ * cγ - sγ * cλ) * sδϕ,
-        m21 = sδλ * sγ * cδϕ * cϕ - sδϕ * cγ * cϕ - sϕ * cδλ * cδϕ,
-        m22 = cδλ * cδϕ * cλ * cϕ + (sγ * sϕ * cλ - sλ * cγ) * sδλ * cδϕ - (sϕ * cγ * cλ + sγ * sλ) * sδϕ;
+    let sinDeltaRoll = Math.sin(deltaRoll);
+    let sinDeltaPitch = Math.sin(deltaPitch);
+    let cosDeltaRoll = Math.cos(deltaRoll);
+    let cosDeltaPitch = Math.cos(deltaPitch);
+
+    let m00 = -sinDeltaRoll * sinRoll * cosPitch + (sinYaw * sinRoll * sinPitch + cosYaw * cosRoll) * cosDeltaRoll,
+        m01 = -sinYaw * cosDeltaRoll * cosPitch - sinDeltaRoll * sinPitch,
+        m10 = - sinDeltaPitch * sinRoll * cosDeltaRoll * cosPitch - (sinYaw * sinRoll * sinPitch + cosYaw * cosRoll) * sinDeltaRoll * sinDeltaPitch - (sinRoll * sinPitch * cosYaw - sinYaw * cosRoll) * cosDeltaPitch,
+        m11 = sinDeltaRoll * sinDeltaPitch * sinYaw * cosPitch - sinDeltaPitch * sinPitch * cosDeltaRoll + cosDeltaPitch * cosYaw * cosPitch,
+        m20 = - sinRoll * cosDeltaRoll * cosDeltaPitch * cosPitch - (sinYaw * sinRoll * sinPitch + cosYaw * cosRoll) * sinDeltaRoll * cosDeltaPitch + (sinRoll * sinPitch * cosYaw - sinYaw * cosRoll) * sinDeltaPitch,
+        m21 = sinDeltaRoll * sinYaw * cosDeltaPitch * cosPitch - sinDeltaPitch * cosYaw * cosPitch - sinPitch * cosDeltaRoll * cosDeltaPitch,
+        m22 = cosDeltaRoll * cosDeltaPitch * cosRoll * cosPitch + (sinYaw * sinPitch * cosRoll - sinRoll * cosYaw) * sinDeltaRoll * cosDeltaPitch - (sinPitch * cosYaw * cosRoll + sinYaw * sinRoll) * sinDeltaPitch;
            
-    let γ_, ϕ_, λ_;
+    let newYaw, newPitch, newRoll;
     if (m01 != 0 || m11 != 0) {
-         γ_ = Math.atan2(-m01, m11);
-         ϕ_ = Math.atan2(-m21, Math.sin(γ_) == 0 ? m11 / Math.cos(γ_) : - m01 / Math.sin(γ_));
-         λ_ = Math.atan2(-m20, m22);
+         newYaw = Math.atan2(-m01, m11);
+         newPitch = Math.atan2(-m21, Math.sin(newYaw) == 0 ? m11 / Math.cos(newYaw) : - m01 / Math.sin(newYaw));
+         newRoll = Math.atan2(-m20, m22);
     } else {
-         γ_ = Math.atan2(m10, m00) - m21 * λ;
-         ϕ_ = - m21 * Math.PI / 2;
-         λ_ = λ;       
+         newYaw = Math.atan2(m10, m00) - m21 * roll;
+         newPitch = - m21 * Math.PI / 2;
+         newRoll = roll;
     }
     
-    return([λ_ * asDegrees, ϕ_ * asDegrees, γ_ * asDegrees]);
+    return([newRoll * asDegrees, newPitch * asDegrees, newYaw * asDegrees]);
   }
 
   function dot(v0, v1) {
@@ -68,17 +73,17 @@ let createMathObject = function() {
   }
 
   function trackballAngles(mousePosition) {
-    var scale = projection.scale();
-    var translation = projection.translate();
-    var x = mousePosition[0] - translation[0];
-    var y = - (mousePosition[1] - translation[1]);
-    var sidesSquared = x*x + y*y;
+    let scale = projection.scale();
+    let translation = projection.translate();
+    let x = mousePosition[0] - translation[0];
+    let y = - (mousePosition[1] - translation[1]);
+    let sidesSquared = x*x + y*y;
 
 
-    var z = scale*scale > 2 * sidesSquared ? Math.sqrt(scale*scale - sidesSquared) : scale*scale / 2 / Math.sqrt(sidesSquared);  
+    let z = scale*scale > 2 * sidesSquared ? Math.sqrt(scale*scale - sidesSquared) : scale*scale / 2 / Math.sqrt(sidesSquared);  
 
-    var lambda = Math.atan2(x, z) * asDegrees; 
-    var phi = Math.atan2(y, z) * asDegrees
+    let lambda = Math.atan2(x, z) * asDegrees; 
+    let phi = Math.atan2(y, z) * asDegrees
     return [lambda, phi];
   }
 
@@ -147,11 +152,10 @@ let createMovementObject = function() {
   let initialRotation;
 
   function scale() {
-    var currentTranslation = d3.event.translate;
-    var newTranslation = [];
-    var scale = d3.event.scale;
-    var quarterHeight = height/8;
-
+    let currentTranslation = d3.event.translate;
+    let newTranslation = [];
+    let scale = d3.event.scale;
+    let quarterHeight = height/8;
 
     newTranslation[0] = Math.min(
       (width/height)  * (scale - 1), 
@@ -177,11 +181,8 @@ let createMovementObject = function() {
     if (initialMousePosition) {
       clearInterval(rotateInterval);
       let newMousePosition = globeMath.trackballAngles(d3.mouse(svg[0][0]));
-      // Pass three vectors in as one variable
       let newRotation = globeMath.dragRotate(
         initialRotation,
-        initialRotation[1],
-        initialRotation[2],
         newMousePosition[0] - initialMousePosition[0],
         newMousePosition[1] - initialMousePosition[1]
       );
@@ -204,11 +205,41 @@ let createMovementObject = function() {
     locationRoller.cancelDemo();
   }
 
+  function rotateMap(newVector) {
+    projection.rotate(newVector);
+    svg.selectAll("path").attr("d", path);
+  }
+
+  function rotateToLocation(targetRotation) {
+    if (displayGlobe) {
+      let isWithin = function (number, target, range) {
+        return Math.abs(number-target) < range;
+      }
+
+      let change = .15;
+      let newVector = globeMath.getNewRotationVector(storedRotation, targetRotation, change);
+
+      if (isWithin(newVector[0], targetRotation[0], change) && isWithin(newVector[1], targetRotation[1], change) && isWithin(newVector[2], targetRotation[2], change)) {
+        storedRotation = newVector;
+        clearInterval(rotateInterval);
+        window.requestAnimationFrame(recolorMap);
+      }
+
+      rotateMap(newVector);
+      storedRotation = newVector;
+    } else {
+      rotateMap([0,0,0]);
+      window.requestAnimationFrame(createNewMap);
+    }
+  }
+
   return {
     mousedown: mousedown,
     mouseup: mouseup,
     mousemove: mousemove,
-    scale: scale
+    scale: scale,
+    rotateMap: rotateMap,
+    rotateToLocation: rotateToLocation
   }
 }
 
@@ -560,7 +591,7 @@ let getColorMap = function() {
 
 function draw(topo, displayGlobe) {
   var country = g.selectAll(".country").data(topo.features);
-
+  console.log(projection.scale());
   let visitedArray = [
     "ATA", "CAN", "AUS", "NZL", "BRA", "ARG", "MAF", "ZWE", "ZAF", "VIR", "VGB", "USA", "TZA", "THA", "BWA", "EGY", "KEN", "MAR", "NAM", "TZA",
     "BHS", "CUB", "HTI", "JAM", "MEX", "CHN", "IND", "IDN", "JPN", "SGP", "THA", "TUR", "ARE", "VNM", "RUS", "PRI", "NLD", "DEU", "ESP", "FRA",
@@ -598,11 +629,9 @@ function draw(topo, displayGlobe) {
       return "black"; 
     });
 
-  //offsets for tooltips
   var offsetL = document.getElementById('container').offsetLeft+20;
   var offsetT = document.getElementById('container').offsetTop+10;
 
-  //tooltips
   country.on("mousemove", function(d,i) {
     var mouse = d3.mouse(svg.node()).map(function(d) {
       return parseInt(d);
@@ -629,7 +658,7 @@ function draw(topo, displayGlobe) {
   if (displayGlobe) {
     newRotation = storedRotation;
   }
-  rotateMap(newRotation);
+  movementObject.rotateMap(newRotation);
   togglingMaps = false;
 }
 
@@ -673,34 +702,6 @@ function recolorMap() {
   }
 }
 
-function rotateMap(newVector) {
-  projection.rotate(newVector);
-  svg.selectAll("path").attr("d", path);
-}
-
-function rotateToLocation(targetRotation) {
-  if (displayGlobe) {
-    let isWithin = function (number, target, range) {
-      return Math.abs(number-target) < range;
-    }
-
-    let change = .15;
-    let newVector = globeMath.getNewRotationVector(storedRotation, targetRotation, change);
-
-    if (isWithin(newVector[0], targetRotation[0], change) && isWithin(newVector[1], targetRotation[1], change) && isWithin(newVector[2], targetRotation[2], change)) {
-      storedRotation = newVector;
-      clearInterval(rotateInterval);
-      window.requestAnimationFrame(recolorMap);
-    }
-
-    rotateMap(newVector);
-    storedRotation = newVector;
-  } else {
-    rotateMap([0,0,0]);
-    window.requestAnimationFrame(createNewMap);
-  }
-}
-
 document.addEventListener("DOMContentLoaded", function (event) {
     var orthographicSelector = document.getElementById('orthographic');
     orthographicSelector.addEventListener('change', function (event) {
@@ -733,7 +734,7 @@ function callForNewMap() {
     }
 
     rotateInterval = setInterval(function() {
-      rotateToLocation(rotationChoosen);
+      movementObject.rotateToLocation(rotationChoosen);
     }, 2);
   } else {
     clearInterval(rotateInterval);
@@ -746,30 +747,26 @@ function callForNewMap() {
   }
 }
 
-var throttleTimer;
-var rotateInterval;
+let topo,projection,path,svg,g;
+let throttleTimer, rotateInterval;
 let displayGlobe = true;
 let selectedMapType = 'visited'; // Could be 'continent', 'visited', 'none'
 
 d3.select(window).on("resize", throttle);
 
-var width = document.getElementById('container').offsetWidth;
-var height = width / 2;
-
-var topo,projection,path,svg,g;
-
-var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
-
+let width = document.getElementById('container').offsetWidth;
+let height = width / 2;
+let tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
 let movementObject = createMovementObject();
-var zoom = d3.behavior.zoom()
+let zoom = d3.behavior.zoom()
       .scaleExtent([1, 9])
       .on("zoom", movementObject.scale);
 
 let globeMath = createMathObject();
 topo = setup(width,height, displayGlobe);
 
-var storedRotation = [0,0,0];
-var storedZoom = 1;
-var togglingMaps = false;
+let storedRotation = [0,0,0];
+let storedZoom = 1;
+let togglingMaps = false;
 
 window.requestAnimationFrame(createNewMap);
