@@ -186,7 +186,7 @@ section {
 }
 
 .display-locations li.flag.lived {
-  font-weight: 600;
+  text-decoration: underline;
 }
 
 .display-code {
@@ -317,6 +317,7 @@ code {
 
 .display-contact-details {
   transition: opacity .7s cubic-bezier(0.85, 0.64, 0.18, 1.13);
+  height: 100%;
 }
 
 .display-contact-details a {
@@ -333,12 +334,11 @@ code {
 }
 
 .display-contact-details img {
-  margin: 40px;
+  margin: auto;
 }
 
 .display-contact-details p {
-  margin-right: 30px;
-  margin-left: 0;
+  margin: auto;
 }
 
 @media only screen and (max-width: 500px) {
@@ -449,5 +449,21 @@ code {
 
   .display-contact-wrapper {
     width: 90%;
+  }
+
+  .stationary-frame {
+    width: 100%;
+  }
+
+  .moving-frame {
+    margin-right: 0;
+  }
+
+  .moving-frame .spinner-items {
+    width: 100%;
+    font-size: calc(1vw + 20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

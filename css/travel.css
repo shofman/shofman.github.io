@@ -11,6 +11,7 @@ h1 {
     align-items: left;
     margin-top: 25px;
     margin-left: 25px;
+    margin-bottom: 10px;
     flex-direction: row;
   }
 
@@ -23,7 +24,7 @@ h1 {
     width: 4px;
     height: 8px;
     top: -.8rem;
-    left: .6rem;
+    left: -1.35rem;
   }
 }
 
@@ -48,6 +49,7 @@ h1 {
 }
 
 .controls p {
+  display: inline-flex;
   text-align: left;
   margin: 0;
   padding: 0;

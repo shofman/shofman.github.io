@@ -1,29 +1,29 @@
 "use strict";
 
-let createMathObject = function() {
-  let asRadians = Math.PI / 180;
-  let asDegrees = 180 / Math.PI;
+var createMathObject = function() {
+  var asRadians = Math.PI / 180;
+  var asDegrees = 180 / Math.PI;
 
   function dragRotate(rotationVector, deltaRoll, deltaPitch) {
-    let roll = rotationVector[0] * asRadians;
-    let pitch = rotationVector[1] * asRadians;
-    let yaw = rotationVector[2] * asRadians;
+    var roll = rotationVector[0] * asRadians;
+    var pitch = rotationVector[1] * asRadians;
+    var yaw = rotationVector[2] * asRadians;
     deltaRoll = deltaRoll * asRadians;
     deltaPitch = deltaPitch * asRadians;
     
-    let sinRoll = Math.sin(roll);
-    let sinPitch = Math.sin(pitch);
-    let sinYaw = Math.sin(yaw);
-    let cosRoll = Math.cos(roll);
-    let cosPitch = Math.cos(pitch);
-    let cosYaw = Math.cos(yaw);
+    var sinRoll = Math.sin(roll);
+    var sinPitch = Math.sin(pitch);
+    var sinYaw = Math.sin(yaw);
+    var cosRoll = Math.cos(roll);
+    var cosPitch = Math.cos(pitch);
+    var cosYaw = Math.cos(yaw);
 
-    let sinDeltaRoll = Math.sin(deltaRoll);
-    let sinDeltaPitch = Math.sin(deltaPitch);
-    let cosDeltaRoll = Math.cos(deltaRoll);
-    let cosDeltaPitch = Math.cos(deltaPitch);
+    var sinDeltaRoll = Math.sin(deltaRoll);
+    var sinDeltaPitch = Math.sin(deltaPitch);
+    var cosDeltaRoll = Math.cos(deltaRoll);
+    var cosDeltaPitch = Math.cos(deltaPitch);
 
-    let m00 = -sinDeltaRoll * sinRoll * cosPitch + (sinYaw * sinRoll * sinPitch + cosYaw * cosRoll) * cosDeltaRoll,
+    var m00 = -sinDeltaRoll * sinRoll * cosPitch + (sinYaw * sinRoll * sinPitch + cosYaw * cosRoll) * cosDeltaRoll,
         m01 = -sinYaw * cosDeltaRoll * cosPitch - sinDeltaRoll * sinPitch,
         m10 = - sinDeltaPitch * sinRoll * cosDeltaRoll * cosPitch - (sinYaw * sinRoll * sinPitch + cosYaw * cosRoll) * sinDeltaRoll * sinDeltaPitch - (sinRoll * sinPitch * cosYaw - sinYaw * cosRoll) * cosDeltaPitch,
         m11 = sinDeltaRoll * sinDeltaPitch * sinYaw * cosPitch - sinDeltaPitch * sinPitch * cosDeltaRoll + cosDeltaPitch * cosYaw * cosPitch,
@@ -31,7 +31,7 @@ let createMathObject = function() {
         m21 = sinDeltaRoll * sinYaw * cosDeltaPitch * cosPitch - sinDeltaPitch * cosYaw * cosPitch - sinPitch * cosDeltaRoll * cosDeltaPitch,
         m22 = cosDeltaRoll * cosDeltaPitch * cosRoll * cosPitch + (sinYaw * sinPitch * cosRoll - sinRoll * cosYaw) * sinDeltaRoll * cosDeltaPitch - (sinPitch * cosYaw * cosRoll + sinYaw * sinRoll) * sinDeltaPitch;
            
-    let newYaw, newPitch, newRoll;
+    var newYaw, newPitch, newRoll;
     if (m01 != 0 || m11 != 0) {
          newYaw = Math.atan2(-m01, m11);
          newPitch = Math.atan2(-m21, Math.sin(newYaw) == 0 ? m11 / Math.cos(newYaw) : - m01 / Math.sin(newYaw));
@@ -73,30 +73,30 @@ let createMathObject = function() {
   }
 
   function trackballAngles(mousePosition) {
-    let scale = projection.scale();
-    let translation = projection.translate();
-    let x = mousePosition[0] - translation[0];
-    let y = - (mousePosition[1] - translation[1]);
-    let sidesSquared = x*x + y*y;
+    var scale = projection.scale();
+    var translation = projection.translate();
+    var x = mousePosition[0] - translation[0];
+    var y = - (mousePosition[1] - translation[1]);
+    var sidesSquared = x*x + y*y;
 
 
-    let z = scale*scale > 2 * sidesSquared ? Math.sqrt(scale*scale - sidesSquared) : scale*scale / 2 / Math.sqrt(sidesSquared);  
+    var z = scale*scale > 2 * sidesSquared ? Math.sqrt(scale*scale - sidesSquared) : scale*scale / 2 / Math.sqrt(sidesSquared);  
 
-    let lambda = Math.atan2(x, z) * asDegrees; 
-    let phi = Math.atan2(y, z) * asDegrees
+    var lambda = Math.atan2(x, z) * asDegrees; 
+    var phi = Math.atan2(y, z) * asDegrees
     return [lambda, phi];
   }
 
   function convertQuaternionToEuler(quaternion){
-    let x = Math.atan2(
+    var x = Math.atan2(
       2 * (quaternion[0] * quaternion[1] + quaternion[2] * quaternion[3]),
       1 - 2 * (quaternion[1] * quaternion[1] + quaternion[2] * quaternion[2])
     );
 
-    let yMin = Math.min(1, 2 * (quaternion[0] * quaternion[2] - quaternion[3] * quaternion[1]));
-    let y = Math.asin(Math.max(-1, yMin));
+    var yMin = Math.min(1, 2 * (quaternion[0] * quaternion[2] - quaternion[3] * quaternion[1]));
+    var y = Math.asin(Math.max(-1, yMin));
 
-    let z = Math.atan2(
+    var z = Math.atan2(
       2 * (quaternion[0] * quaternion[3] + quaternion[1] * quaternion[2]),
       1 - 2 * (quaternion[2] * quaternion[2] + quaternion[3] * quaternion[3])
     );
@@ -105,14 +105,14 @@ let createMathObject = function() {
   }
 
   function slerp(quaternionStart, quaternionEnd, percentChange) {
-    let cosHalfTheta = dot(quaternionStart, quaternionEnd);
+    var cosHalfTheta = dot(quaternionStart, quaternionEnd);
 
     if (Math.abs(cosHalfTheta) >= 1.0) {
       return quaternionStart;
     }
 
-    let halfTheta = Math.acos(cosHalfTheta);
-    let sinHalfTheta = Math.sqrt(1 - cosHalfTheta * cosHalfTheta);
+    var halfTheta = Math.acos(cosHalfTheta);
+    var sinHalfTheta = Math.sqrt(1 - cosHalfTheta * cosHalfTheta);
 
     if (Math.abs(sinHalfTheta) < 0.001){
       return [
@@ -123,20 +123,20 @@ let createMathObject = function() {
       ];
     }
 
-    let ratioA = Math.sin((1-percentChange) * halfTheta) / sinHalfTheta;
-    let ratioB = Math.sin(percentChange*halfTheta) / sinHalfTheta;
+    var ratioA = Math.sin((1-percentChange) * halfTheta) / sinHalfTheta;
+    var ratioB = Math.sin(percentChange*halfTheta) / sinHalfTheta;
 
-    let w = quaternionStart[0] * ratioA + quaternionEnd[0] * ratioB;
-    let x = quaternionStart[1] * ratioA + quaternionEnd[1] * ratioB;
-    let y = quaternionStart[2] * ratioA + quaternionEnd[2] * ratioB;
-    let z = quaternionStart[3] * ratioA + quaternionEnd[3] * ratioB;
+    var w = quaternionStart[0] * ratioA + quaternionEnd[0] * ratioB;
+    var x = quaternionStart[1] * ratioA + quaternionEnd[1] * ratioB;
+    var y = quaternionStart[2] * ratioA + quaternionEnd[2] * ratioB;
+    var z = quaternionStart[3] * ratioA + quaternionEnd[3] * ratioB;
 
     return [w,x,y,z];
   }
 
 
   function getNewRotationVectorViaSlerp(currentRotation, targetRotation, change) {
-    let newQuaternion = slerp(convertEulerToQuaternion(currentRotation), convertEulerToQuaternion(targetRotation), change);
+    var newQuaternion = slerp(convertEulerToQuaternion(currentRotation), convertEulerToQuaternion(targetRotation), change);
     return convertQuaternionToEuler(newQuaternion);
   }
 
@@ -147,15 +147,15 @@ let createMathObject = function() {
   }
 }
 
-let createMovementObject = function() {
-  let initialMousePosition = null;
-  let initialRotation;
+var createMovementObject = function() {
+  var initialMousePosition = null;
+  var initialRotation;
 
   function scale() {
-    let currentTranslation = d3.event.translate;
-    let newTranslation = [];
-    let scale = d3.event.scale;
-    let quarterHeight = height/8;
+    var currentTranslation = d3.event.translate;
+    var newTranslation = [];
+    var scale = d3.event.scale;
+    var quarterHeight = height/8;
 
     newTranslation[0] = Math.min(
       (width/height)  * (scale - 1), 
@@ -180,8 +180,8 @@ let createMovementObject = function() {
   function mousemove() {
     if (initialMousePosition) {
       clearInterval(rotateInterval);
-      let newMousePosition = globeMath.trackballAngles(d3.mouse(svg[0][0]));
-      let newRotation = globeMath.dragRotate(
+      var newMousePosition = globeMath.trackballAngles(d3.mouse(svg[0][0]));
+      var newRotation = globeMath.dragRotate(
         initialRotation,
         newMousePosition[0] - initialMousePosition[0],
         newMousePosition[1] - initialMousePosition[1]
@@ -212,12 +212,12 @@ let createMovementObject = function() {
 
   function rotateToLocation(targetRotation) {
     if (displayGlobe) {
-      let isWithin = function (number, target, range) {
+      var isWithin = function (number, target, range) {
         return Math.abs(number-target) < range;
       }
 
-      let change = .15;
-      let newVector = globeMath.getNewRotationVector(storedRotation, targetRotation, change);
+      var change = .15;
+      var newVector = globeMath.getNewRotationVector(storedRotation, targetRotation, change);
 
       if (isWithin(newVector[0], targetRotation[0], change) && isWithin(newVector[1], targetRotation[1], change) && isWithin(newVector[2], targetRotation[2], change)) {
         storedRotation = newVector;
@@ -244,7 +244,7 @@ let createMovementObject = function() {
 }
 
 function setupProjection(displayGlobe) {
-  let newProjection;
+  var newProjection;
   if (displayGlobe) {
     newProjection = d3.geo.orthographic()
         .scale(height/2.5)
@@ -297,11 +297,11 @@ function setup(width,height, displayGlobe){
 
   g = svg.append("g");
 
-  let world = getCurrentWorld(displayGlobe);
+  var world = getCurrentWorld(displayGlobe);
   return topojson.feature(world, world.objects.countries);
 }
 
-let colorFillNames = {
+var colorFillNames = {
   defaultFill: "#ABDDA4",
   nonvisited: "#b4b4b7",
   visited: "#ff0000",
@@ -314,12 +314,12 @@ let colorFillNames = {
   antarctica: '#d3d3d3'
 };
 
-let shadeColor = function (color, percent) {   
+var shadeColor = function (color, percent) {   
     var f=parseInt(color.slice(1),16),quaternion=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
     return "#"+(0x1000000+(Math.round((quaternion-R)*p)+R)*0x10000+(Math.round((quaternion-G)*p)+G)*0x100+(Math.round((quaternion-B)*p)+B)).toString(16).slice(1);
 }
 
-let getColorMap = function() {
+var getColorMap = function() {
     return {
       'ZWE': {fillKey: 'africa'},
       'ZMB': {fillKey: 'africa'},
@@ -354,7 +354,6 @@ let getColorMap = function() {
       'LBY': {fillKey: 'africa'},
       'LBR': {fillKey: 'africa'},
       'KEN': {fillKey: 'africa'},
-      'LBR': {fillKey: 'africa'},
       'GNQ': {fillKey: 'africa'},
       'GNB': {fillKey: 'africa'},
       'GMB': {fillKey: 'africa'},
@@ -497,7 +496,6 @@ let getColorMap = function() {
       'CAN': {fillKey: 'northamerica' },
       'GTM': {fillKey: 'northamerica' },
       'HND': {fillKey: 'northamerica' },
-      'BLZ': {fillKey: 'northamerica' },
       'GRL': {fillKey: 'northamerica' },
       'SLV': {fillKey: 'northamerica' },
       'NIC': {fillKey: 'northamerica' },
@@ -506,7 +504,6 @@ let getColorMap = function() {
       'DOM': {fillKey: 'northamerica' },
       'CUB': {fillKey: 'northamerica' },
       'HTI': {fillKey: 'northamerica' },
-      'BHS': {fillKey: 'northamerica' },
       'PRI': {fillKey: 'northamerica' },
       'TTO': {fillKey: 'northamerica' },
       'VGB': {fillKey: 'northamerica' },
@@ -541,10 +538,8 @@ let getColorMap = function() {
       'SUR': {fillKey: 'southamerica' },
       'GUF': {fillKey: 'southamerica' },
       'BRA': {fillKey: 'southamerica' },
-      'ARG': {fillKey: 'southamerica' },
       'URY': {fillKey: 'southamerica' },
       'PRY': {fillKey: 'southamerica' },
-      'BOL': {fillKey: 'southamerica' },
       'PER': {fillKey: 'southamerica' },
       'ABW': {fillKey: 'southamerica' },
       'FLK': {fillKey: 'southamerica' },
@@ -591,8 +586,7 @@ let getColorMap = function() {
 
 function draw(topo, displayGlobe) {
   var country = g.selectAll(".country").data(topo.features);
-  console.log(projection.scale());
-  let visitedArray = [
+  var visitedArray = [
     "ATA", "CAN", "AUS", "NZL", "BRA", "ARG", "MAF", "ZWE", "ZAF", "VIR", "VGB", "USA", "TZA", "THA", "BWA", "EGY", "KEN", "MAR", "NAM", "TZA",
     "BHS", "CUB", "HTI", "JAM", "MEX", "CHN", "IND", "IDN", "JPN", "SGP", "THA", "TUR", "ARE", "VNM", "RUS", "PRI", "NLD", "DEU", "ESP", "FRA",
     "GBR", "SWE", "EST", "FIN", "GRC", "HKG", "ITA", "MNE", "HRV", "HUN", "CHE", "AUT", "BEL", 'CZE'
@@ -600,8 +594,8 @@ function draw(topo, displayGlobe) {
 
   country.enter().insert("path")
     .attr("class", function(d) {
-      let colorMap = getColorMap();
-      let visited = visitedArray.indexOf(d.id) > -1 ? ' visited' : '';
+      var colorMap = getColorMap();
+      var visited = visitedArray.indexOf(d.id) > -1 ? ' visited' : '';
       if (colorMap[d.id]) {
         return "country " + colorMap[d.id].fillKey + visited;
       } else {
@@ -613,11 +607,11 @@ function draw(topo, displayGlobe) {
     .attr("title", function(d,i) { return d.properties.name; })
     .style("fill", function(d, i) {
       try {
-        let colorMap = getColorMap();
+        var colorMap = getColorMap();
         if (colorMap[d.id]) {
           if (selectedMapType === 'visited' &&  locationRoller.getSelectedElement && locationRoller.getSelectedElement().toLowerCase().replace(' ', '') === colorMap[d.id].fillKey.toLowerCase()) {
-            let color = colorFillNames[colorMap[d.id].fillKey];
-            let percentageChange = visitedArray.indexOf(d.id) > -1 ? -.5 : .5;
+            var color = colorFillNames[colorMap[d.id].fillKey];
+            var percentageChange = visitedArray.indexOf(d.id) > -1 ? -.5 : .5;
             return shadeColor(color, percentageChange);
           } else {
             return colorFillNames[colorMap[d.id].fillKey];
@@ -719,7 +713,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 function callForNewMap() {
   if (displayGlobe && locationRoller.getSelectedElement) {
-    let rotationCoordinates = {
+    var rotationCoordinates = {
       'europe': [-15.672299334783183, -42.992669189528236, 0.0034898530054431345],
       'northamerica': [101.93038481306967, -42.389726903499984, 9.29878917438975],
       'asia': [-88.76957254392269, -37.36394465849986, -19.01068422558651],
@@ -728,7 +722,7 @@ function callForNewMap() {
       'africa': [-15.44547456275948, -0.6516005548556657, -0],
       'oceania': [-135.78958485165387, 30.194218903527958, 4.349942898316325]
     };
-    let rotationChoosen = rotationCoordinates[locationRoller.getSelectedElement().toLowerCase().replace(' ', '')];
+    var rotationChoosen = rotationCoordinates[locationRoller.getSelectedElement().toLowerCase().replace(' ', '')];
     if (rotateInterval) {
       clearInterval(rotateInterval);
     }
@@ -747,26 +741,26 @@ function callForNewMap() {
   }
 }
 
-let topo,projection,path,svg,g;
-let throttleTimer, rotateInterval;
-let displayGlobe = true;
-let selectedMapType = 'visited'; // Could be 'continent', 'visited', 'none'
+var topo,projection,path,svg,g;
+var throttleTimer, rotateInterval;
+var displayGlobe = true;
+var selectedMapType = 'visited'; // Could be 'continent', 'visited', 'none'
 
 d3.select(window).on("resize", throttle);
 
-let width = document.getElementById('container').offsetWidth;
-let height = width / 2;
-let tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
-let movementObject = createMovementObject();
-let zoom = d3.behavior.zoom()
+var width = document.getElementById('container').offsetWidth;
+var height = width / 2;
+var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
+var movementObject = createMovementObject();
+var zoom = d3.behavior.zoom()
       .scaleExtent([1, 9])
       .on("zoom", movementObject.scale);
 
-let globeMath = createMathObject();
+var globeMath = createMathObject();
 topo = setup(width,height, displayGlobe);
 
-let storedRotation = [0,0,0];
-let storedZoom = 1;
-let togglingMaps = false;
+var storedRotation = [0,0,0];
+var storedZoom = 1;
+var togglingMaps = false;
 
 window.requestAnimationFrame(createNewMap);
