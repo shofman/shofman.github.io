@@ -1305,6 +1305,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     orthographicSelector.addEventListener('change', function (event) {
       displayGlobe = orthographicSelector.checked || false;
       toggleAllContinentsVisibility(!displayGlobe && (selectedMapType === 'visited'), false);
+      if (displayGlobe && displayAllContinents) {
+        displayAllContinents = false;
+        showAllSelector.checked = false;
+      }
       window.requestAnimationFrame(createNewMap);
       togglingMaps = true;
     });

@@ -395,6 +395,8 @@ code {
   }
 
   .display-locations ul {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
     column-count: 1;
     padding-left: 10px;
     padding-right: 0;
