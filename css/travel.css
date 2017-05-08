@@ -6,28 +6,6 @@ h1 {
   margin-bottom: 0;
 }
 
-@media only screen and (min-width: 700px) {
-  body .controls {
-    align-items: left;
-    margin-top: 25px;
-    margin-left: 25px;
-    margin-bottom: 10px;
-    flex-direction: row;
-  }
-
-  .controls p.map-toggle {
-    text-align: center;
-  }
-
-  .controls [type="checkbox"]:not(:checked) + label:after,
-  .controls [type="checkbox"]:checked + label:after {
-    width: 4px;
-    height: 8px;
-    top: -.8rem;
-    left: -1.35rem;
-  }
-}
-
 #container circle {
   cursor: move;
 }
@@ -72,7 +50,7 @@ svg {
   border: 1px solid rgba(176, 176, 176, .8);
   border-radius: 5px;
   height: initial;
-  width: 60%;
+  width: 95%;
   overflow:hidden;
   background: #F0F8FF;
 }
@@ -179,4 +157,30 @@ div.tooltip {
 /* hover style just for information */
 label:hover:before {
   border: 2px solid #4778d9!important;
+}
+
+@media only screen and (min-width: 700px) {
+  body .controls {
+    align-items: left;
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-bottom: 10px;
+    flex-direction: row;
+  }
+
+  .controls p.map-control {
+    text-align: center;
+  }
+
+  .controls [type="checkbox"]:not(:checked) + label:after,
+  .controls [type="checkbox"]:checked + label:after {
+    width: 4px;
+    height: 8px;
+    top: -.8rem;
+    left: -1.35rem;
+  }
+
+  #container {
+    width: 60%;
+  }
 }

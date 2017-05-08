@@ -1265,30 +1265,65 @@ function createNewMap () {
 }
 
 function recolorMap() {
-  ['northamerica','europe','asia','oceania','antarctica','africa','southamerica'].forEach(function (element) {
-    d3.selectAll("." + element).transition().style("fill", colorFillNames[element]);
-  });
+  if (displayAllContinents) {
+    ['northamerica','europe','asia','oceania','antarctica','africa','southamerica'].forEach(function (element) {
+      if (selectedMapType === 'visited') {
+        d3.selectAll("." + element).transition().style("fill", shadeColor(colorFillNames[element], .5));
+        d3.selectAll("." + element + ".visited").transition().style("fill", shadeColor(colorFillNames[element], -.5));
+      } else {
+        d3.selectAll("." + element).transition().style("fill", colorFillNames[element]);
+      }
+    });
+  } else {
+    ['northamerica','europe','asia','oceania','antarctica','africa','southamerica'].forEach(function (element) {
+      d3.selectAll("." + element).transition().style("fill", colorFillNames[element]);
+    });
 
-  if (locationRoller.getSelectedElement && selectedMapType === 'visited') {
-    var continentSelected = locationRoller.getSelectedElement().toLowerCase().replace(' ', '');
-    d3.selectAll("." + continentSelected).transition().style("fill", shadeColor(colorFillNames[continentSelected], .5));
-    d3.selectAll("." + continentSelected + ".visited").transition().style("fill", shadeColor(colorFillNames[continentSelected], -.5));
+    if (locationRoller.getSelectedElement && selectedMapType === 'visited') {
+      var continentSelected = locationRoller.getSelectedElement().toLowerCase().replace(' ', '');
+      d3.selectAll("." + continentSelected).transition().style("fill", shadeColor(colorFillNames[continentSelected], .5));
+      d3.selectAll("." + continentSelected + ".visited").transition().style("fill", shadeColor(colorFillNames[continentSelected], -.5));
+    }
   }
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
+    var toggleAllContinentsVisibility = function (shouldDisplay, hideWithOpacity) {
+      if (shouldDisplay) {
+        document.getElementsByClassName('all-continents')[0].style.display = "inline-flex";
+        document.getElementsByClassName('all-continents')[0].style.opacity = "1";
+      } else {
+        if (hideWithOpacity) {
+          document.getElementsByClassName('all-continents')[0].style.opacity = "0";
+        } else {
+          document.getElementsByClassName('all-continents')[0].style.display = "none";
+        }
+      }
+    };
+
     var orthographicSelector = document.getElementById('orthographic');
     orthographicSelector.addEventListener('change', function (event) {
       displayGlobe = orthographicSelector.checked || false;
+      toggleAllContinentsVisibility(!displayGlobe && (selectedMapType === 'visited'), false);
       window.requestAnimationFrame(createNewMap);
       togglingMaps = true;
     });
 
     var visitedSelector = document.getElementById('visited');
     visitedSelector.addEventListener('change', function (event) {
-        selectedMapType = visitedSelector.checked ? 'visited' : 'continent';
-        window.requestAnimationFrame(recolorMap);
+      selectedMapType = visitedSelector.checked ? 'visited' : 'continent';
+      toggleAllContinentsVisibility(!displayGlobe && (selectedMapType === 'visited'), true);
+      window.requestAnimationFrame(recolorMap);
     });
+
+    var showAllSelector = document.getElementById('show-all');
+    showAllSelector.addEventListener('change', function (event) {
+      displayAllContinents = showAllSelector.checked || false;
+      locationRoller.cancelDemo();
+      window.requestAnimationFrame(recolorMap);
+    });
+
+    
 });
 
 function callForNewMap() {
@@ -1324,6 +1359,7 @@ function callForNewMap() {
 var topo,projection,path,svg,g;
 var throttleTimer, rotateInterval;
 var displayGlobe = true;
+var displayAllContinents = false;
 var selectedMapType = 'visited'; // Could be 'continent', 'visited', 'none'
 var storedRotation = [0,0,0];
 var storedZoom = 1;

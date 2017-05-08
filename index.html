@@ -66,13 +66,17 @@
       <h3>I like to travel</h3>
       <p>Check out this interactive map showing the places I've been: </p>
       <section class="controls">
-        <p class="map-toggle">
+        <p class="map-control">
           <input type="checkbox" id="orthographic" checked/>
           <label for="orthographic">Globe view</label>
         </p>
-        <p class="map-toggle">
+        <p class="map-control">
           <input type="checkbox" id="visited" checked/>
           <label for="visited">Scott's Countries</label>
+        </p>
+        <p class="map-control all-continents" style="display: none;">
+          <input type="checkbox" id="show-all" />
+          <label for="show-all">Show All Continents</label>
         </p>
       </section>
       <div id="container"></div>
