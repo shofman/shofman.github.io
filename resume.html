@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Scott Hofman">
+    <link href="./css/header.css" rel="stylesheet">
+    <link href="./css/resume.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg" href="./favicon-128x128.png" sizes="128x128">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kurale" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li>
+          <img src="./favicon-128x128.png" alt="icon"/>
+        </li>
+        <li>Samples</li>
+        <li id="header-focus">Scott Hofman</li>
+        <li>About Me</li>
+      </ul>
+    </header>
+
+    <h1>Resume</h1>
+
+    <p>Click to download resume as PDF <a href="#">here</a></p>
+
+    <section id="summary">
+    </section>
+
+    <section id="skills">
+      <h2>Programming Languages and Technologies</h2>
+      <div class="skills-list">
+        <div class="languages">
+          <h3>Languages</h3>
+          <ul>
+            <li>Javascript</li>
+            <li>PHP</li>
+            <li>Java</li>
+            <li>Ruby/Rails</li>
+            <li>AngularJs</li>
+            <li>JQuery</li>
+            <li>Python</li>
+            <li>SCSS/CSS2/CSS3</li>
+            <li>C#</li>
+            <li>C</li>
+            <li>C++</li>
+            <li>MySQL</li>
+            <li>PostgreSQL</li>
+            <li>SQLite</li>
+            <li>nodeJs</li>
+            <li>Haskell</li>
+            <li>MATLAB</li>
+            <li>TI-Basic</li>
+            <li>Bash</li>
+          </ul>
+        </div>
+
+        <div class="technologies">
+          <h3>Technologies</h3>
+          <ul>
+            <li>Git</li>
+            <li>SVN</li>
+            <li>Redis</li>
+            <li>Teaspoon</li>
+            <li>Jasmine</li>
+            <li>Android SDK</li>
+            <li>AWS S3</li>
+            <li>HaProxy</li>
+            <li>RSpec</li>
+            <li>MongoDb</li>
+            <li>Docker</li>
+            <li>Vagrant</li>
+            <li>Nginx</li>
+            <li>Apache</li>
+            <li>RabbitMq</li>
+            <li>Grunt</li>
+            <li>npm</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Selected Projects</h2>
+
+      <div class="project-list">
+        <div class="project">
+          <div class="project-description">
+            <h3>Search By Image</h3>
+            <h5>Add search by image front-end to the iStockphoto website</h5>
+            <p>iStockphoto - February 2017</p>
+          </div>
+          <ul>
+            <li>Extended Angular library to allow users to drag-and-drop/select files, adding inline validation and Jasmine/Teaspoon tests. Images were uploaded to AWS S3</li>
+            <li>Created standard modal as a mixin in SCSS to be used site-wide</li>
+            <li>Adapted jQuery search-bar plugin to allow multiple sources to search from. Needed to maintain search functionality for three different sites</li>
+          </ul>
+          <div class="company">
+            
+          </div>
+        </div>
+      
+        <div class="project">
+          <div class="project-description">
+            <h3>Unifying iStockphoto with Getty Images</h3>
+          </div>
+          <ul>
+            <li>Implemented HaProxy LoadBalancer to cutover pages from PHP/Zend to Rails</li>
+            <li>Coded proxy rules to strip iStock’s country/language from URL request, redirect to appropriate Rails app, and re-append country/language for display</li>
+            <li>Developed tests to validate routing behavior for both iStock and Getty Images</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Moving Asset View Page to Getty Images</h3>
+          </div>
+          <ul>
+            <li>Worked with multiple service backends to deliver page that could handle four million unique views per week in 10 different languages</li>
+            <li>Created app to handle 30 unique download states, adapted responsive carousel to display similar images, and wrote image zoom functionality in Angular</li>
+            <li>Styled the page to be identical to previous page, despite different HTML structure</li>
+            <li>Improved page performance - page load time decreased by 50% (~5s to 2.5s)</li>
+            <li>Developed script to automate user creation to increase team productivity</li>
+            <li>Delivered several presentations to entire company, detailing progress</li>
+          </ul>
+        </div>
+        
+        <div class="project">
+          <div class="project-description">
+            <h3>Allow Anonymous Users to Purchase - iStockphoto</h3>
+          </div>
+          <ul>
+            <li>Rewrote PHP + Zend Framework purchase flow to allow users to be anonymous</li>
+            <li>Separated Angular checkout functionality into modular services, which eased extending functionality for anonymous users and increased testability in Jasmine</li>
+            <li>Developed a session-based cart for anonymous users, with capability to transfer to MySQL database for checkout</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Update to Credit Purchase Logic</h3>
+          </div>
+          <ul>
+            <li>“Re-discovered” ten-year old logic for credit expiry and wrote MySQL queries to update expiry dates</li>
+            <li>Implemented RabbitMq queue to process users upon login, and message consumer to update expiry date on all active credits (some spanning several decades).</li>
+            <li>Deprecated an entire purchase option, requiring removal of hundreds of lines of code</li>
+            <li>Refactored dozens of poor unit tests - decreased unit test runtime by 16%</li>
+          </ul>
+        </div>
+        
+        <div class="project">
+          <div class="project-description">
+            <h3>Delivering Autonomy Teamsite CMS Implementation</h3>
+          </div>
+          <ul>
+            <li>Designed PHP system to use CURL to fetch entire pages, with fallback content</li>
+            <li>Delivered several key pages under tight deadlines - Homepage, Plugins</li>
+            <li>Configured and deployed system to allow marketing team adapt pricing content on a per-user basis - used JQuery to parse response and update display accordingly</li>
+            <li>Regarded as local expert on implementation - trained several individuals in useage</li>
+          </ul>
+        </div>
+        
+        <div class="project">
+          <div class="project-description">
+            <h3>Independant Android Game</h3>
+          </div>
+          <ul>
+            <li>Developed core mechanics for the game (Rytmos) using C# in Unity and developed database for tracking player scores</li>
+            <li>Assisted with art creation, sound processing and marketing</li>
+            <li>Released on Google Play within three-month deadline, using rapid prototyping</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      
+    </section>
+
+    <section id="employment">
+      <h2>Employment</h2>
+    </section>
+
+    <footer>
+      <section>
+        <p>© 2017 Scott Hofman</p>
+      </section>
+      <ul>
+        <li>
+          <img src="./favicon-128x128.png" alt="icon"/>
+        </li>
+      </ul>
+    </footer>
+  </body>

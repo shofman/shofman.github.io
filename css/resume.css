@@ -1,0 +1,88 @@
+h1, p {
+    text-align: center;
+}
+
+#projects h3, #projects h5, #projects ul {
+    max-width: 500px;
+    text-align: left;
+    margin: 0;
+    line-height: 26px;
+}
+
+#projects ul {
+    font-size: 14px;
+}
+
+#projects li {
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+#projects, #skills, #education, #employment {
+    text-align: center;
+}
+
+.project-list {
+    display: inline-flex;
+    flex-direction: column;
+    max-width: 75%;
+}
+
+.project:last-child {
+    border-bottom: none;
+}
+
+.project:nth-child(even) {
+    background-color: #bbbbbb;
+}
+
+.project {
+    display: flex;
+    text-align: left;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,.4);
+    padding: 25px 20px;
+}
+
+.project-description {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+}
+
+.project-description p {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.skills-list {
+    display: flex;
+    justify-content: center;
+}
+
+.languages, .technologies {
+    padding: 20px;
+    flex-basis: 15%;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+
+.languages ul, .technologies ul {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.languages ul {
+    border-right: 1px solid rgba (0,0,0,0.4);
+}
+
+.languages h3, .technologies h3 {
+    text-align: left;
+}
+
+.languages li, .technologies li {
+    text-align: left;
+}
