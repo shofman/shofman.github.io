@@ -1,3 +1,7 @@
+h1 {
+  margin: 0;
+}
+
 .cover-photo {
     position: relative;
     width: 100%;
@@ -44,6 +48,36 @@
 
 #antarctica {
   background-image: url('../cover_photo.jpg');
+}
+
+.about-me {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0;
+  background-color: #d0d0d0;
+  margin-bottom: 50px;
+}
+
+.about-me .about-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 4vw;
+}
+
+.about-me .about-photo {
+  display: flex;
+  margin-left: 4vw;
+  margin-right: 4vw;
+}
+
+.about-me .about-photo img {
+  height: 200px;
+  width: auto;
+  border-radius: 40px;
+  padding: 7px;
+  background-color: #6f6f6f;
 }
 
 .about-me .contact {
@@ -473,5 +507,9 @@ code {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .about-me .about-photo {
+    display: none;
   }
 }

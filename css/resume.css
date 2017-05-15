@@ -32,6 +32,14 @@ h1, p {
     border-bottom: none;
 }
 
+#skills > div:last-of-type {
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    width: 46%;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    font-size: 18px;
+}
+
 .project:nth-child(even) {
     background-color: #bbbbbb;
 }
@@ -61,28 +69,80 @@ h1, p {
     justify-content: center;
 }
 
-.languages, .technologies {
+.skill-summary {
     padding: 20px;
     flex-basis: 15%;
-    border-bottom: 1px solid rgba(0,0,0,0.3);
 }
 
-.languages ul, .technologies ul {
+.skill-summary ul {
     -moz-column-count: 2;
     -webkit-column-count: 2;
     column-count: 2;
     padding-left: 0;
     list-style-type: none;
-}
-
-.languages ul {
-    border-right: 1px solid rgba (0,0,0,0.4);
-}
-
-.languages h3, .technologies h3 {
     text-align: left;
 }
 
-.languages li, .technologies li {
+.skill-summary h3 {
     text-align: left;
+}
+
+.skill-summary li {
+    text-align: left;
+    display: inline;
+    padding: 0 5px;
+}
+
+.skill-summary li:after {
+    content: "\A";
+    white-space: pre;
+}
+
+#tooltip {
+    position: absolute;
+    left: 10px;
+    background-color: lightgrey;
+    opacity: 0;
+    transition: opacity .5s ease-in-out;
+}
+
+#tooltip.active {
+    opacity: 1;
+    transition: opacity .5s ease-in-out, left .2s ease-in-out, top .2s ease-in-out;
+}
+
+#employment {
+    overflow-x: auto;
+}
+
+table {
+    margin: 0 auto;
+    text-align: left;
+    width: 100%;
+    max-width: 50%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: calc(3vw - 2%);
+}
+
+
+tr:nth-child(even) {
+    background-color: #bbbbbb;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+}
+
+
+@media only screen and (max-width: 500px) {
+    table {
+        max-width: 100%;
+    }
+
+    td {
+        padding: 10px 0;
+        text-align: left;
+    }
 }

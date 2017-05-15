@@ -10,42 +10,53 @@
     <link rel="icon" type="image/svg" href="./favicon-128x128.png" sizes="128x128">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kurale" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./css/flag.css" />
-    <script src="./js/cover-photo-scroll.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="./js/cover-photo-scroll.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js" defer></script>
+    <script src="./js/world-map.js" defer></script>
+    <script type="text/javascript" defer>
+        if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent))
+            document.write('<script src="./js/ie-threedimensional-fix.js"><\/script>');
+    </script>
   </head>
   <body>
     <header>
       <ul>
         <li>
-          <img src="./favicon-128x128.png" alt="icon"/>
+          <a href="http://www.scotthofman.com"><img src="./favicon-128x128.png" alt="icon"/></a>
         </li>
-        <li>Samples</li>
-        <li id="header-focus">Scott Hofman</li>
-        <li>About Me</li>
+        <li><a href="http://www.scotthofman.com/resume">C.V.</a></li>
+        <li><a href="https://github.com/shofman">Coding</a></li>
+        <li><a href="http://www.scotthofman.com#contact">Contact</a></li>
       </ul>
     </header>
     
     <section class="about-me">
-      <h1>Welcome!</h1>
-      <h3>My name is <strong>Scott Hofman</strong></h3>
+      <div class="about-text">
+        <h1>Welcome!</h1>
+        <h3>My name is <strong>Scott Hofman</strong></h3>
+      </div>
+      <div class="about-photo">
+        <img src="./images/me.png" alt="A picture of me"/>
+      </div>
     </section>
-    <hr>
+
     <section>
-      <h3>I like to code</h3>
-      <p class="code-header">Sometimes I write code in: </p>
+      <h3>I currently write code in:</h3>
       <div class="code-spinner">
         <div id="languages" class="scrollable-container">
           <div class="stage">
             <div class="shape">
-              <div data-item="Javascript" class="code item">Javascript</div>
-              <div data-item="PHP" class="code item">PHP</div>
-              <div data-item="C#" class="code item">C#</div>
-              <div data-item="Python" class="code item">Python</div>
-              <div data-item="Java" class="code item">Java</div>
-              <div data-item="SQL" class="code item">SQL</div>
-              <div data-item="Ruby" class="code item">Ruby</div>
+              <div data-item="Javascript" class="code item" style="transform: rotateX(0deg) translateZ(110px);">Javascript</div>
+              <div data-item="PHP" class="code item" style="transform: rotateX(51.4286deg) translateZ(110px);">PHP</div>
+              <div data-item="C#" class="code item" style="transform: rotateX(102.857deg) translateZ(110px);">C#</div>
+              <div data-item="Python" class="code item" style="transform: rotateX(154.286deg) translateZ(110px);">Python</div>
+              <div data-item="Java" class="code item" style="transform: rotateX(205.714deg) translateZ(110px);">Java</div>
+              <div data-item="SQL" class="code item" style="transform: rotateX(257.143deg) translateZ(110px);">SQL</div>
+              <div data-item="Ruby" class="code item" style="transform: rotateX(308.571deg) translateZ(110px);">Ruby</div>
             </div>
           </div>
         </div>
@@ -101,11 +112,6 @@
           </div>
         </div>
       </div>
-      <script src="./js/world-map.js"></script>
-      <script type="text/javascript">
-          if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent))
-              document.write('<script src="./js/ie-threedimensional-fix.js"><\/script>');
-      </script>
     </section>
 
     <section class="cover-photo">
@@ -120,9 +126,9 @@
       
     </section>
 
-    <section class="contact-me">
+    <section class="contact-me" id="contact">
       <h3>Contact Me</h3>
-      <p>Here's how you can get ahold of me:</p>
+      <p>Here's how you can reach me:</p>
       <div class="contact-spinner">
         <div id="contact" class="scrollable-container">
           <div class="stage">
@@ -142,7 +148,7 @@
 
     <section class="final-note">
       <p>This <strong>fully responsive</strong> site was developed by me. If you like this, and want to see more</p>
-      <p>Please contact me or see my resume <a href="file::///C:/User/Scoot/Documents/Websites/Personal/resume.html">here</a></p>
+      <p>Please contact me or see my resume <a href="./resume.html">here</a></p>
     </section>
     <footer>
       <section>
@@ -150,7 +156,7 @@
       </section>
       <ul>
         <li>
-          <img src="./favicon-128x128.png" alt="icon"/>
+          <a href="http://www.scotthofman.com"><img src="./favicon-128x128.png" alt="icon"/></a>
         </li>
       </ul>
     </footer>

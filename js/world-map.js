@@ -778,7 +778,7 @@ var createMovementObject = function() {
     }
   }
 
-  function mousedown() {  // remember where the mouse was pressed, in canvas coords
+  function mousedown() {
     initialMousePosition = globeMath.trackballAngles(d3.mouse(svg[0][0]));
     initialRotation = projection.rotate();
     d3.event.preventDefault();
@@ -889,7 +889,7 @@ var colorFillNames = {
   southamerica: '#ff0000',
   africa: '#006400',
   europe: '#800080',
-  asia: '#ffa500',
+  asia: '#f79104',
   oceania: '#5f9ab7',
   antarctica: '#d3d3d3'
 };
@@ -1326,8 +1326,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
       locationRoller.cancelDemo();
       window.requestAnimationFrame(recolorMap);
     });
-
-    
 });
 
 function callForNewMap() {

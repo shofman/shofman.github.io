@@ -30,9 +30,9 @@ var locationMapping = {
 var contactMapping = {
     "LinkedIn": '<a class="linkedin" href="https://www.linkedin.com/in/scott-hofman-92a36882/"><img src="./images/In-2C-108px-TM.png"/><p>View My LinkedIn<sub>™</sub> Page</p></a>',
     'GitHub': '<a href="https://github.com/shofman"><img src="./images/GitHub-Mark-120px-plus.png"/><p>View My GitHub Page</p></a>',
-    'Skype': '<a class="keep-text" href="skype:scott.hofman?add"><img src="./images/s-logo-solid.jpg"/><p>scott.hofman</p></a>',
+    'Skype': '<a class="keep-text" href="skype:scott.hofman?add"><img src="./images/s-logo.png"/><p>scott.hofman</p></a></div>',
     'Email': '<a class="keep-text" href="mailto:scott.a.hofman@gmail.com"><img src="./images/email-icon.png"/><p>scott.a.hofman@gmail.com</p></a>',
-    'Phone': '<a class="keep-text" href="tel:+15874323532"><img src="./images/phone-icon.png"/><p>1-587-432-3532</p></a>'
+    'Phone': '<a class="keep-text" href="tel:+15874323532"><img src="./images/phone-icon.png"/><p>+1-587-432-3532</p></a>'
 };
 
 window.onload = function () {
@@ -79,6 +79,7 @@ window.onload = function () {
 
         function loop() {
             var scrollTop = getScrollTop();
+
             if (lastScrollTop === scrollTop) {
                 requestAnimation(loop);
                 return;
@@ -122,7 +123,15 @@ window.onload = function () {
         var demoCount = 0;
         var heightAdjustmentTimeout;
         var opacityTimeout;
-        function changeLanguage() {
+        var angle = 0;
+        var elementSelected = 0;
+        var shapeElement = baseElement.getElementsByClassName("shape")[0];
+        var stageElement = baseElement.getElementsByClassName("stage")[0];
+        var itemElements = baseElement.getElementsByClassName("item");
+        var angleDelta = 360 / itemElements.length;
+        var lastItemElementIndex = itemElements.length - 1;
+
+        function changeRollerItem() {
             if (shapeElement) {
                 shapeElement.style.transform = "rotateX(" + angle + "deg)";
             }
@@ -145,14 +154,6 @@ window.onload = function () {
                 }, 300);
             }
         }
-
-        var angle = 0;
-        var elementSelected = 0;
-        var shapeElement = baseElement.getElementsByClassName("shape")[0];
-        var stageElement = baseElement.getElementsByClassName("stage")[0];
-        var itemElements = baseElement.getElementsByClassName("item");
-        var angleDelta = 360 / itemElements.length;
-        var lastItemElementIndex = itemElements.length - 1;
 
         var cancelDemo = function () {
             if (demoScroll) {
@@ -191,7 +192,7 @@ window.onload = function () {
         };
 
         var updateSpinner = function() {
-            window.requestAnimationFrame(changeLanguage);
+            window.requestAnimationFrame(changeRollerItem);
             cancelDemo();
             if (heightAdjustmentTimeout) {
                 clearTimeout(heightAdjustmentTimeout);
@@ -201,27 +202,10 @@ window.onload = function () {
             }
         };
 
-        if (stageElement) {
-            stageElement.addEventListener("wheel", function(event) {
-                updateWheelAngle(event);
-                updateSpinner();
-                event.preventDefault();
-            });
-        }
-
-        if (shapeElement) {
-            shapeElement.style.display = "block";
-            shapeElement.addEventListener("click", function(event) {
-                updateClickAngle(event);
-                updateSpinner();
-                event.preventDefault();
-            });
-        }
-
         var demoScrollbar = function () {
             var fakeEvent = {deltaY: 10};
             updateWheelAngle(fakeEvent);
-            window.requestAnimationFrame(changeLanguage);
+            window.requestAnimationFrame(changeRollerItem);
 
             demoCount++;
             if (demoCount > (itemElements.length * 2 - 1)) {
@@ -241,16 +225,37 @@ window.onload = function () {
                 baseAngle += angleDelta;
             }
         };
-        setupRollerAppearance(itemElements);
-        changeLanguage();
+
+        var getSelectedElement = function () {
+            return itemElements[elementSelected].getAttribute("data-item");
+        };
+
+        if (stageElement) {
+            stageElement.addEventListener("wheel", function(event) {
+                updateWheelAngle(event);
+                updateSpinner();
+                event.preventDefault();
+            });
+        }
+
+        if (shapeElement) {
+            shapeElement.style.display = "block";
+            shapeElement.addEventListener("click", function(event) {
+                updateClickAngle(event);
+                updateSpinner();
+                event.preventDefault();
+            });
+        }
+
+        window.requestAnimationFrame(function() {
+            setupRollerAppearance(itemElements);
+            changeRollerItem();
+        });
 
         if (demoRollerOptions.demo === true) {
             var demoScroll = setInterval(demoScrollbar, demoRollerOptions.speed);
         }
 
-        var getSelectedElement = function () {
-            return itemElements[elementSelected].getAttribute("data-item");
-        };
 
         return {
             getSelectedElement: getSelectedElement,
@@ -259,8 +264,10 @@ window.onload = function () {
     };
 
     var adjustHeightOfDisplayElement = function () {
-        locationWrapper.style.height = (displayLocations.offsetHeight + displayLocationsHeader.offsetHeight) + "px";
-        calgaryPhoto.updatePhotoPosition();
+        window.requestAnimationFrame(function() {
+            locationWrapper.style.height = (displayLocations.offsetHeight + displayLocationsHeader.offsetHeight) + "px";
+            calgaryPhoto.updatePhotoPosition();
+        });
     };
 
     window.onresize = function () {
@@ -290,9 +297,4 @@ window.onload = function () {
     if (!locationRoller.getSelectedElement) {
         locationRoller = setupRoller(locationRollerElement, locationRollerOptions, locationsDisplay, locationMapping, adjustHeightOfDisplayElement);
     }
-}
-function showContactPage() {
-    locationRoller.cancelDemo();
-    languageRoller.cancelDemo();
-    document.getElementById("contact").scrollIntoView()
 }
