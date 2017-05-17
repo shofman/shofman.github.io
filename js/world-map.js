@@ -805,7 +805,9 @@ var createMovementObject = function() {
         window.requestAnimationFrame(recolorMap);
       }
 
-      rotateMap(newVector);
+      window.requestAnimationFrame(function() {
+        rotateMap(newVector);
+      });
       storedRotation = newVector;
     } else {
       rotateMap([0,0,0]);
@@ -1346,7 +1348,7 @@ function callForNewMap() {
 
     rotateInterval = setInterval(function() {
       movementObject.rotateToLocation(rotationChoosen);
-    }, 2);
+    }, 50);
   } else {
     clearInterval(rotateInterval);
     storedRotation = [0,0,0];

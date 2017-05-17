@@ -45,6 +45,9 @@ window.onload = function () {
     var setupCoverPhotoTransition = function (element, shouldCancelDemo) {
         var coverPhotoPosition = calcOffsetTop(element);
         var coverPhotoHeight = element.offsetHeight;
+        var requestAnimation = window.requestAnimationFrame;
+        var lastScrollTop = getScrollTop();
+        var ticking = false;
 
         var fadeImageOut = function(element, elementOffsetHeight, elementHeight) {
             var opacity = 1 - ((lastScrollTop - elementOffsetHeight + 100) / elementHeight);
@@ -54,8 +57,6 @@ window.onload = function () {
             element.style.opacity = opacity;
         };
 
-        var requestAnimation = window.requestAnimationFrame;
-        var lastScrollTop = getScrollTop();
 
         function getScrollTop() {
             var backupBodyElement = (document.documentElement || document.body.parentNode || document.body);
@@ -73,21 +74,15 @@ window.onload = function () {
               return false;
             }
         }
-        if (requestAnimation) {
-            loop();
-        }
 
-        function loop() {
-            var scrollTop = getScrollTop();
-
-            if (lastScrollTop === scrollTop) {
-                requestAnimation(loop);
-                return;
-            } else {
+        window.addEventListener('scroll', function(e) {
+          var scrollTop = getScrollTop();
+          if (!ticking) {
+            window.requestAnimationFrame(function() {
                 if (scrollTop > coverPhotoPosition && !(scrollTop > coverPhotoPosition + coverPhotoHeight)) {
                     lastScrollTop = scrollTop;
                     fadeImageOut(element, coverPhotoPosition, coverPhotoHeight);
-                    requestAnimation(loop);
+                    ticking = false;
                     return;
                 } else if (scrollTop < coverPhotoPosition) {
                     setCoverPhotoOpacity(element, 1);
@@ -95,19 +90,19 @@ window.onload = function () {
                     if (shouldCancelDemo && scrollTop + viewportHeight > coverPhotoPosition + 200) {
                         locationRoller.cancelDemo();
                     }
-                    requestAnimation(loop);
+                    ticking = false;
                     return;
                 }
 
                 if (getScrollTop() > coverPhotoPosition + coverPhotoHeight) {
                     setCoverPhotoOpacity(element, 0);
-                    requestAnimation(loop);
+                    ticking = false;
                     return;
                 }
-                requestAnimation(loop);
-                return;
-            }
-        }
+            });
+          }
+          ticking = true;
+        });
 
         function updatePhotoPosition() {
             coverPhotoHeight = element.offsetHeight;
