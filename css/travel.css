@@ -37,11 +37,6 @@ h1 {
   stroke-width: 1.5px;
 }
 
-path.country {
-  will-change: transform;
-  transform: translateZ(0);
-}
-
 .text{
   font-size:10px;
   text-transform:capitalize;
