@@ -2,6 +2,15 @@ h1, p {
     text-align: center;
 }
 
+#projects a, .download-link {
+    color: slateblue;
+    font-weight: 600;
+}
+
+#projects a:visited, .download-link:visited {
+    color: darkblue;
+}
+
 #projects h3, #projects h5, #projects ul {
     max-width: 500px;
     text-align: left;
@@ -20,6 +29,7 @@ h1, p {
 
 #projects, #skills, #education, #employment {
     text-align: center;
+    margin-top: 50px;
 }
 
 .project-list {
@@ -59,9 +69,17 @@ h1, p {
 }
 
 .project-description p {
-    display: flex;
-    flex-direction: column;
+    display: inline;
     text-align: left;
+    margin-top: 5px;
+}
+
+.project a {
+    text-decoration: none;
+}
+
+.project-description .first-entry {
+    margin-bottom: 0;
 }
 
 .skills-list {
@@ -78,13 +96,16 @@ h1, p {
 }
 
 .skill-summary ul {
-    grid-template-columns: repeat(4, 200px);
+    grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 10px;
     grid-row-gap: 14px;
     display: inline-grid;
     padding: 10px;
     background-color: #bbb;
     border-radius: 15px;
+    min-width: 400px;
+    width: 85%;
+    max-width: 1050px;
 }
 
 .skill-summary .grid-header {
@@ -129,8 +150,8 @@ h1, p {
 table {
     margin: 0 auto;
     text-align: left;
-    width: 100%;
-    max-width: 50%;
+    width: 80%;
+    max-width: 56%;
     table-layout: fixed;
     border-collapse: collapse;
 }
@@ -156,6 +177,10 @@ tr:nth-child(even) {
 }
 
 @media only screen and (max-width: 500px) {
+    .project {
+        flex-direction: column;
+    }
+
     table {
         max-width: 100%;
     }

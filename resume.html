@@ -25,7 +25,7 @@
 
     <h1>Resume</h1>
 
-    <p>Click to download resume as PDF <a href="#">here</a></p>
+    <p>Click to download resume as PDF <a class="download-link" href="files/resume.pdf">here</a></p>
 
     <section id="summary">
     </section>
@@ -36,88 +36,187 @@
       <div class="project-list">
         <div class="project">
           <div class="project-description">
-            <h3>Search By Image</h3>
-            <h5>Add search by image front-end to the iStockphoto website</h5>
-            <p>iStockphoto - February 2017</p>
+            <h3>Invision Partnership</h3>
+            <h5>Add Invision plugin to iStockphoto asset pages</h5>
+            <p>iStockphoto - April - May 2017</p>
           </div>
           <ul>
-            <li>Extended Angular library to allow users to drag-and-drop/select files, adding inline validation and Jasmine/Teaspoon tests. Images were uploaded to AWS S3</li>
-            <li>Created standard modal as a mixin in SCSS to be used site-wide</li>
-            <li>Adapted jQuery search-bar plugin to allow multiple sources to search from. Needed to maintain search functionality for three different sites</li>
-          </ul>
-          <div class="company">
-            
-          </div>
-        </div>
-      
-        <div class="project">
-          <div class="project-description">
-            <h3>Unifying iStockphoto with Getty Images</h3>
-          </div>
-          <ul>
-            <li>Implemented HaProxy LoadBalancer to cutover pages from PHP/Zend to Rails</li>
-            <li>Coded proxy rules to strip iStock’s country/language from URL request, redirect to appropriate Rails app, and re-append country/language for display</li>
-            <li>Developed tests to validate routing behavior for both iStock and Getty Images</li>
+            <li><strong>Technologies Used:</strong> SCSS, Autonomy TeamSite, Coffeescript</li>
+            <li>Created responsive <a href="http://www.istockphoto.com/invision">web page</a> for promotional component</li>
+            <li>Delivered prototypes of download buttons and modals under a changing set of requirements</li>
           </ul>
         </div>
 
         <div class="project">
           <div class="project-description">
-            <h3>Moving Asset View Page to Getty Images</h3>
+            <h3>Hackathon Project</h3>
+            <h5>Automatic keyword tagging for assets based off combined results of multiple image APIs</h5>
+            <p>iStockphoto - March 2017</p>
           </div>
           <ul>
-            <li>Worked with multiple service backends to deliver page that could handle four million unique views per week in 10 different languages</li>
-            <li>Created app to handle 30 unique download states, adapted responsive carousel to display similar images, and wrote image zoom functionality in Angular</li>
-            <li>Styled the page to be identical to previous page, despite different HTML structure</li>
-            <li>Improved page performance - page load time decreased by 50% (~5s to 2.5s)</li>
-            <li>Developed script to automate user creation to increase team productivity</li>
-            <li>Delivered several presentations to entire company, detailing progress</li>
+            <li><strong>Technologies Used:</strong> Sinatra, Ruby/Rails, DC/OS, Gitlab Builds, Docker, Artifactory</li>
+            <li>Setup Gitlab build server to deploy Docker instance to DC/OS for team to use multiple image library APIs.</li>
+            <li>Pair-programmed on code to tag images with keywords. </li>
           </ul>
         </div>
-        
+
         <div class="project">
           <div class="project-description">
-            <h3>Allow Anonymous Users to Purchase - iStockphoto</h3>
+            <h3>Search By Image</h3>
+            <h5>Add search by image front-end to the iStockphoto website</h5>
+            <p>iStockphoto - February 2017</p>
           </div>
           <ul>
-            <li>Rewrote PHP + Zend Framework purchase flow to allow users to be anonymous</li>
-            <li>Separated Angular checkout functionality into modular services, which eased extending functionality for anonymous users and increased testability in Jasmine</li>
-            <li>Developed a session-based cart for anonymous users, with capability to transfer to MySQL database for checkout</li>
+            <li><strong>Technologies Used:</strong> Angular, AWS S3, Jasmine, Teaspoon, Ruby/Rails, SCSS, JQuery</li>
+            <li>Extended existing library to allow users to drag-and-drop/select files and upload files to the cloud, adding inline validation and tests.</li>
+            <li>Created responsive modal to be used site-wide as a re-usable mixin.</li>
+            <li>Adapted search to use fingerprint as search parameter. Maintained search functionality for three different sites.</li>
+          </ul>
+        </div>        
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Moving <a href="http://www.istockphoto.com/photo/mountain-landscape-gm517188688-89380423">Asset View Page</a> from iStockphoto to Getty Images</h3>
+            <h5>Migrate the iStockphoto asset page from PHP to Rails</h5>
+            <p>iStockphoto - April - November 2016</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> Angular, SCSS, Ruby/Rails, PHP, JQuery, Coffeescript, C#, Rspec</li>
+            <li>Wrote logic to handle 30 unique download states, adapted responsive carousel to display similar images, and handled backwards compatibility for routing structures.</li>
+            <li>Styled the page to be identical to previous iteration, despite different underlying HTML.</li>
+            <li>Improved page performance - page load time decreased by 50%.</li>
+            <li>Scripted user creation to increase team productivity.</li>
+            <li>Delivered progress updates to entire company as part of monthly summaries.</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Unifying iStockphoto with Getty Images</h3>
+            <h5>Critical first step in unifying two codebases</h5>
+            <p>iStockphoto - January - March 2016</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> HaProxy, Ruby/Rails, Sinatra</li>
+            <li>Updated load balancer to route iStockphoto requests from old servers to new.</li>
+            <li>Coded proxy rules to strip iStock’s country/language from URL request, redirect to appropriate Rails app, and re-append country/language for SEO.</li>
+            <li>Developed tests to validate routing behavior for both iStockphoto and Getty Images.</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Autonomy Teamsite CMS</h3>
+            <h5>Create system to allow site to deliver content via Teamsite CMS</h5>
+            <p>iStockphoto - March 2014 - March 2016</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> Autonomy TeamSite, PHP, phpunit, CSS, XML, XSLT, C#</li>
+            <li>Designed system to fetch complete webpages, and to show fallback content on error.</li>
+            <li>Delivered design of key pages under tight deadlines - <a href="http://www.istockphoto.com">Homepage</a>, <a href="http://www.istockphoto.com/plugins">Plugins Promo</a>, <a href="http://www.istockphoto.com/plans-and-pricing">Pricing</a>.</li>
+            <li>Deployed system to update prices on a per-user basis.</li>
+            <li>Took responsibility for training individuals on CMS implementation.</li>
           </ul>
         </div>
 
         <div class="project">
           <div class="project-description">
             <h3>Update to Credit Purchase Logic</h3>
+            <h5>Create new behavior for credit expiry logic.</h5>
+            <p>iStockphoto -  June - August 2015</p>
           </div>
           <ul>
-            <li>“Re-discovered” ten-year old logic for credit expiry and wrote MySQL queries to update expiry dates</li>
-            <li>Implemented RabbitMq queue to process users upon login, and message consumer to update expiry date on all active credits (some spanning several decades).</li>
-            <li>Deprecated an entire purchase option, requiring removal of hundreds of lines of code</li>
-            <li>Refactored dozens of poor unit tests - decreased unit test runtime by 16%</li>
+            <li><strong>Technologies Used:</strong> MySQL, RabbitMq, PHP, phpunit, Git</li>
+            <li>Worked with legacy code to update credit expiry logic.</li>
+            <li>Wrote queries to process and update expiry dates on all active credits (some spanning several decades).</li>
+            <li>Deprecated a purchase flow, removing hundreds of lines of code.</li>
+            <li>Improved dozens of unit tests - decreased test suite runtime by 16%.</li>
           </ul>
         </div>
         
         <div class="project">
           <div class="project-description">
-            <h3>Delivering Autonomy Teamsite CMS Implementation</h3>
+            <h3>Allow Anonymous Users to Purchase</h3>
+            <h5>Update <a href="http://www.istockphoto.com/ca/plans-and-pricing/buy-credits?credit-pack=362">checkout flow</a> to allow anonymous users to sign-up and purchase</h5>
+            <p>iStockphoto - December 2014 - March 2015</p>
           </div>
           <ul>
-            <li>Designed PHP system to use CURL to fetch entire pages, with fallback content</li>
-            <li>Delivered several key pages under tight deadlines - Homepage, Plugins</li>
-            <li>Configured and deployed system to allow marketing team adapt pricing content on a per-user basis - used JQuery to parse response and update display accordingly</li>
-            <li>Regarded as local expert on implementation - trained several individuals in useage</li>
+            <li><strong>Technologies Used:</strong> PHP, Zend, Jasmine, Grunt, MySQL, Angular, phpunit</li>
+            <li>Refactored checkout process to allow anonymous users to purchase items.</li>
+            <li>Created API to allow detection of existing users and creation of new users before purchase.</li>
+            <li>Improved testability of checkout by separating functionality into modular services.</li>
+            <li>Developed a session-based cart for anonymous users, with capability to transfer to database for checkout.</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Update iStockphoto SEO</h3>
+            <h5>Update and maintain URLs sitewide for SEO purposes</h5>
+            <p class="first-entry">iStockphoto - May - July 2014 and</p>
+            <p>October - December 2015</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> PHP, nginx, Javascript, AngularJS, SCSS</li>
+            <li>Reworked routes for all photo and search pages</li>
+            <li>Later, worked on country picker to allow users to change languages</li>
+            <li>Helped add country and language into all URLs, depending on the users preference</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Project Dissertation</h3>
+            <h5>Take existing dissertation work about Word Storms and build scalable website around it</h5>
+            <p>University of Edinburgh - September 2012 - April 2013</p>
+          </div>
+        
+          <ul> 
+            <li><strong>Technologies Used:</strong> Javascript, Ruby/Rails, Java, CSS, EC2, S3</li>
+            <li>Create scalable website to generate 'Word Storms' - shared collections of word clouds from a corpus</li>
+            <li>Delivered code onto EC2 instance and images were uploaded to S3</li>
+            <li>Learned Javascript, Ruby on Rails, and CSS while undergoing this project</li>
           </ul>
         </div>
         
         <div class="project">
           <div class="project-description">
             <h3>Independant Android Game</h3>
+            <h5>Music and rhythm game, based off user's MP3. Analyze waveform of song, and created game based around it.</h5>
+            <p><a href="http://rytmos-game.com">Rytmos</a> -  June - August 2012</p>
           </div>
           <ul>
-            <li>Developed core mechanics for the game (Rytmos) using C# in Unity and developed database for tracking player scores</li>
-            <li>Assisted with art creation, sound processing and marketing</li>
-            <li>Released on Google Play within three-month deadline, using rapid prototyping</li>
+            <li><strong>Technologies Used:</strong> C#, Unity, Photoshop, SQLite, C, Java, SVN</li>
+            <li>Developed core game mechanics and setup database for tracking player scores.</li>
+            <li>Assisted with art creation, sound processing and marketing.</li>
+            <li>Released on <a href="https://play.google.com/store/apps/details?id=com.BiTeraGames.Rytmos.Full&hl=en">Google Play</a> within three-month deadline, using rapid prototyping.</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Design Football (Soccer) Lego Robot</h3>
+            <h5>One of 12 teams competing in tournament</h5>
+            <p>University of Edinburgh - January 2012 - May 2012</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> Java, Git</li>
+            <li>Robot took input from overhead camera. In charge of team that analyzed realtime data from camera feed and sent pitch information to robot</li>
+            <li>Designed two separate vision systems (first abandoned due to random segfaults in Java). Swapped seamlessly during middle of project</li>
+            <li>Delivered summary presentation in front of all peers and several representatives from large corporations</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>University Android Application</h3>
+            <h5>Individual Practical - Create Android application for tourism</h5>
+            <p>University of Edinburgh - September - December 2011</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> Android SDK, Eclipse, Java</li>
+            <li>Built Android 2.3.1 application to allow users to find their position without using Google maps and find directions to the Informatics Forum in Edinburgh.</li>
+            <li>Delivered list of hotels, restaurants and cafes that may be of interest to individuals as a database.</li>
           </ul>
         </div>
       </div>
@@ -126,9 +225,9 @@
     <section id="skills">
       <h2>Programming Languages and Technologies</h2>
       <div class="skills-list">
-        <div id="tooltip">
+<!--         <div id="tooltip">
           <p class="tooltip-text">This is a test<p>
-        </div>
+        </div> -->
 
         <div class="languages skill-summary">
           <ul>
@@ -139,6 +238,7 @@
             <li data-item="Ruby">Ruby/Rails</li>
             <li data-item="AngularJs">AngularJs</li>
             <li data-item="JQuery">JQuery</li>
+            <li data-item="Coffeescript">Coffeescript</li>
             <li data-item="Python">Python</li>
             <li data-item="SCSS">SCSS/CSS</li>
             <li data-item="C">C#</li>
@@ -154,8 +254,8 @@
             <li data-item="TI">TI-Basic</li>
             <li data-item="Bash">Bash</li>
             <li data-item="Go">Go</li>
-            <li data-item="XML">Go</li>
-            <li data-item="XSLT">Go</li>
+            <li data-item="XML">XML</li>
+            <li data-item="XSLT">XSLT</li>
           </ul>
         </div>
 
