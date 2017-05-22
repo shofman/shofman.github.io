@@ -3,7 +3,7 @@ h1, p {
 }
 
 #projects a, .download-link {
-    color: slateblue;
+    color: royalblue;
     font-weight: 600;
 }
 
@@ -29,13 +29,14 @@ h1, p {
 
 #projects, #skills, #education, #employment {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 2vw;
 }
 
 .project-list {
     display: inline-flex;
     flex-direction: column;
     max-width: 75%;
+    width: 60%;
 }
 
 .project:last-child {
@@ -115,6 +116,7 @@ h1, p {
     display: flex;
     justify-content: center;
     padding: 15px;
+    margin-bottom: 15px;
 }
 
 .skill-summary h3 {
@@ -123,6 +125,10 @@ h1, p {
 
 .skill-summary li {
     display: inline;
+}
+
+.skill-summary li:last-child {
+    margin-bottom: 15px;
 }
 
 .skill-summary li:after {
@@ -182,11 +188,22 @@ tr:nth-child(even) {
     }
 
     table {
-        max-width: 100%;
+        max-width: none;
+        width: 95%;
     }
 
     td {
-        padding: 10px 0;
+        padding: 10px;
         text-align: left;
+    }
+
+    .skill-summary ul {
+        display: flex;
+        flex-direction: column;
+        min-width: auto;
+    }
+
+    #projects ul {
+        padding-left: 15px;
     }
 }
