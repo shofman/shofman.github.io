@@ -845,7 +845,7 @@ function setup(width,height, displayGlobe){
 
   path = d3.geo.path().projection(projection);
   if (displayGlobe) {
-    svg = d3.select("#container").append("svg")
+    svg = d3.select("#map-container").append("svg")
         .attr("fill", "transparent")
         .call(zoom)
         .attr("preserveAspectRatio", "xMinYMin  meet")
@@ -869,7 +869,7 @@ function setup(width,height, displayGlobe){
        .attr("stroke", "transparent")
        .attr("fill", "#F0F8FF");
   } else {
-    svg = d3.select("#container").append("svg")
+    svg = d3.select("#map-container").append("svg")
         .attr("width", width)
         .attr("height", height)
         .call(zoom)
@@ -1205,8 +1205,8 @@ function draw(topo, displayGlobe) {
       return "black"; 
     });
 
-  var offsetL = document.getElementById('container').offsetLeft+20;
-  var offsetT = document.getElementById('container').offsetTop+10;
+  var offsetL = document.getElementById('map-container').offsetLeft+20;
+  var offsetT = document.getElementById('map-container').offsetTop+10;
 
   country.on("mousemove", function(d,i) {
     var mouse = d3.mouse(svg.node()).map(function(d) {
@@ -1250,17 +1250,18 @@ function click() {
 }
 
 function createNewMap () {
-  var container = document.getElementById('container');
-  width = container.offsetWidth;
+  var mapContainer = document.getElementById('map-container');
+  var globeContainer = document.getElementById('globe-container');
+  width = mapContainer.offsetWidth;
   height = width / 2;
-  d3.select('svg').remove();
+  d3.selectAll('svg').remove();
   if (displayGlobe) {
     if (height > 600) {
       height = 600;
     }
-    container.className = "global-view"; 
+    mapContainer.className = "global-view"; 
   } else {
-    container.classList.remove("global-view"); 
+    mapContainer.classList.remove("global-view"); 
   }
   topo = setup(width,height,displayGlobe);
   draw(topo, displayGlobe);
@@ -1360,7 +1361,7 @@ function callForNewMap() {
   }
 }
 
-var topo,projection,path,svg,g;
+var topo,projection,path,mapSvg,globeSvg,svg,g;
 var throttleTimer, rotateInterval;
 var displayGlobe = true;
 var displayAllContinents = false;
@@ -1371,9 +1372,9 @@ var togglingMaps = false;
 
 d3.select(window).on("resize", throttle);
 
-var width = document.getElementById('container').offsetWidth;
+var width = document.getElementById('map-container').offsetWidth;
 var height = width / 2;
-var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
+var tooltip = d3.select("#map-container").append("div").attr("class", "tooltip hidden");
 var movementObject = createMovementObject();
 var zoom = d3.behavior.zoom()
       .scaleExtent([1, 9])
