@@ -41,7 +41,8 @@ h1 {
   font-size:10px;
   text-transform:capitalize;
 }
-#map-container {
+
+#map-container, #globe-container {
   margin: 10px auto 30px;
   border: 1px solid rgba(176, 176, 176, .8);
   border-radius: 5px;
@@ -49,9 +50,14 @@ h1 {
   width: 95%;
   overflow:hidden;
   background: #F0F8FF;
+  display: none;
 }
 
-#map-container.global-view {
+#map-container.active, #globe-container.active {
+  display: block;
+}
+
+#globe-container {
   background: none;
 }
 .hidden { 
@@ -93,6 +99,12 @@ div.tooltip {
   pointer-events: all;
   transition: opacity .2s;
   white-space: nowrap;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
 /* checkbox aspect */
@@ -177,7 +189,7 @@ label:hover:before {
     left: -1.35rem;
   }
 
-  #map-container {
+  #map-container, #globe-container {
     width: 60%;
   }
 }

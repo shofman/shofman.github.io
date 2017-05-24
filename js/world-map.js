@@ -1,8 +1,8 @@
 "use strict";
 
-function getCurrentWorld (displayGlobe) {
+function getCurrentWorld (isGlobe) {
   let world;
-  if (displayGlobe) {
+  if (isGlobe) {
     world = {
       "type":"Topology",
       "objects": {
@@ -653,8 +653,8 @@ var createMathObject = function() {
   }
 
   function trackballAngles(mousePosition) {
-    var scale = projection.scale();
-    var translation = projection.translate();
+    var scale = getProjection(displayGlobe).scale();
+    var translation = getProjection(displayGlobe).translate();
     var x = mousePosition[0] - translation[0];
     var y = - (mousePosition[1] - translation[1]);
     var sidesSquared = x*x + y*y;
@@ -735,23 +735,27 @@ var createMovementObject = function() {
     var currentTranslation = d3.event.translate;
     var newTranslation = [];
     var scale = d3.event.scale;
-    var quarterHeight = height/8;
+    var quarterHeight = getHeight(displayGlobe)/8;
 
     newTranslation[0] = Math.min(
-      (width/height)  * (scale - 1), 
-      Math.max( width * (1 - scale), currentTranslation[0] )
+      (getWidth(displayGlobe)/getHeight(displayGlobe))  * (scale - 1), 
+      Math.max( getWidth(displayGlobe) * (1 - scale), currentTranslation[0] )
     );
 
     newTranslation[1] = Math.min(
       quarterHeight * (scale - 1) + quarterHeight * scale, 
-      Math.max(height  * (1 - scale) - quarterHeight * scale, currentTranslation[1])
+      Math.max(getHeight(displayGlobe)  * (1 - scale) - quarterHeight * scale, currentTranslation[1])
     );
 
-
-    zoom.translate(newTranslation);
-    g.attr("transform", "translate(" + newTranslation + ")scale(" + scale + ")");
-
-    d3.selectAll("circle").attr("transform", "translate(" + newTranslation + ")scale(" + scale + ")");
+    if (displayGlobe) {
+      globeZoom.translate(newTranslation);
+    } else {
+      mapZoom.translate(newTranslation);
+    }
+    getGraphAttribute(displayGlobe).attr("transform", "translate(" + newTranslation + ")scale(" + scale + ")");
+    if (displayGlobe) {
+      d3.selectAll("circle").attr("transform", "translate(" + newTranslation + ")scale(" + scale + ")");
+    }
     storedZoom = scale;
 
     d3.selectAll(".country").style("stroke-width", 1.5 / scale);
@@ -760,7 +764,7 @@ var createMovementObject = function() {
   function mousemove() {
     if (initialMousePosition) {
       clearInterval(rotateInterval);
-      var newMousePosition = globeMath.trackballAngles(d3.mouse(svg[0][0]));
+      var newMousePosition = globeMath.trackballAngles(d3.mouse(getVisibleSvg(displayGlobe)[0][0]));
       var newRotation = globeMath.dragRotate(
         initialRotation,
         newMousePosition[0] - initialMousePosition[0],
@@ -779,15 +783,15 @@ var createMovementObject = function() {
   }
 
   function mousedown() {
-    initialMousePosition = globeMath.trackballAngles(d3.mouse(svg[0][0]));
-    initialRotation = projection.rotate();
+    initialMousePosition = globeMath.trackballAngles(d3.mouse(getVisibleSvg(displayGlobe)[0][0]));
+    initialRotation = getProjection(displayGlobe).rotate();
     d3.event.preventDefault();
     locationRoller.cancelDemo();
   }
 
   function rotateMap(newVector) {
-    projection.rotate(newVector);
-    svg.selectAll("path").attr("d", path);
+    getProjection(displayGlobe).rotate(newVector);
+    getVisibleSvg(displayGlobe).selectAll("path").attr("d", getPath(displayGlobe));
   }
 
   function rotateToLocation(targetRotation) {
@@ -806,12 +810,11 @@ var createMovementObject = function() {
       }
 
       window.requestAnimationFrame(function() {
-        rotateMap(newVector);
+        if (displayGlobe) {
+          rotateMap(newVector);
+        }
       });
       storedRotation = newVector;
-    } else {
-      rotateMap([0,0,0]);
-      window.requestAnimationFrame(createNewMap);
     }
   }
 
@@ -825,33 +828,32 @@ var createMovementObject = function() {
   }
 }
 
-function setupProjection(displayGlobe) {
-  var newProjection;
-  if (displayGlobe) {
-    newProjection = d3.geo.orthographic()
-        .scale(height/2.5)
-        .translate([width / 2, height / 2])
+function setupProjection(isGlobe) {
+  if (isGlobe) {
+    globeProjection = d3.geo.orthographic()
+        .scale(getHeight(isGlobe)/2.5)
+        .translate([getWidth(isGlobe) / 2, getHeight(isGlobe) / 2])
         .clipAngle(90);
+    globePath = d3.geo.path().projection(globeProjection);
   } else {
-    newProjection = d3.geo.equirectangular()
-      .translate([(width/2), (height/2)])
-      .scale( width / 2 / Math.PI);
+    mapProjection = d3.geo.equirectangular()
+      .translate([(getWidth(isGlobe)/2), (getHeight(isGlobe)/2)])
+      .scale( getWidth(isGlobe) / 2 / Math.PI);
+    mapPath = d3.geo.path().projection(mapProjection);
   }
-  return newProjection;
 }
 
-function setup(width,height, displayGlobe){
-  projection = setupProjection(displayGlobe);
+function setup(isGlobe){
+  setupProjection(isGlobe);
 
-  path = d3.geo.path().projection(projection);
-  if (displayGlobe) {
-    svg = d3.select("#map-container").append("svg")
+  if (isGlobe) {
+    globeSvg = d3.select("#globe-container").append("svg")
         .attr("fill", "transparent")
-        .call(zoom)
+        .call(globeZoom)
         .attr("preserveAspectRatio", "xMinYMin  meet")
-        .attr("viewBox", "0 0 " + (width) + " " + (height))
-        .attr("width", width)
-        .attr("height", height)
+        .attr("viewBox", "0 0 " + (getWidth(isGlobe)) + " " + (getHeight(isGlobe)))
+        .attr("width", getWidth(isGlobe))
+        .attr("height", getHeight(isGlobe))
         .on("mousedown.zoom", null)
         .on("touchstart.zoom", null)
         .on("touchmove.zoom", null)
@@ -862,24 +864,24 @@ function setup(width,height, displayGlobe){
         .on("touchmove", movementObject.mousemove)
         .on("touchend", movementObject.mouseup)
         .on("mouseup", movementObject.mouseup);
-    svg.append("circle")
-       .attr("cx", width/2)
-       .attr("cy", height/2)
-       .attr("r", height/2.5)
+    globeSvg.append("circle")
+       .attr("cx", getWidth(isGlobe)/2)
+       .attr("cy", getHeight(isGlobe)/2)
+       .attr("r", getHeight(isGlobe)/2.5)
        .attr("stroke", "transparent")
        .attr("fill", "#F0F8FF");
+    globeG = globeSvg.append("g");
   } else {
-    svg = d3.select("#map-container").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .call(zoom)
+    mapSvg = d3.select("#map-container").append("svg")
+        .attr("width", getWidth(isGlobe))
+        .attr("height", getHeight(isGlobe))
+        .call(mapZoom)
         .on("click", click)
         .append("g");
+    mapG = mapSvg.append("g");
   }
 
-  g = svg.append("g");
-
-  var world = getCurrentWorld(displayGlobe);
+  var world = getCurrentWorld(isGlobe);
   return topojson.feature(world, world.objects.countries);
 }
 
@@ -1166,8 +1168,9 @@ var getColorMap = function() {
     };
 };
 
-function draw(topo, displayGlobe) {
-  var country = g.selectAll(".country").data(topo.features);
+function draw(isGlobe) {
+  topo = setup(isGlobe);
+  var country = getGraphAttribute(isGlobe).selectAll(".country").data(topo.features);
   var visitedArray = [
     "ATA", "CAN", "AUS", "NZL", "BRA", "ARG", "MAF", "ZWE", "ZAF", "VIR", "VGB", "USA", "TZA", "THA", "BWA", "EGY", "KEN", "MAR", "NAM", "TZA",
     "BHS", "CUB", "HTI", "JAM", "MEX", "CHN", "IND", "IDN", "JPN", "SGP", "THA", "TUR", "ARE", "VNM", "RUS", "PRI", "NLD", "DEU", "ESP", "FRA",
@@ -1184,7 +1187,7 @@ function draw(topo, displayGlobe) {
         return "country " + visited;
       }
     })
-    .attr("d", path)
+    .attr("d", getPath(isGlobe))
     .attr("id", function(d,i) { return d.id; })
     .attr("title", function(d,i) { return d.properties.name; })
     .style("fill", function(d, i) {
@@ -1205,37 +1208,37 @@ function draw(topo, displayGlobe) {
       return "black"; 
     });
 
-  var offsetL = document.getElementById('map-container').offsetLeft+20;
-  var offsetT = document.getElementById('map-container').offsetTop+10;
 
   country.on("mousemove", function(d,i) {
-    var mouse = d3.mouse(svg.node()).map(function(d) {
+    var offsetL = getContainer(displayGlobe).offsetLeft+20;
+    var offsetT = getContainer(displayGlobe).offsetTop+10;
+    var mouse = d3.mouse(getVisibleSvg(displayGlobe).node()).map(function(d) {
       return parseInt(d);
     });
 
     d3.select(this).style("cursor", "pointer");
-
-    tooltip.classed("hidden", false)
+    getTooltip(displayGlobe).classed("hidden", false)
             .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
             .html(function(d) {
-              if (d.properties.name) return d.properties.name
+              if (d.properties.name) {
+                return d.properties.name;
+              }
               return d.id; 
             }(d));
 
   }).on("mouseout",  function(d,i) {
-    tooltip.classed("hidden", true);
+    getTooltip(displayGlobe).classed("hidden", true);
   });
-  if (togglingMaps) {
-    zoom.translate([0, 0]).scale(storedZoom);
+  if (displayGlobe) {
+    globeZoom.translate([0, 0]).scale(storedZoom);
   } else {
-    zoom.translate([0, 0]).scale(1);
+    mapZoom.translate([0, 0]).scale(1);
   }
   var newRotation = [0,0,0];
-  if (displayGlobe) {
+  if (isGlobe) {
     newRotation = storedRotation;
   }
   movementObject.rotateMap(newRotation);
-  togglingMaps = false;
 }
 
 function throttle() {
@@ -1246,25 +1249,88 @@ function throttle() {
 }
 
 function click() {
-  var latlon = projection.invert(d3.mouse(this));
+  var latlon = getProjection(displayGlobe).invert(d3.mouse(this));
 }
 
-function createNewMap () {
-  var mapContainer = document.getElementById('map-container');
-  var globeContainer = document.getElementById('globe-container');
-  width = mapContainer.offsetWidth;
-  height = width / 2;
+function createNewMap() {
+  mapWidth = getContainer(displayGlobe).offsetWidth;
+  globeWidth = getContainer(displayGlobe).offsetWidth;
+  mapHeight = mapWidth / 2;
+  globeHeight = globeWidth / 2;
   d3.selectAll('svg').remove();
-  if (displayGlobe) {
-    if (height > 600) {
-      height = 600;
-    }
-    mapContainer.className = "global-view"; 
-  } else {
-    mapContainer.classList.remove("global-view"); 
+  if (globeHeight > 600) {
+    globeHeight = 600;
   }
-  topo = setup(width,height,displayGlobe);
-  draw(topo, displayGlobe);
+  if (mapHeight > 600) {
+    mapHeight = 600;
+  }
+  
+  draw(false);
+  draw(true);
+}
+
+function getHeight(isGlobe) {
+  if (isGlobe) {
+    return globeHeight;
+  } else {
+    return mapHeight;
+  }
+}
+
+function getWidth(isGlobe) {
+  if (isGlobe) {
+    return globeWidth;
+  } else {
+    return mapWidth;
+  }
+}
+
+function getVisibleSvg(isGlobe) {
+  if (isGlobe) {
+    return globeSvg;
+  } else {
+    return mapSvg;
+  }
+}
+
+function getGraphAttribute(isGlobe) {
+  if (isGlobe) {
+    return globeG;
+  } else {
+    return mapG;
+  }
+}
+
+function getProjection(isGlobe) {
+  if (isGlobe) {
+    return globeProjection;
+  } else {
+    return mapProjection;
+  }
+}
+
+function getPath(isGlobe) {
+  if (isGlobe) {
+    return globePath;
+  } else {
+    return mapPath;
+  }
+}
+
+function getTooltip(isGlobe) {
+  if (isGlobe) {
+    return globeTooltip;
+  } else {
+    return mapTooltip;
+  }
+}
+
+function getContainer(isGlobe) {
+  if (isGlobe) {
+    return globeContainer;
+  } else {
+    return mapContainer;
+  }
 }
 
 function recolorMap() {
@@ -1312,8 +1378,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
         displayAllContinents = false;
         showAllSelector.checked = false;
       }
-      window.requestAnimationFrame(createNewMap);
-      togglingMaps = true;
+      if (displayGlobe) {
+        globeContainer.className = "active";
+        mapContainer.classList.remove("active");
+      } else {
+        mapContainer.className = "active";
+        globeContainer.classList.remove("active");
+      }
     });
 
     var visitedSelector = document.getElementById('visited');
@@ -1342,6 +1413,7 @@ function callForNewMap() {
       'africa': [-15.44547456275948, -0.6516005548556657, -0],
       'oceania': [-135.78958485165387, 30.194218903527958, 4.349942898316325]
     };
+    window.requestAnimationFrame(recolorMap);
     var rotationChoosen = rotationCoordinates[locationRoller.getSelectedElement().toLowerCase().replace(' ', '')];
     if (rotateInterval) {
       clearInterval(rotateInterval);
@@ -1353,35 +1425,42 @@ function callForNewMap() {
   } else {
     clearInterval(rotateInterval);
     storedRotation = [0,0,0];
-    if (!togglingMaps) {
-      window.requestAnimationFrame(recolorMap);
-    } else {
-      window.requestAnimationFrame(createNewMap);
-    }
+    window.requestAnimationFrame(recolorMap);
   }
 }
 
-var topo,projection,path,mapSvg,globeSvg,svg,g;
+var mapSvg,globeSvg,mapG,globeG,mapProjection,globeProjection,mapPath,globePath;
 var throttleTimer, rotateInterval;
 var displayGlobe = true;
 var displayAllContinents = false;
-var selectedMapType = 'visited'; // Could be 'continent', 'visited', 'none'
+var selectedMapType = 'visited';
 var storedRotation = [0,0,0];
 var storedZoom = 1;
-var togglingMaps = false;
 
 d3.select(window).on("resize", throttle);
 
-var width = document.getElementById('map-container').offsetWidth;
-var height = width / 2;
-var tooltip = d3.select("#map-container").append("div").attr("class", "tooltip hidden");
+var mapContainer = document.getElementById('map-container');
+var globeContainer = document.getElementById('globe-container');
+var mapWidth = mapContainer.offsetWidth;
+var mapHeight = mapWidth / 2;
+var globeWidth = globeContainer.offsetWidth;
+var globeHeight = globeWidth / 2;
+var mapTooltip = d3.select("#map-container").append("div").attr("class", "tooltip hidden");
+var globeTooltip = d3.select("#globe-container").append("div").attr("class", "tooltip hidden");
 var movementObject = createMovementObject();
-var zoom = d3.behavior.zoom()
+var mapZoom = d3.behavior.zoom()
+      .scaleExtent([1, 9])
+      .on("zoom", movementObject.scale);
+
+var globeZoom = d3.behavior.zoom()
       .scaleExtent([1, 9])
       .on("zoom", movementObject.scale);
 
 var globeMath = createMathObject();
-topo = setup(width,height, displayGlobe);
+globeContainer.className = "active";
+mapContainer.className = "active";
+setup(displayGlobe);
 
 
-window.requestAnimationFrame(createNewMap);
+createNewMap();
+mapContainer.classList.remove("active");
