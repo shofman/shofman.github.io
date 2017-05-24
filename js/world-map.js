@@ -1169,7 +1169,7 @@ var getColorMap = function() {
 };
 
 function draw(isGlobe) {
-  topo = setup(isGlobe);
+  var topo = setup(isGlobe);
   var country = getGraphAttribute(isGlobe).selectAll(".country").data(topo.features);
   var visitedArray = [
     "ATA", "CAN", "AUS", "NZL", "BRA", "ARG", "MAF", "ZWE", "ZAF", "VIR", "VGB", "USA", "TZA", "THA", "BWA", "EGY", "KEN", "MAR", "NAM", "TZA",
