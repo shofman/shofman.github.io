@@ -794,11 +794,33 @@ var createMovementObject = function() {
     getVisibleSvg(displayGlobe).selectAll("path").attr("d", getPath(displayGlobe));
   }
 
+  var isWithin = function (number, target, range) {
+    return Math.abs(number-target) < range;
+  }
+
+  var rotateVectorList = [];
+
+  function calcRotationLocations(startRotation, targetRotation) {
+    if (displayGlobe) {
+
+      var change = .15;
+      var newVector = globeMath.getNewRotationVector(startRotation, targetRotation, change);
+      rotateVectorList.push(newVector);
+
+      if (isWithin(newVector[0], targetRotation[0], change) && isWithin(newVector[1], targetRotation[1], change) && isWithin(newVector[2], targetRotation[2], change)) {
+        try {
+          return rotateVectorList;
+        } finally {
+          rotateVectorList = [];
+        }
+      } else {
+        return calcRotationLocations(newVector, targetRotation);
+      }
+    }
+  }
+
   function rotateToLocation(targetRotation) {
     if (displayGlobe) {
-      var isWithin = function (number, target, range) {
-        return Math.abs(number-target) < range;
-      }
 
       var change = .15;
       var newVector = globeMath.getNewRotationVector(storedRotation, targetRotation, change);
@@ -824,7 +846,8 @@ var createMovementObject = function() {
     mousemove: mousemove,
     scale: scale,
     rotateMap: rotateMap,
-    rotateToLocation: rotateToLocation
+    rotateToLocation: rotateToLocation,
+    calcRotationLocations: calcRotationLocations
   }
 }
 
@@ -1414,14 +1437,20 @@ function callForNewMap() {
       'oceania': [-135.78958485165387, 30.194218903527958, 4.349942898316325]
     };
     window.requestAnimationFrame(recolorMap);
-    var rotationChoosen = rotationCoordinates[locationRoller.getSelectedElement().toLowerCase().replace(' ', '')];
+    var rotationChosen = rotationCoordinates[locationRoller.getSelectedElement().toLowerCase().replace(' ', '')];
     if (rotateInterval) {
       clearInterval(rotateInterval);
     }
-
+    var rotationsNeeded = movementObject.calcRotationLocations(storedRotation, rotationChosen);
+    var currentRotationIndex = 0;
     rotateInterval = setInterval(function() {
-      movementObject.rotateToLocation(rotationChoosen);
+      movementObject.rotateMap(rotationsNeeded[currentRotationIndex]);
+      currentRotationIndex++;
+      if (currentRotationIndex >= rotationsNeeded.length) {
+        clearInterval(rotateInterval);
+      }
     }, 50);
+    storedRotation = rotationsNeeded[rotationsNeeded.length-1];
   } else {
     clearInterval(rotateInterval);
     storedRotation = [0,0,0];
