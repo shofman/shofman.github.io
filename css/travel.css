@@ -19,7 +19,7 @@ h1 {
   display: flex;
   margin-top: -25px;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-top: 20px;
   margin-left: 10%;
   margin-top: 10px;
@@ -171,10 +171,9 @@ label:hover:before {
 @media only screen and (min-width: 700px) {
   body .controls {
     align-items: left;
-    margin-top: 25px;
-    margin-left: 25px;
-    margin-bottom: 10px;
+    margin: 25px auto 10px;
     flex-direction: row;
+    width: 60%;
   }
 
   .controls p.map-control {

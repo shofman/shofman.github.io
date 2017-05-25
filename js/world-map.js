@@ -1380,26 +1380,19 @@ function recolorMap() {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    var toggleAllContinentsVisibility = function (shouldDisplay, hideWithOpacity) {
-      if (shouldDisplay) {
-        document.getElementsByClassName('all-continents')[0].style.display = "inline-flex";
-        document.getElementsByClassName('all-continents')[0].style.opacity = "1";
-      } else {
-        if (hideWithOpacity) {
-          document.getElementsByClassName('all-continents')[0].style.opacity = "0";
-        } else {
-          document.getElementsByClassName('all-continents')[0].style.display = "none";
-        }
-      }
+    var orthographicSelector = document.getElementById('orthographic');
+    var visitedSelector = document.getElementById('visited');
+    var showAllSelector = document.getElementById('show-all');
+    var toggleAllContinentsEnabled = function (disableContinentsButton) {
+      showAllSelector.disabled = disableContinentsButton;
     };
 
-    var orthographicSelector = document.getElementById('orthographic');
     orthographicSelector.addEventListener('change', function (event) {
       displayGlobe = orthographicSelector.checked || false;
-      toggleAllContinentsVisibility(!displayGlobe && (selectedMapType === 'visited'), false);
+      selectedMapType = visitedSelector.checked ? 'visited' : 'continent';
+      toggleAllContinentsEnabled((selectedMapType !== 'visited'));
       if (displayGlobe && displayAllContinents) {
-        displayAllContinents = false;
-        showAllSelector.checked = false;
+        window.requestAnimationFrame(recolorMap);
       }
       if (displayGlobe) {
         globeContainer.className = "active";
@@ -1410,14 +1403,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
       }
     });
 
-    var visitedSelector = document.getElementById('visited');
     visitedSelector.addEventListener('change', function (event) {
       selectedMapType = visitedSelector.checked ? 'visited' : 'continent';
-      toggleAllContinentsVisibility(!displayGlobe && (selectedMapType === 'visited'), true);
+      toggleAllContinentsEnabled((selectedMapType !== 'visited'));
+      if ((selectedMapType !== 'visited')) {
+        displayAllContinents = false;
+        showAllSelector.checked = false;
+      }
       window.requestAnimationFrame(recolorMap);
     });
 
-    var showAllSelector = document.getElementById('show-all');
     showAllSelector.addEventListener('change', function (event) {
       displayAllContinents = showAllSelector.checked || false;
       locationRoller.cancelDemo();
@@ -1444,7 +1439,11 @@ function callForNewMap() {
     var rotationsNeeded = movementObject.calcRotationLocations(storedRotation, rotationChosen);
     var currentRotationIndex = 0;
     rotateInterval = setInterval(function() {
-      movementObject.rotateMap(rotationsNeeded[currentRotationIndex]);
+      window.requestAnimationFrame(function() {
+        if (displayGlobe) {
+          movementObject.rotateMap(rotationsNeeded[currentRotationIndex]);
+        }
+      });
       currentRotationIndex++;
       if (currentRotationIndex >= rotationsNeeded.length) {
         clearInterval(rotateInterval);
