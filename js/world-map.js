@@ -1,7 +1,7 @@
 "use strict";
 
 function getCurrentWorld (isGlobe) {
-  let world;
+  var world;
   if (isGlobe) {
     world = {
       "type":"Topology",
@@ -804,10 +804,11 @@ var createMovementObject = function() {
     if (displayGlobe) {
 
       var change = .15;
+      var acceptableDistance = .6;
       var newVector = globeMath.getNewRotationVector(startRotation, targetRotation, change);
       rotateVectorList.push(newVector);
 
-      if (isWithin(newVector[0], targetRotation[0], change) && isWithin(newVector[1], targetRotation[1], change) && isWithin(newVector[2], targetRotation[2], change)) {
+      if (isWithin(newVector[0], targetRotation[0], acceptableDistance) && isWithin(newVector[1], targetRotation[1], acceptableDistance) && isWithin(newVector[2], targetRotation[2], acceptableDistance)) {
         try {
           return rotateVectorList;
         } finally {
@@ -1439,15 +1440,17 @@ function callForNewMap() {
     var rotationsNeeded = movementObject.calcRotationLocations(storedRotation, rotationChosen);
     var currentRotationIndex = 0;
     rotateInterval = setInterval(function() {
-      window.requestAnimationFrame(function() {
-        if (displayGlobe) {
-          movementObject.rotateMap(rotationsNeeded[currentRotationIndex]);
-        }
-      });
-      currentRotationIndex++;
-      if (currentRotationIndex >= rotationsNeeded.length) {
+      if (currentRotationIndex >= rotationsNeeded.length - 10) {
         clearInterval(rotateInterval);
       }
+      window.requestAnimationFrame(function() {
+        if (displayGlobe && currentRotationIndex < rotationsNeeded.length) {
+          movementObject.rotateMap(rotationsNeeded[currentRotationIndex]);
+          currentRotationIndex++;
+        } else {
+          clearInterval(rotateInterval);
+        }
+      });
     }, 50);
     storedRotation = rotationsNeeded[rotationsNeeded.length-1];
   } else {

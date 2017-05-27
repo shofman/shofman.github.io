@@ -18,13 +18,13 @@ var languageMapping = {
 };
 
 var locationMapping = {
-    "North America": "<li class=\"flag bs\">Bahamas</li><li class=\"flag ca lived\">Canada</li><li class=\"flag cu\">Cuba</li><li class=\"flag ht\">Haiti</li><li class=\"flag jm\">Jamaica</li><li class=\"flag mx\">Mexico</li><li class=\"flag us lived\">United States</li></ul>",
-    "South America": "<li class=\"flag ar\">Argentina</li><li class=\"flag br\">Brazil</li></ul>",
-    "Antarctica": "<li class=\"flag aq\">Antarctica</li><div>Yep, I really went to Antarctica</div></ul>",
-    "Africa": "<li class=\"flag bw\">Botswana</li><li class=\"flag eg\">Egypt</li><li class=\"flag ke\">Kenya</li><li class=\"flag ma\">Morocco</li><li class=\"flag na\">Namibia</li><li class=\"flag za\">South Africa</li><li class=\"flag tz\">Tanzania</li><li class=\"flag zw\">Zimbabwe</li></ul>",
-    "Oceania": "<li class=\"flag au\">Australia</li><li class=\"flag nz\">New Zealand</li></ul>",
-    "Asia": "<li class=\"flag cn\">China</li><li class=\"flag in\">India</li><li class=\"flag id\">Indonesia</li><li class=\"flag jp\">Japan</li><li class=\"flag sg\">Singapore</li><li class=\"flag th\">Thailand</li><li class=\"flag tr\">Turkey</li><li class=\"flag ae\">United Arab Emirates</li><li class=\"flag vn\">Vietnam</li></ul>",
-    "Europe": "<li class=\"flag at\">Austria</li><li class=\"flag be\">Belgium</li><li class=\"flag hr\">Croatia</li><li class=\"flag cz\">Czech Republic</li><li class=\"flag dk\">Denmark</li><li class=\"flag ee\">Estonia</li><li class=\"flag fi\">Finland</li><li class=\"flag fr\">France</li><li class=\"flag de\">Germany</li><li class=\"flag gr\">Greece</li><li class=\"flag hu\">Hungary</li><li class=\"flag it\">Italy</li><li class=\"flag mc\">Monaco</li><li class=\"flag me\">Montenegro</li><li class=\"flag nl\">Netherlands</li><li class=\"flag ru\">Russia</li><li class=\"flag es\">Spain</li><li class=\"flag se\">Sweden</li><li class=\"flag ch\">Switzerland</li><li class=\"flag gb lived\">United Kingdom</li><li class=\"flag va\">Vatican City</li></ul>"
+    "North America": "<li class=\"flag bs\">Bahamas</li><li class=\"flag ca lived\">Canada</li><li class=\"flag cu\">Cuba</li><li class=\"flag ht\">Haiti</li><li class=\"flag jm\">Jamaica</li><li class=\"flag mx\">Mexico</li><li class=\"flag us lived\">United States</li>",
+    "South America": "<li class=\"flag ar\">Argentina</li><li class=\"flag br\">Brazil</li>",
+    "Antarctica": "<li class=\"flag aq\">Antarctica</li><div>Yep, I really went to Antarctica</div>",
+    "Africa": "<li class=\"flag bw\">Botswana</li><li class=\"flag eg\">Egypt</li><li class=\"flag ke\">Kenya</li><li class=\"flag ma\">Morocco</li><li class=\"flag na\">Namibia</li><li class=\"flag za\">South Africa</li><li class=\"flag tz\">Tanzania</li><li class=\"flag zw\">Zimbabwe</li>",
+    "Oceania": "<li class=\"flag au\">Australia</li><li class=\"flag nz\">New Zealand</li>",
+    "Asia": "<li class=\"flag cn\">China</li><li class=\"flag in\">India</li><li class=\"flag id\">Indonesia</li><li class=\"flag jp\">Japan</li><li class=\"flag sg\">Singapore</li><li class=\"flag th\">Thailand</li><li class=\"flag tr\">Turkey</li><li class=\"flag ae\">United Arab Emirates</li><li class=\"flag vn\">Vietnam</li>",
+    "Europe": "<li class=\"flag at\">Austria</li><li class=\"flag be\">Belgium</li><li class=\"flag hr\">Croatia</li><li class=\"flag cz\">Czech Republic</li><li class=\"flag dk\">Denmark</li><li class=\"flag ee\">Estonia</li><li class=\"flag fi\">Finland</li><li class=\"flag fr\">France</li><li class=\"flag de\">Germany</li><li class=\"flag gr\">Greece</li><li class=\"flag hu\">Hungary</li><li class=\"flag it\">Italy</li><li class=\"flag mc\">Monaco</li><li class=\"flag me\">Montenegro</li><li class=\"flag nl\">Netherlands</li><li class=\"flag ru\">Russia</li><li class=\"flag es\">Spain</li><li class=\"flag se\">Sweden</li><li class=\"flag ch\">Switzerland</li><li class=\"flag gb lived\">United Kingdom</li><li class=\"flag va\">Vatican City</li>"
 };
 
 var contactMapping = {
@@ -242,12 +242,14 @@ window.onload = function () {
             });
         }
 
+        var isIE = /MSIE \d|Trident.*rv:/.test(navigator.userAgent);
         window.requestAnimationFrame(function() {
-            setupRollerAppearance(itemElements);
-            changeRollerItem();
+            if(!isIE) {
+                setupRollerAppearance(itemElements);
+            }
         });
 
-        if (demoRollerOptions.demo === true) {
+        if (demoRollerOptions.demo === true && !isIE) {
             var demoScroll = setInterval(demoScrollbar, demoRollerOptions.speed);
         }
 
