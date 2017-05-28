@@ -246,6 +246,7 @@ window.onload = function () {
         window.requestAnimationFrame(function() {
             if(!isIE) {
                 setupRollerAppearance(itemElements);
+                changeRollerItem();
             }
         });
 

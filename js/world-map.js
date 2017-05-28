@@ -732,29 +732,11 @@ var createMovementObject = function() {
   var initialRotation;
 
   function scale() {
-    var currentTranslation = d3.event.translate;
-    var newTranslation = [];
     var scale = d3.event.scale;
-    var quarterHeight = getHeight(displayGlobe)/8;
 
-    newTranslation[0] = Math.min(
-      (getWidth(displayGlobe)/getHeight(displayGlobe))  * (scale - 1), 
-      Math.max( getWidth(displayGlobe) * (1 - scale), currentTranslation[0] )
-    );
-
-    newTranslation[1] = Math.min(
-      quarterHeight * (scale - 1) + quarterHeight * scale, 
-      Math.max(getHeight(displayGlobe)  * (1 - scale) - quarterHeight * scale, currentTranslation[1])
-    );
-
+    getGraphAttribute(displayGlobe).attr("transform", d3.event.transform);
     if (displayGlobe) {
-      globeZoom.translate(newTranslation);
-    } else {
-      mapZoom.translate(newTranslation);
-    }
-    getGraphAttribute(displayGlobe).attr("transform", "translate(" + newTranslation + ")scale(" + scale + ")");
-    if (displayGlobe) {
-      d3.selectAll("circle").attr("transform", "translate(" + newTranslation + ")scale(" + scale + ")");
+      d3.selectAll("circle").attr("transform", d3.event.transform);
     }
     storedZoom = scale;
 
@@ -764,7 +746,9 @@ var createMovementObject = function() {
   function mousemove() {
     if (initialMousePosition) {
       clearInterval(rotateInterval);
-      var newMousePosition = globeMath.trackballAngles(d3.mouse(getVisibleSvg(displayGlobe)[0][0]));
+      var visibleSvg = getVisibleSvg(displayGlobe);
+      var mousePos = d3.mouse(visibleSvg["_groups"][0][0]);
+      var newMousePosition = globeMath.trackballAngles(mousePos);
       var newRotation = globeMath.dragRotate(
         initialRotation,
         newMousePosition[0] - initialMousePosition[0],
@@ -783,7 +767,9 @@ var createMovementObject = function() {
   }
 
   function mousedown() {
-    initialMousePosition = globeMath.trackballAngles(d3.mouse(getVisibleSvg(displayGlobe)[0][0]));
+    var visibleSvg = getVisibleSvg(displayGlobe);
+    var mousePos = d3.mouse(visibleSvg["_groups"][0][0]);
+    initialMousePosition = globeMath.trackballAngles(mousePos);
     initialRotation = getProjection(displayGlobe).rotate();
     d3.event.preventDefault();
     locationRoller.cancelDemo();
@@ -854,16 +840,16 @@ var createMovementObject = function() {
 
 function setupProjection(isGlobe) {
   if (isGlobe) {
-    globeProjection = d3.geo.orthographic()
+    globeProjection = d3.geoOrthographic()
         .scale(getHeight(isGlobe)/2.5)
         .translate([getWidth(isGlobe) / 2, getHeight(isGlobe) / 2])
         .clipAngle(90);
-    globePath = d3.geo.path().projection(globeProjection);
+    globePath = d3.geoPath().projection(globeProjection);
   } else {
-    mapProjection = d3.geo.equirectangular()
+    mapProjection = d3.geoEquirectangular()
       .translate([(getWidth(isGlobe)/2), (getHeight(isGlobe)/2)])
       .scale( getWidth(isGlobe) / 2 / Math.PI);
-    mapPath = d3.geo.path().projection(mapProjection);
+    mapPath = d3.geoPath().projection(mapProjection);
   }
 }
 
@@ -1214,6 +1200,26 @@ function draw(isGlobe) {
     .attr("d", getPath(isGlobe))
     .attr("id", function(d,i) { return d.id; })
     .attr("title", function(d,i) { return d.properties.name; })
+    .on("mousemove", function(d,i) {
+        var offsetL = getContainer(displayGlobe).offsetLeft+20;
+        var offsetT = getContainer(displayGlobe).offsetTop+10;
+        var mouse = d3.mouse(getVisibleSvg(displayGlobe).node()).map(function(d) {
+          return parseInt(d);
+        });
+
+        d3.select(this).style("cursor", "pointer");
+        getTooltip(displayGlobe).classed("hidden", false)
+                .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
+                .html(function(d) {
+                  if (d.properties.name) {
+                    return d.properties.name;
+                  }
+                  return d.id; 
+                }(d));
+
+      }).on("mouseout",  function(d,i) {
+        getTooltip(displayGlobe).classed("hidden", true);
+      })
     .style("fill", function(d, i) {
       try {
         var colorMap = getColorMap();
@@ -1231,38 +1237,6 @@ function draw(isGlobe) {
       }
       return "black"; 
     });
-
-
-  country.on("mousemove", function(d,i) {
-    var offsetL = getContainer(displayGlobe).offsetLeft+20;
-    var offsetT = getContainer(displayGlobe).offsetTop+10;
-    var mouse = d3.mouse(getVisibleSvg(displayGlobe).node()).map(function(d) {
-      return parseInt(d);
-    });
-
-    d3.select(this).style("cursor", "pointer");
-    getTooltip(displayGlobe).classed("hidden", false)
-            .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
-            .html(function(d) {
-              if (d.properties.name) {
-                return d.properties.name;
-              }
-              return d.id; 
-            }(d));
-
-  }).on("mouseout",  function(d,i) {
-    getTooltip(displayGlobe).classed("hidden", true);
-  });
-  if (displayGlobe) {
-    globeZoom.translate([0, 0]).scale(storedZoom);
-  } else {
-    mapZoom.translate([0, 0]).scale(1);
-  }
-  var newRotation = [0,0,0];
-  if (isGlobe) {
-    newRotation = storedRotation;
-  }
-  movementObject.rotateMap(newRotation);
 }
 
 function throttle() {
@@ -1421,17 +1395,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 });
 
+var rotationCoordinates = {
+  'europe': [-15.672299334783183, -42.992669189528236, 0.0034898530054431345],
+  'northamerica': [101.93038481306967, -42.389726903499984, 9.29878917438975],
+  'asia': [-88.76957254392269, -37.36394465849986, -19.01068422558651],
+  'antarctica': [21.653867796634064, 89.3139539698907, -34.143665676810556],
+  'southamerica': [64.6113636409277, 27.86200051985779, 1.5090438689472683],
+  'africa': [-15.44547456275948, -0.6516005548556657, -0],
+  'oceania': [-135.78958485165387, 30.194218903527958, 4.349942898316325]
+};
+
 function callForNewMap() {
   if (displayGlobe && locationRoller.getSelectedElement) {
-    var rotationCoordinates = {
-      'europe': [-15.672299334783183, -42.992669189528236, 0.0034898530054431345],
-      'northamerica': [101.93038481306967, -42.389726903499984, 9.29878917438975],
-      'asia': [-88.76957254392269, -37.36394465849986, -19.01068422558651],
-      'antarctica': [21.653867796634064, 89.3139539698907, -34.143665676810556],
-      'southamerica': [64.6113636409277, 27.86200051985779, 1.5090438689472683],
-      'africa': [-15.44547456275948, -0.6516005548556657, -0],
-      'oceania': [-135.78958485165387, 30.194218903527958, 4.349942898316325]
-    };
     window.requestAnimationFrame(recolorMap);
     var rotationChosen = rotationCoordinates[locationRoller.getSelectedElement().toLowerCase().replace(' ', '')];
     if (rotateInterval) {
@@ -1442,16 +1417,13 @@ function callForNewMap() {
     rotateInterval = setInterval(function() {
       if (currentRotationIndex >= rotationsNeeded.length - 10) {
         clearInterval(rotateInterval);
+      } else if (displayGlobe && currentRotationIndex < rotationsNeeded.length) {
+        window.requestAnimationFrame(function() {
+            movementObject.rotateMap(rotationsNeeded[currentRotationIndex]);
+            currentRotationIndex++;
+        });
       }
-      window.requestAnimationFrame(function() {
-        if (displayGlobe && currentRotationIndex < rotationsNeeded.length) {
-          movementObject.rotateMap(rotationsNeeded[currentRotationIndex]);
-          currentRotationIndex++;
-        } else {
-          clearInterval(rotateInterval);
-        }
-      });
-    }, 50);
+    }, 60);
     storedRotation = rotationsNeeded[rotationsNeeded.length-1];
   } else {
     clearInterval(rotateInterval);
@@ -1479,12 +1451,12 @@ var globeHeight = globeWidth / 2;
 var mapTooltip = d3.select("#map-container").append("div").attr("class", "tooltip hidden");
 var globeTooltip = d3.select("#globe-container").append("div").attr("class", "tooltip hidden");
 var movementObject = createMovementObject();
-var mapZoom = d3.behavior.zoom()
+var mapZoom = d3.zoom()
       .scaleExtent([1, 9])
       .on("zoom", movementObject.scale);
 
-var globeZoom = d3.behavior.zoom()
-      .scaleExtent([1, 9])
+var globeZoom = d3.zoom()
+      .scaleExtent([1, 3])
       .on("zoom", movementObject.scale);
 
 var globeMath = createMathObject();

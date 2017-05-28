@@ -10,6 +10,11 @@ h1 {
   cursor: move;
 }
 
+svg {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
 .header-description {
   margin-top: 0;
   padding: 0 20px;
