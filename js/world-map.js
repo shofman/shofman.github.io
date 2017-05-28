@@ -732,20 +732,17 @@ var createMovementObject = function() {
   var initialRotation;
 
   function scale() {
-    var scale = d3.event.scale;
+    storedZoom = d3.event.scale;
 
     getGraphAttribute(displayGlobe).attr("transform", d3.event.transform);
     if (displayGlobe) {
       d3.selectAll("circle").attr("transform", d3.event.transform);
     }
-    storedZoom = scale;
-
-    d3.selectAll(".country").style("stroke-width", 1.5 / scale);
+    d3.selectAll(".country").style("stroke-width", 1.5 / d3.event.transform.k + "px");
   }
 
   function mousemove() {
     if (initialMousePosition) {
-      clearInterval(rotateInterval);
       var visibleSvg = getVisibleSvg(displayGlobe);
       var mousePos = d3.mouse(visibleSvg["_groups"][0][0]);
       var newMousePosition = globeMath.trackballAngles(mousePos);
@@ -778,6 +775,19 @@ var createMovementObject = function() {
   function rotateMap(newVector) {
     getProjection(displayGlobe).rotate(newVector);
     getVisibleSvg(displayGlobe).selectAll("path").attr("d", getPath(displayGlobe));
+  }
+
+  function transitionMap(newVector) {
+    d3.transition()
+    .duration(1000)
+    .tween("rotate", function() {
+      var r = d3.interpolate(getProjection(displayGlobe).rotate(), newVector);
+      return function(t) {
+        if (displayGlobe) {
+          rotateMap(r(t));
+        }
+      };
+    });
   }
 
   var isWithin = function (number, target, range) {
@@ -814,7 +824,6 @@ var createMovementObject = function() {
 
       if (isWithin(newVector[0], targetRotation[0], change) && isWithin(newVector[1], targetRotation[1], change) && isWithin(newVector[2], targetRotation[2], change)) {
         storedRotation = newVector;
-        clearInterval(rotateInterval);
         window.requestAnimationFrame(recolorMap);
       }
 
@@ -833,6 +842,7 @@ var createMovementObject = function() {
     mousemove: mousemove,
     scale: scale,
     rotateMap: rotateMap,
+    transitionMap: transitionMap,
     rotateToLocation: rotateToLocation,
     calcRotationLocations: calcRotationLocations
   }
@@ -864,14 +874,13 @@ function setup(isGlobe){
         .attr("viewBox", "0 0 " + (getWidth(isGlobe)) + " " + (getHeight(isGlobe)))
         .attr("width", getWidth(isGlobe))
         .attr("height", getHeight(isGlobe))
+        .on("wheel", function() { d3.event.preventDefault(); })
         .on("mousedown.zoom", null)
         .on("touchstart.zoom", null)
         .on("touchmove.zoom", null)
         .on("touchend.zoom", null)
         .on("mousedown", movementObject.mousedown)
-        .on("touchstart", movementObject.mousedown)
         .on("mousemove", movementObject.mousemove)
-        .on("touchmove", movementObject.mousemove)
         .on("touchend", movementObject.mouseup)
         .on("mouseup", movementObject.mouseup);
     globeSvg.append("circle")
@@ -1409,31 +1418,16 @@ function callForNewMap() {
   if (displayGlobe && locationRoller.getSelectedElement) {
     window.requestAnimationFrame(recolorMap);
     var rotationChosen = rotationCoordinates[locationRoller.getSelectedElement().toLowerCase().replace(' ', '')];
-    if (rotateInterval) {
-      clearInterval(rotateInterval);
-    }
-    var rotationsNeeded = movementObject.calcRotationLocations(storedRotation, rotationChosen);
-    var currentRotationIndex = 0;
-    rotateInterval = setInterval(function() {
-      if (currentRotationIndex >= rotationsNeeded.length - 10) {
-        clearInterval(rotateInterval);
-      } else if (displayGlobe && currentRotationIndex < rotationsNeeded.length) {
-        window.requestAnimationFrame(function() {
-            movementObject.rotateMap(rotationsNeeded[currentRotationIndex]);
-            currentRotationIndex++;
-        });
-      }
-    }, 60);
-    storedRotation = rotationsNeeded[rotationsNeeded.length-1];
+    movementObject.transitionMap(rotationChosen);
+    storedRotation = rotationChosen;
   } else {
-    clearInterval(rotateInterval);
     storedRotation = [0,0,0];
     window.requestAnimationFrame(recolorMap);
   }
 }
 
 var mapSvg,globeSvg,mapG,globeG,mapProjection,globeProjection,mapPath,globePath;
-var throttleTimer, rotateInterval;
+var throttleTimer;
 var displayGlobe = true;
 var displayAllContinents = false;
 var selectedMapType = 'visited';

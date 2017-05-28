@@ -78,6 +78,7 @@ div.tooltip {
   opacity: 0.9; 
   position: absolute;
   will-change: transform;
+  z-index: 2;
 }
 .graticule {
   fill: none;
