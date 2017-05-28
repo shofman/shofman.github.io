@@ -38,8 +38,11 @@ var contactMapping = {
 window.onload = function () {
     function calcOffsetTop(elt) {
         var rect = elt.getBoundingClientRect();
-        var bodyElt = document.body;
-        return rect.top + bodyElt.scrollTop;
+        var bodyScrollTop = document.body.scrollTop;
+        if (bodyScrollTop === 0) {
+            bodyScrollTop = document.documentElement.scrollTop;
+        }
+        return rect.top + bodyScrollTop;
     }
 
     var setupCoverPhotoTransition = function (element, shouldCancelDemo) {
@@ -56,7 +59,6 @@ window.onload = function () {
         var setCoverPhotoOpacity = function (element, opacity) {
             element.style.opacity = opacity;
         };
-
 
         function getScrollTop() {
             var backupBodyElement = (document.documentElement || document.body.parentNode || document.body);
@@ -76,8 +78,9 @@ window.onload = function () {
         }
 
         window.addEventListener('scroll', function(e) {
-          var scrollTop = getScrollTop();
           if (!ticking) {
+            var scrollTop = getScrollTop();
+            var viewportHeight = window.innerHeight;
             window.requestAnimationFrame(function() {
                 if (scrollTop > coverPhotoPosition && !(scrollTop > coverPhotoPosition + coverPhotoHeight)) {
                     lastScrollTop = scrollTop;
@@ -86,15 +89,12 @@ window.onload = function () {
                     return;
                 } else if (scrollTop < coverPhotoPosition) {
                     setCoverPhotoOpacity(element, 1);
-                    var viewportHeight = window.innerHeight;
                     if (shouldCancelDemo && scrollTop + viewportHeight > coverPhotoPosition + 200) {
                         locationRoller.cancelDemo();
                     }
                     ticking = false;
                     return;
-                }
-
-                if (getScrollTop() > coverPhotoPosition + coverPhotoHeight) {
+                } else if (scrollTop > coverPhotoPosition + coverPhotoHeight) {
                     setCoverPhotoOpacity(element, 0);
                     ticking = false;
                     return;
