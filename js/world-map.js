@@ -1193,7 +1193,8 @@ function draw(isGlobe) {
   var visitedArray = [
     "ATA", "CAN", "AUS", "NZL", "BRA", "ARG", "MAF", "ZWE", "ZAF", "VIR", "VGB", "USA", "TZA", "THA", "BWA", "EGY", "KEN", "MAR", "NAM", "TZA",
     "BHS", "CUB", "HTI", "JAM", "MEX", "CHN", "IND", "IDN", "JPN", "SGP", "THA", "TUR", "ARE", "VNM", "RUS", "PRI", "NLD", "DEU", "ESP", "FRA",
-    "GBR", "SWE", "EST", "FIN", "GRC", "HKG", "ITA", "MNE", "HRV", "HUN", "CHE", "AUT", "BEL", 'CZE', "DNK"
+    "GBR", "SWE", "EST", "FIN", "GRC", "HKG", "ITA", "MNE", "HRV", "HUN", "CHE", "AUT", "BEL", 'CZE', "DNK", "KHM", "LAO", "BRN", "TWN", "PHL",
+    "IRL", "MYS",
   ];
 
   country.enter().insert("path")
