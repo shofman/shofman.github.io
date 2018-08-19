@@ -914,7 +914,8 @@ var colorFillNames = {
   europe: '#800080',
   asia: '#f79104',
   oceania: '#5f9ab7',
-  antarctica: '#d3d3d3'
+  antarctica: '#d3d3d3',
+  caribbean: '#000000'
 };
 
 var shadeColor = function (color, percent) {   
@@ -922,287 +923,17 @@ var shadeColor = function (color, percent) {
     return "#"+(0x1000000+(Math.round((quaternion-R)*p)+R)*0x10000+(Math.round((quaternion-G)*p)+G)*0x100+(Math.round((quaternion-B)*p)+B)).toString(16).slice(1);
 }
 
-var getColorMap = function() {
-    return {
-      'ZWE': {fillKey: 'africa'},
-      'ZMB': {fillKey: 'africa'},
-      'ZAF': {fillKey: 'africa'},
-      'UGA': {fillKey: 'africa'},
-      'TZA': {fillKey: 'africa'},
-      'TUN': {fillKey: 'africa'},
-      'TGO': {fillKey: 'africa'},
-      'TCD': {fillKey: 'africa'},
-      'SWZ': {fillKey: 'africa'},
-      'SSD': {fillKey: 'africa'},
-      'SOM': {fillKey: 'africa'},
-      'somaliland': {fillKey: 'africa'},
-      'SLE': {fillKey: 'africa'},
-      'SHN': {fillKey: 'africa'},
-      'SEN': {fillKey: 'africa'},
-      'SDN': {fillKey: 'africa'},
-      'RWA': {fillKey: 'africa'},
-      'REU': {fillKey: 'africa'},
-      'NGA': {fillKey: 'africa'},
-      'NER': {fillKey: 'africa'},
-      'NAM': {fillKey: 'africa'},
-      'MYT': {fillKey: 'africa'},
-      'MWI': {fillKey: 'africa'},
-      'MUS': {fillKey: 'africa'},
-      'MRT': {fillKey: 'africa'},
-      'MOZ': {fillKey: 'africa'},
-      'MLI': {fillKey: 'africa'},
-      'MDG': {fillKey: 'africa'},
-      'MAR': {fillKey: 'africa'},
-      'LSO': {fillKey: 'africa'},
-      'LBY': {fillKey: 'africa'},
-      'LBR': {fillKey: 'africa'},
-      'KEN': {fillKey: 'africa'},
-      'GNQ': {fillKey: 'africa'},
-      'GNB': {fillKey: 'africa'},
-      'GMB': {fillKey: 'africa'},
-      'GIN': {fillKey: 'africa'},
-      'GHA': {fillKey: 'africa'},
-      'GAB': {fillKey: 'africa'},
-      'ETH': {fillKey: 'africa'},
-      'ESH': {fillKey: 'africa'},
-      'ERI': {fillKey: 'africa'},
-      'EGY': {fillKey: 'africa'},
-      'DZA': {fillKey: 'africa'},
-      'DJI': {fillKey: 'africa'},
-      'CPV': {fillKey: 'africa'},
-      'COM': {fillKey: 'africa'},
-      'COG': {fillKey: 'africa'},
-      'COD': {fillKey: 'africa'},
-      'CMR': {fillKey: 'africa'},
-      'CIV': {fillKey: 'africa'},
-      'CAF': {fillKey: 'africa'},
-      'BWA': {fillKey: 'africa'},
-      'BFA': {fillKey: 'africa'},
-      'BEN': {fillKey: 'africa'},
-      'BDI': {fillKey: 'africa'},
-      'AGO': {fillKey: 'africa'},
-
-      'YEM': {fillKey: 'asia'},
-      'VNM': {fillKey: 'asia'},
-      'UZB': {fillKey: 'asia'},
-      'TWN': {fillKey: 'asia'},
-      'TUR': {fillKey: 'asia'},
-      'TLS': {fillKey: 'asia'},
-      'TKM': {fillKey: 'asia'},
-      'TJK': {fillKey: 'asia'},
-      'THA': {fillKey: 'asia'},
-      'SYR': {fillKey: 'asia'},
-      'SYC': {fillKey: 'asia'},
-      'SGP': {fillKey: 'asia'},
-      'SAU': {fillKey: 'asia'},
-      'RUS': {fillKey: 'asia'},
-      'QAT': {fillKey: 'asia'},
-      'PSE': {fillKey: 'asia'},
-      'PRK': {fillKey: 'asia'},
-      'PHL': {fillKey: 'asia'},
-      'PAK': {fillKey: 'asia'},
-      'OMN': {fillKey: 'asia'},
-      'NPL': {fillKey: 'asia'},
-      'MYS': {fillKey: 'asia'},
-      'MNG': {fillKey: 'asia'},
-      'MMR': {fillKey: 'asia'},
-      'MDV': {fillKey: 'asia'},
-      'MAC': {fillKey: 'asia'},
-      'LKA': {fillKey: 'asia'},
-      'LBN': {fillKey: 'asia'},
-      'LAO': {fillKey: 'asia'},
-      'KWT': {fillKey: 'asia'},
-      'KOR': {fillKey: 'asia'},
-      'KHM': {fillKey: 'asia'},
-      'KGZ': {fillKey: 'asia'},
-      'KAZ': {fillKey: 'asia'},
-      'JPN': {fillKey: 'asia'},
-      'JOR': {fillKey: 'asia'},
-      'ISR': {fillKey: 'asia'},
-      'IRQ': {fillKey: 'asia'},
-      'IRN': {fillKey: 'asia'},
-      'IOT': {fillKey: 'asia'},
-      'IND': {fillKey: 'asia'},
-      'IDN': {fillKey: 'asia'},
-      'HKG': {fillKey: 'asia'},
-      'CXR': {fillKey: 'asia'},
-      'CHN': {fillKey: 'asia'},
-      'CCK': {fillKey: 'asia'},
-      'BTN': {fillKey: 'asia'},
-      'BRN': {fillKey: 'asia'},
-      'BHR': {fillKey: 'asia'},
-      'BGD': {fillKey: 'asia'},
-      'AZE': {fillKey: 'asia'},
-      'ARM': {fillKey: 'asia'},
-      'ARE': {fillKey: 'asia'},
-      'AFG': {fillKey: 'asia'},
-
-      'GEO': {fillKey: 'asia'},
-      'CYP': {fillKey: 'asia'},
-      'northern_cyprus': {fillKey: 'asia'},
-      
-      'VAT': {fillKey: 'europe'},
-      'UKR': {fillKey: 'europe'},
-      'SWE': {fillKey: 'europe'},
-      'SVN': {fillKey: 'europe'},
-      'SVK': {fillKey: 'europe'},
-      'SRB': {fillKey: 'europe'},
-      'SMR': {fillKey: 'europe'},
-      'SJM': {fillKey: 'europe'},
-      'ROU': {fillKey: 'europe'},
-      'PRT': {fillKey: 'europe'},
-      'POL': {fillKey: 'europe'},
-      'NOR': {fillKey: 'europe'},
-      'NLD': {fillKey: 'europe'},
-      'MNE': {fillKey: 'europe'},
-      'MLT': {fillKey: 'europe'},
-      'MKD': {fillKey: 'europe'},
-      'MDA': {fillKey: 'europe'},
-      'MCO': {fillKey: 'europe'},
-      'LVA': {fillKey: 'europe'},
-      'LUX': {fillKey: 'europe'},
-      'LTU': {fillKey: 'europe'},
-      'LIE': {fillKey: 'europe'},
-      'JEY': {fillKey: 'europe'},
-      'ITA': {fillKey: 'europe'},
-      'ISL': {fillKey: 'europe'},
-      'IRL': {fillKey: 'europe'},
-      'IMN': {fillKey: 'europe'},
-      'HUN': {fillKey: 'europe'},
-      'HRV': {fillKey: 'europe'},
-      'GRC': {fillKey: 'europe'},
-      'GIB': {fillKey: 'europe'},
-      'GGY': {fillKey: 'europe'},
-      'GBR': {fillKey: 'europe'},
-      'FRO': {fillKey: 'europe'},
-      'FRA': {fillKey: 'europe'},
-      'FIN': {fillKey: 'europe'},
-      'EST': {fillKey: 'europe'},
-      'ESP': {fillKey: 'europe'},
-      'DNK': {fillKey: 'europe'},
-      'DEU': {fillKey: 'europe'},
-      'CZE': {fillKey: 'europe'},
-      'ALA': {fillKey: 'europe'},
-      'ALB': {fillKey: 'europe'},
-      'AND': {fillKey: 'europe'},
-      'AUT': {fillKey: 'europe'},
-      'BEL': {fillKey: 'europe'},
-      'BGR': {fillKey: 'europe'},
-      'BIH': {fillKey: 'europe'},
-      'BLR': {fillKey: 'europe'},
-      'CHE': {fillKey: 'europe'},
-      'kosovo': {fillKey: 'europe'},
-      'EUR_RUS': {fillKey: 'europe'},
-
-      'USA': {fillKey: 'northamerica' },
-      'MEX': {fillKey: 'northamerica' },
-      'CAN': {fillKey: 'northamerica' },
-      'GTM': {fillKey: 'northamerica' },
-      'HND': {fillKey: 'northamerica' },
-      'GRL': {fillKey: 'northamerica' },
-      'SLV': {fillKey: 'northamerica' },
-      'NIC': {fillKey: 'northamerica' },
-      'CRI': {fillKey: 'northamerica' },
-      'DMA': {fillKey: 'northamerica' },
-      'DOM': {fillKey: 'northamerica' },
-      'CUB': {fillKey: 'northamerica' },
-      'HTI': {fillKey: 'northamerica' },
-      'PRI': {fillKey: 'northamerica' },
-      'TTO': {fillKey: 'northamerica' },
-      'VGB': {fillKey: 'northamerica' },
-      'VIR': {fillKey: 'northamerica' },
-      'JAM': {fillKey: 'northamerica' },
-      'PAN': {fillKey: 'northamerica' },
-      'VCT': {fillKey: 'northamerica' },
-      'UMI': {fillKey: 'northamerica' },
-      'TCA': {fillKey: 'northamerica' },
-      'SXM': {fillKey: 'northamerica' },
-      'STP': {fillKey: 'northamerica' },
-      'SPM': {fillKey: 'northamerica' },
-      'MTQ': {fillKey: 'northamerica' },
-      'MSR': {fillKey: 'northamerica' },
-      'MAF': {fillKey: 'northamerica' },
-      'LCA': {fillKey: 'northamerica' },
-      'KNA': {fillKey: 'northamerica' },
-      'GRD': {fillKey: 'northamerica' },
-      'GLP': {fillKey: 'northamerica' },
-      'CYM': {fillKey: 'northamerica' },
-      'BRB': {fillKey: 'northamerica' },
-      'BMU': {fillKey: 'northamerica' },
-      'BLZ': {fillKey: 'northamerica' },
-      'BLM': {fillKey: 'northamerica' },
-      'BHS': {fillKey: 'northamerica' },
-      'BES': {fillKey: 'northamerica' },
-      'ATG': {fillKey: 'northamerica' },
-      'AIA': {fillKey: 'northamerica' },
-
-      'VEN': {fillKey: 'southamerica' },
-      'GUY': {fillKey: 'southamerica' },
-      'SUR': {fillKey: 'southamerica' },
-      'GUF': {fillKey: 'southamerica' },
-      'BRA': {fillKey: 'southamerica' },
-      'URY': {fillKey: 'southamerica' },
-      'PRY': {fillKey: 'southamerica' },
-      'PER': {fillKey: 'southamerica' },
-      'ABW': {fillKey: 'southamerica' },
-      'FLK': {fillKey: 'southamerica' },
-      'ECU': {fillKey: 'southamerica' },
-      'CUW': {fillKey: 'southamerica' },
-      'COL': {fillKey: 'southamerica' },
-      'CHL': {fillKey: 'southamerica' },
-      'BOL': {fillKey: 'southamerica' },
-      'ARG': {fillKey: 'southamerica' },
-
-      'AUS': {fillKey: 'oceania' },
-      'NZL': {fillKey: 'oceania' },
-      'WSM': {fillKey: 'oceania' },
-      'TON': {fillKey: 'oceania' },
-      'SLB': {fillKey: 'oceania' },
-      'FJI': {fillKey: 'oceania' },
-      'VUT': {fillKey: 'oceania' },
-      'TUV': {fillKey: 'oceania' },
-      'TKL': {fillKey: 'oceania' },
-      'PYF': {fillKey: 'oceania' },
-      'PNG': {fillKey: 'oceania' },
-      'PLW': {fillKey: 'oceania' },
-      'PCN': {fillKey: 'oceania' },
-      'WLF': {fillKey: 'oceania' },
-      'NRU': {fillKey: 'oceania' },
-      'NIU': {fillKey: 'oceania' },
-      'NFK': {fillKey: 'oceania' },
-      'NCL': {fillKey: 'oceania' },
-      'MNP': {fillKey: 'oceania' },
-      'MHL': {fillKey: 'oceania' },
-      'KIR': {fillKey: 'oceania' },
-      'GUM': {fillKey: 'oceania' },
-      'FSM': {fillKey: 'oceania' },
-      'ASM': {fillKey: 'oceania' },
-      'ATF': {fillKey: 'oceania' },
-      'COK': {fillKey: 'oceania' },
-
-      'ATA': {fillKey: 'antarctica'},
-      'BVT': {fillKey: 'antarctica'},
-      'SGS': {fillKey: 'antarctica'},
-      'HMD': {fillKey: 'antarctica'},
-    };
-};
-
 function draw(isGlobe) {
   var topo = setup(isGlobe);
   var country = getGraphAttribute(isGlobe).selectAll(".country").data(topo.features);
-  var visitedArray = [
-    "ATA", "CAN", "AUS", "NZL", "BRA", "ARG", "MAF", "ZWE", "ZAF", "VIR", "VGB", "USA", "TZA", "THA", "BWA", "EGY", "KEN", "MAR", "NAM", "TZA",
-    "BHS", "CUB", "HTI", "JAM", "MEX", "CHN", "IND", "IDN", "JPN", "SGP", "THA", "TUR", "ARE", "VNM", "RUS", "PRI", "NLD", "DEU", "ESP", "FRA",
-    "GBR", "SWE", "EST", "FIN", "GRC", "HKG", "ITA", "MNE", "HRV", "HUN", "CHE", "AUT", "BEL", 'CZE', "DNK", "KHM", "LAO", "BRN", "TWN", "PHL",
-    "IRL", "MYS",
-  ];
+  var countryInfo = getCountryInfo();
+  var visitedArray = getVisitedCountries();
 
   country.enter().insert("path")
     .attr("class", function(d) {
-      var colorMap = getColorMap();
       var visited = visitedArray.indexOf(d.id) > -1 ? ' visited' : '';
-      if (colorMap[d.id]) {
-        return "country " + colorMap[d.id].fillKey + visited;
+      if (countryInfo[d.id]) {
+        return "country " + countryInfo[d.id].fillKey + visited;
       } else {
         return "country " + visited;
       }
@@ -1232,14 +963,13 @@ function draw(isGlobe) {
       })
     .style("fill", function(d, i) {
       try {
-        var colorMap = getColorMap();
-        if (colorMap[d.id]) {
-          if (selectedMapType === 'visited' &&  locationRoller.getSelectedElement && locationRoller.getSelectedElement().toLowerCase().replace(' ', '') === colorMap[d.id].fillKey.toLowerCase()) {
-            var color = colorFillNames[colorMap[d.id].fillKey];
+        if (countryInfo[d.id]) {
+          if (selectedMapType === 'visited' &&  locationRoller.getSelectedElement && locationRoller.getSelectedElement().toLowerCase().replace(' ', '') === countryInfo[d.id].fillKey.toLowerCase()) {
+            var color = colorFillNames[countryInfo[d.id].fillKey];
             var percentageChange = visitedArray.indexOf(d.id) > -1 ? -.5 : .5;
             return shadeColor(color, percentageChange);
           } else {
-            return colorFillNames[colorMap[d.id].fillKey];
+            return colorFillNames[countryInfo[d.id].fillKey];
           }
         }
       } catch(e) {
@@ -1342,8 +1072,9 @@ function getContainer(isGlobe) {
 }
 
 function recolorMap() {
+  var listOfContinents = ['northamerica','europe','asia','oceania','antarctica','africa','southamerica', 'caribbean']
   if (displayAllContinents) {
-    ['northamerica','europe','asia','oceania','antarctica','africa','southamerica'].forEach(function (element) {
+    listOfContinents.forEach(function (element) {
       if (selectedMapType === 'visited') {
         d3.selectAll("." + element).transition().style("fill", shadeColor(colorFillNames[element], .5));
         d3.selectAll("." + element + ".visited").transition().style("fill", shadeColor(colorFillNames[element], -.5));
@@ -1352,7 +1083,7 @@ function recolorMap() {
       }
     });
   } else {
-    ['northamerica','europe','asia','oceania','antarctica','africa','southamerica'].forEach(function (element) {
+    listOfContinents.forEach(function (element) {
       d3.selectAll("." + element).transition().style("fill", colorFillNames[element]);
     });
 
@@ -1412,7 +1143,8 @@ var rotationCoordinates = {
   'antarctica': [21.653867796634064, 89.3139539698907, -34.143665676810556],
   'southamerica': [64.6113636409277, 27.86200051985779, 1.5090438689472683],
   'africa': [-15.44547456275948, -0.6516005548556657, -0],
-  'oceania': [-135.78958485165387, 30.194218903527958, 4.349942898316325]
+  'oceania': [-135.78958485165387, 30.194218903527958, 4.349942898316325],
+  'caribbean': [75.20983902442727, -12.071642110547781, 17.965465687385763],
 };
 
 function callForNewMap() {
@@ -1447,11 +1179,11 @@ var mapTooltip = d3.select("#map-container").append("div").attr("class", "toolti
 var globeTooltip = d3.select("#globe-container").append("div").attr("class", "tooltip hidden");
 var movementObject = createMovementObject();
 var mapZoom = d3.zoom()
-      .scaleExtent([1, 9])
+      .scaleExtent([1, 50])
       .on("zoom", movementObject.scale);
 
 var globeZoom = d3.zoom()
-      .scaleExtent([1, 3])
+      .scaleExtent([1, 9])
       .on("zoom", movementObject.scale);
 
 var globeMath = createMathObject();

@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./css/flag.css" />
+    <script src="./js/visited.js" defer></script>
     <script src="./js/cover-photo-scroll.js"></script>
     <script src="https://d3js.org/d3.v4.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js" defer></script>
@@ -110,6 +111,7 @@
           <div class="stage">
             <div class="shape">
               <div data-item="North America" class="continents item">North America</div>
+              <div data-item="Caribbean" class="continents item">Caribbean</div>
               <div data-item="Antarctica" class="continents item">Antarctica</div>
               <div data-item="South America" class="continents item">South America</div>
               <div data-item="Asia" class="continents item">Asia</div>
@@ -122,15 +124,7 @@
         <div class="location-display-wrapper">
           <div class="header">Countries Visited<span class="footer">Underlined countries are where I have lived</span></div>
           <div class="display-locations">
-            <ul class="f32 country-list">
-              <li class="flag bs">Bahamas</li>
-              <li class="flag ca lived">Canada</li>
-              <li class="flag cu">Cuba</li>
-              <li class="flag ht">Haiti</li>
-              <li class="flag jm">Jamaica</li>
-              <li class="flag mx">Mexico</li>
-              <li class="flag us lived">United States</li>
-            </ul>
+            <ul class="f32 country-list"></ul>
           </div>
         </div>
       </div>
