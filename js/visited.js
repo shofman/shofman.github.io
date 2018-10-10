@@ -907,7 +907,7 @@ function getCountryInfo () {
     'MLT': {
       countryName: 'Malta',
       fillKey: 'europe',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'mt',
     },
