@@ -879,7 +879,7 @@ function getCountryInfo () {
     'POL': {
       countryName: 'Poland',
       fillKey: 'europe',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'pl',
     },
