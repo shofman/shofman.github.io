@@ -1,6 +1,13 @@
 <html>
   <head>
     <title>Scott of the month</title>
+
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+
     <style>
       @import url(https://fonts.googleapis.com/css?family=Pacifico);
 
@@ -135,22 +142,119 @@
         from {
           transform: rotate(0deg);
         }
-        to { 
+        to {
           transform: rotate(360deg);
         }
       }
 
       #me {
-          animation-name:            rotate; 
-          animation-duration:        100.5s; 
-          animation-iteration-count: infinite;
-          animation-timing-function: linear;
-          height: 200px;
-          width: 180px;
+        animation-name: rotate;
+        animation-duration: 100.5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        height: 200px;
+        width: 180px;
       }
 
       #price {
         opacity: 0;
+      }
+
+      .rain {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+      }
+
+      .rain.back-row {
+        display: none;
+        z-index: 1;
+        bottom: 60px;
+        opacity: 0.5;
+      }
+
+      body.back-row-toggle .rain.back-row {
+        display: block;
+      }
+
+      .drop {
+        position: absolute;
+        bottom: 100%;
+        width: 15px;
+        height: 120px;
+        pointer-events: none;
+        animation: drop 0.5s linear infinite;
+      }
+
+      @keyframes drop {
+        0% {
+          transform: translateY(0vh);
+        }
+        75% {
+          transform: translateY(90vh);
+        }
+        100% {
+          transform: translateY(90vh);
+        }
+      }
+
+      .stem {
+        width: 1px;
+        height: 60%;
+        margin-left: 7px;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25));
+        animation: stem 0.5s linear infinite;
+      }
+
+      @keyframes stem {
+        0% {
+          opacity: 1;
+        }
+        65% {
+          opacity: 1;
+        }
+        75% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .splat {
+        width: 15px;
+        height: 10px;
+        border-top: 2px dotted rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        opacity: 1;
+        transform: scale(0);
+        animation: splat 0.5s linear infinite;
+        display: none;
+      }
+
+      body.splat-toggle .splat {
+        display: block;
+      }
+
+      @keyframes splat {
+        0% {
+          opacity: 1;
+          transform: scale(0);
+        }
+        80% {
+          opacity: 1;
+          transform: scale(0);
+        }
+        90% {
+          opacity: 0.5;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1.5);
+        }
       }
     </style>
     <script src="https://cdn.rawgit.com/scottschiller/Snowstorm/master/snowstorm-min.js"></script>
@@ -167,21 +271,96 @@
         snowStorm.start()
       }
     </script>
-
   </head>
   <body style="margin: 0px; background: #0e0e0e;">
+    <div class="rain front-row"></div>
     <h1 class="rainbow">Scott of the Month - Jättebra</h1>
     <img id="me" src="./images/edgar.png" />
     <h4 class="rainbow" id="month"></h4>
+    <div class="rain back-row"></div>
     <h6 id="price">$3.14</h6>
   </body>
   <script>
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
+    var monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ]
 
-    var d = new Date();
-    var monthDisplay = document.getElementById('month');
+    var d = new Date()
+    var monthDisplay = document.getElementById('month')
     monthDisplay.innerHTML = monthNames[d.getMonth()]
+  </script>
+
+  <script>
+    var makeItRain = function() {
+      //clear out everything
+      $('.rain').empty()
+
+      var increment = 0
+      var drops = ''
+      var backDrops = ''
+
+      while (increment < 100) {
+        //couple random numbers to use for various randomizations
+        //random number between 98 and 1
+        var randoHundo = Math.floor(Math.random() * (98 - 1 + 1) + 1)
+        //random number between 5 and 2
+        var randoFiver = Math.floor(Math.random() * (5 - 2 + 1) + 2)
+        //increment
+        increment += randoFiver
+        //add in a new raindrop with various randomizations to certain CSS properties
+        drops +=
+          '<div class="drop" style="left: ' +
+          increment +
+          '%; bottom: ' +
+          (randoFiver + randoFiver - 1 + 100) +
+          '%; animation-delay: 0.' +
+          randoHundo +
+          's; animation-duration: 0.5' +
+          randoHundo +
+          's;"><div class="stem" style="animation-delay: 0.' +
+          randoHundo +
+          's; animation-duration: 0.5' +
+          randoHundo +
+          's;"></div><div class="splat" style="animation-delay: 0.' +
+          randoHundo +
+          's; animation-duration: 0.5' +
+          randoHundo +
+          's;"></div></div>'
+        backDrops +=
+          '<div class="drop" style="right: ' +
+          increment +
+          '%; bottom: ' +
+          (randoFiver + randoFiver - 1 + 100) +
+          '%; animation-delay: 0.' +
+          randoHundo +
+          's; animation-duration: 0.5' +
+          randoHundo +
+          's;"><div class="stem" style="animation-delay: 0.' +
+          randoHundo +
+          's; animation-duration: 0.5' +
+          randoHundo +
+          's;"></div><div class="splat" style="animation-delay: 0.' +
+          randoHundo +
+          's; animation-duration: 0.5' +
+          randoHundo +
+          's;"></div></div>'
+      }
+
+      $('.rain.front-row').append(drops)
+      $('.rain.back-row').append(backDrops)
+    }
+
+    makeItRain()
   </script>
 </html>
