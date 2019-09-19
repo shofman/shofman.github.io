@@ -844,7 +844,7 @@ function getCountryInfo () {
     'SRB': {
       countryName: 'Serbia',
       fillKey: 'europe',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'rs',
     },
@@ -865,7 +865,7 @@ function getCountryInfo () {
     'ROU': {
       countryName: 'Romania',
       fillKey: 'europe',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'ro',
     },
@@ -977,7 +977,7 @@ function getCountryInfo () {
     'ISL': {
       countryName: 'Iceland',
       fillKey: 'europe',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'is',
     },
