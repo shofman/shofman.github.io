@@ -6,13 +6,6 @@
       </script>
     <![endif]-->
     <title>Scott of the month</title>
-
-    <script
-      src="http://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
-
     <style>
       @import url(https://fonts.googleapis.com/css?family=Pacifico);
 
@@ -130,7 +123,7 @@
 
       body {
         margin: 0px;
-        background: #2eb5e5;
+        background: #343d3c;
         overflow: hidden;
       }
 
@@ -176,7 +169,6 @@
       }
 
       .rain.back-row {
-        display: none;
         z-index: 1;
         bottom: 60px;
         opacity: 0.5;
@@ -263,7 +255,7 @@
           transform: scale(1.5);
         }
       }
-      .sun {
+      #sun {
         position: absolute;
         top: 0;
         left: 0;
@@ -311,6 +303,7 @@
       .ray1 {
         height: 170px;
         width: 30px;
+        transform: rotate(180deg);
         -webkit-transform: rotate(180deg);
         top: -175px;
         left: 15px;
@@ -318,6 +311,7 @@
       .ray2 {
         height: 100px;
         width: 8px;
+        transform: rotate(220deg);
         -webkit-transform: rotate(220deg);
         top: -90px;
         left: 75px;
@@ -325,6 +319,7 @@
       .ray3 {
         height: 170px;
         width: 50px;
+        transform: rotate(250deg);
         -webkit-transform: rotate(250deg);
         top: -80px;
         left: 100px;
@@ -332,6 +327,7 @@
       .ray4 {
         height: 120px;
         width: 14px;
+        transform: rotate(305deg);
         -webkit-transform: rotate(305deg);
         top: 30px;
         left: 100px;
@@ -339,6 +335,7 @@
       .ray5 {
         height: 140px;
         width: 30px;
+        transform: 15deg);
         -webkit-transform: rotate(-15deg);
         top: 60px;
         left: 40px;
@@ -346,6 +343,7 @@
       .ray6 {
         height: 90px;
         width: 50px;
+        transform: rotate(30deg);
         -webkit-transform: rotate(30deg);
         top: 60px;
         left: -40px;
@@ -353,6 +351,7 @@
       .ray7 {
         height: 180px;
         width: 10px;
+        transform: rotate(70deg);
         -webkit-transform: rotate(70deg);
         top: -35px;
         left: -40px;
@@ -360,6 +359,7 @@
       .ray8 {
         height: 120px;
         width: 30px;
+        transform: rotate(100deg);
         -webkit-transform: rotate(100deg);
         top: -45px;
         left: -90px;
@@ -367,6 +367,7 @@
       .ray9 {
         height: 80px;
         width: 10px;
+        transform: rotate(120deg);
         -webkit-transform: rotate(120deg);
         top: -65px;
         left: -60px;
@@ -374,29 +375,30 @@
       .ray10 {
         height: 190px;
         width: 23px;
+        transform: rotate(150deg);
         -webkit-transform: rotate(150deg);
         top: -185px;
         left: -60px;
       }
 
-      @-webkit-keyframes ray_anim {
+      .hidden {
+        display: none;
+      }
+
+      @keyframes ray_anim {
         0% {
-          -webkit-transform: rotate(0deg);
           transform: rotate(0deg);
+          -webkit-transform: rotate(0deg);
         }
         100% {
-          -webkit-transform: rotate(360deg);
           transform: rotate(360deg);
+          -webkit-transform: rotate(360deg);
         }
       }
     </style>
-
-    <!-- 
-      Enable in the Winter: 
-      <script src="https://cdn.rawgit.com/scottschiller/Snowstorm/master/snowstorm-min.js"></script> -->
   </head>
   <body>
-    <div class="sun">
+    <div id="sun" class="hidden">
       <div class="ray_box">
         <div class="ray ray1"></div>
         <div class="ray ray2"></div>
@@ -410,11 +412,11 @@
         <div class="ray ray10"></div>
       </div>
     </div>
-    <div class="rain front-row"></div>
+    <div id="front-rain" class="front-row rain"></div>
     <h1 class="rainbow">Scott of the Month - Jättebra</h1>
     <img id="me" src="./images/Michael.jpg" />
     <h4 class="rainbow" id="month"></h4>
-    <div class="rain back-row"></div>
+    <div id="back-rain" class="back-row rain"></div>
     <h6 id="price">$3.14</h6>
     <script type="application/ld+json">
       {
@@ -431,34 +433,23 @@
     </script>
   </body>
   <script>
-    var monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ]
-
-    var d = new Date()
-    var monthDisplay = document.getElementById('month')
-    monthDisplay.innerHTML = monthNames[d.getMonth()]
-  </script>
-
-  <script>
     var makeItRain = function() {
       //clear out everything
-      $('.rain').empty()
+      var elements = document.querySelectorAll('.rain');
+
+      elements.forEach(function(element) {
+          while (element.firstChild) {
+              element.removeChild(element.firstChild);
+          }
+      });
 
       var increment = 0
       var drops = ''
       var backDrops = ''
+
+      var createDropStyle = (location, increment, randoFiver, randoHundo) => {
+        return `${location}:${increment}%;bottom:${randoFiver + randoFiver - 1 + 100}%;animation-delay: 0.${randoHundo}s;animation-duration: 0.5${randoHundo}s;`
+      }
 
       while (increment < 100) {
         //couple random numbers to use for various randomizations
@@ -469,48 +460,62 @@
         //increment
         increment += randoFiver
         //add in a new raindrop with various randomizations to certain CSS properties
+
+        var stem = `<div class="stem" style="animation-delay: 0.${randoHundo}s;animation-duration: 0.5${randoHundo}s;"></div>`
+        var splat = `<div class="splat" style="animation-delay: 0.${randoHundo}s; animation-duration: 0.5${randoHundo}s;"></div>`
         drops +=
-          '<div class="drop" style="left: ' +
-          increment +
-          '%; bottom: ' +
-          (randoFiver + randoFiver - 1 + 100) +
-          '%; animation-delay: 0.' +
-          randoHundo +
-          's; animation-duration: 0.5' +
-          randoHundo +
-          's;"><div class="stem" style="animation-delay: 0.' +
-          randoHundo +
-          's; animation-duration: 0.5' +
-          randoHundo +
-          's;"></div><div class="splat" style="animation-delay: 0.' +
-          randoHundo +
-          's; animation-duration: 0.5' +
-          randoHundo +
-          's;"></div></div>'
+          `<div class="drop" style="${createDropStyle('left', increment, randoFiver, randoHundo)}">
+            ${stem}
+            ${splat}
+          </div>`
+
         backDrops +=
-          '<div class="drop" style="right: ' +
-          increment +
-          '%; bottom: ' +
-          (randoFiver + randoFiver - 1 + 100) +
-          '%; animation-delay: 0.' +
-          randoHundo +
-          's; animation-duration: 0.5' +
-          randoHundo +
-          's;"><div class="stem" style="animation-delay: 0.' +
-          randoHundo +
-          's; animation-duration: 0.5' +
-          randoHundo +
-          's;"></div><div class="splat" style="animation-delay: 0.' +
-          randoHundo +
-          's; animation-duration: 0.5' +
-          randoHundo +
-          's;"></div></div>'
+          `<div class="drop" style="${createDropStyle('right', increment, randoFiver, randoHundo)}">
+            ${stem}
+            ${splat}
+          </div>`
       }
 
-      $('.rain.front-row').append(drops)
-      $('.rain.back-row').append(backDrops)
-    }
+      var addElement = (element, drops) => {
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = drops;
 
-    makeItRain()
+        // Append each child to the chosen element
+        while (tempDiv.firstChild) {
+          element.appendChild(tempDiv.firstChild);
+        }
+      }
+
+      addElement(document.getElementById('front-rain'), drops)
+      addElement(document.getElementById('back-rain'), backDrops)
+    }
+  </script>
+  <script>
+    var monthDisplay = document.getElementById('month')
+    monthDisplay.innerHTML = new Date().toLocaleString('default', { month: 'long' })
+
+    // Comma delimited list - reference here for more https://open-meteo.com/en/docs/#hourly=temperature_2m,showers,snowfall
+    var requestedParams = 'snowfall,rain'
+    var stockholmLocation = 'latitude=59.334591&longitude=18.063240'
+
+    fetch(`https://api.open-meteo.com/v1/forecast?${stockholmLocation}&current=${requestedParams}`)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response && response.current) {
+          if(response.current.snowfall > 0) {
+            var snowScript = document.createElement('script')
+            snowScript.setAttribute('src', 'https://cdn.rawgit.com/scottschiller/Snowstorm/master/snowstorm-min.js')
+            document.head.appendChild(snowScript)
+            snowScript.onload = function () {
+              window.snowStorm.start()
+            }
+          } else if (response.current.rain > 0) {
+            makeItRain()
+          } else {
+            // Let the sunshine
+            document.getElementById('sun').classList.remove('hidden')
+          }
+        }
+      })
   </script>
 </html>
