@@ -1,23 +1,23 @@
 "use strict";
 
-var displayHelloWorld = function () {
+const displayHelloWorld = function () {
     console.log("Hello World");
 };
 
-var locationRoller = {};
-var languageRoller = {};
+let locationRoller = {};
+let languageRoller = {};
 
-var languageMapping = {
+const languageMapping = {
     "PHP": "&lt;?php echo \"Hello World!\"; ?>",
     "Ruby": "puts \"Hello World\"",
-    "Javascript": "<div class=\"top-level\">var displayHelloWorld = function () {<div>console.log(\"Hello World\");</div>};<div class=\"empty-space\"></div>displayHelloWorld();</div>",
+    "Javascript": "<div class=\"top-level\">const displayHelloWorld = function () {<div>console.log(\"Hello World\");</div>};<div class=\"empty-space\"></div>displayHelloWorld();</div>",
     "Java": "<div class=\"top-level\">public class HelloWorld {<div class=\"empty-space\"></div> <div> public static void main(String[] args) { <div>System.out.println(\"Hello World\");</div>}</div><div class=\"empty-space\"></div>}</div>",
     "C#": "<div class=\"top-level\">using System;<div class=\"empty-space\"></div><div class=\"cancel-indent\">public class Hello <div class=\"cancel-indent\">{ <div>public static void Main() <div class=\"cancel-indent\">{<div>Console.WriteLine(\"Hello World!\");</div>}</div</div></div></div>}</div>",
     "SQL": "<div class=\"left-code\">SELECT G.Basic, P.Name <div>FROM Greetings as G, Places as P <div>WHERE G.Language = P.Location <div>ORDER BY P.Location;</div></div></div></div>",
     "Python": "print(\"Hello World!\")"
 };
 
-var locationMapping = {
+const locationMapping = {
     "North America": "northamerica",
     "South America": "southamerica",
     "Antarctica": "antarctica",
@@ -28,7 +28,7 @@ var locationMapping = {
     "Caribbean": "caribbean"
 };
 
-var contactMapping = {
+const contactMapping = {
     "LinkedIn": '<a class="linkedin" href="https://www.linkedin.com/in/scott-hofman-92a36882/"><img src="./images/In-2C-108px-TM.png"/><p>View My LinkedIn<sub>™</sub> Page</p></a>',
     'GitHub': '<a href="https://github.com/shofman"><img src="./images/GitHub-Mark-120px-plus.png"/><p>View My GitHub Page</p></a>',
     'Skype': '<a class="keep-text" href="skype:scott.hofman?add"><img src="./images/s-logo.png"/><p>scott.hofman</p></a></div>',
@@ -38,7 +38,7 @@ var contactMapping = {
 
 window.onload = function () {
     function calcOffsetTop(elt) {
-        var rect = elt.getBoundingClientRect();
+        const rect = elt.getBoundingClientRect();
         var bodyScrollTop = document.body.scrollTop;
         if (bodyScrollTop === 0) {
             bodyScrollTop = document.documentElement.scrollTop;
@@ -142,8 +142,6 @@ window.onload = function () {
                             countryInfo[countryName].fillKey === displayMapping[currentItem.getAttribute("data-item")] &&
                             countryInfo[countryName].visited
                         );
-
-                        console.log('country', countriesToShow)
 
                         var listOutput = countriesToShow.sort().map(countryCode => 
                             '<li class="flag ' + countryInfo[countryCode].flagName + (countryInfo[countryCode].lived ? ' lived' : '') + '">' + countryInfo[countryCode].countryName + '</li>'
