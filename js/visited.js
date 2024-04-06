@@ -1497,14 +1497,14 @@ function getCountryInfo () {
     'URY': {
       countryName: 'Uruguay',
       fillKey: 'southamerica',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'uy',
     },
     'PRY': {
       countryName: 'Paraguay',
       fillKey: 'southamerica',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'py',
     },
@@ -1553,7 +1553,7 @@ function getCountryInfo () {
     'CHL': {
       countryName: 'Chile',
       fillKey: 'southamerica',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'cl',
     },
