@@ -13,11 +13,22 @@ const createDisplay = (params) => {
       .zoom()
       .scaleExtent(params.zoom)
       .on("zoom", function zoom() {
-        worldDisplay.getGraphAttribute().attr("transform", d3.event.transform);
         if (worldDisplay.isGlobe) {
-          d3.selectAll("circle").attr("transform", d3.event.transform);
+          const { k: zoomLevel } = d3.event.transform;
+          const center = [worldDisplay.getWidth() / 2, worldDisplay.getHeight() / 2];
+
+          const xOffset = center[0] * (1 - zoomLevel);
+          const yOffset = center[1] * (1 - zoomLevel);
+
+          const transform = `translate(${xOffset}, ${yOffset}) scale(${zoomLevel})`;
+
+          worldDisplay.getGraphAttribute().attr("transform", transform);
+          d3.selectAll("circle").attr("transform", transform);
+          d3.selectAll(".country").style("stroke-width", 1.5 / d3.event.transform.k + "px");
+        } else {
+          worldDisplay.getGraphAttribute().attr("transform", d3.event.transform);
+          d3.selectAll(".country").style("stroke-width", 1.5 / d3.event.transform.k + "px");
         }
-        d3.selectAll(".country").style("stroke-width", 1.5 / d3.event.transform.k + "px");
       }),
     svg: null,
     width: container.offsetWidth,
@@ -207,7 +218,7 @@ function rotateMap(newVector) {
 const createMovementObject = function () {
   let initialMousePosition = null;
   let initialRotation;
-  let storedRotation
+  let storedRotation;
 
   function mousemove() {
     if (initialMousePosition) {
@@ -241,7 +252,7 @@ const createMovementObject = function () {
   }
 
   function storeRotation(rotation) {
-    storedRotation = rotation
+    storedRotation = rotation;
   }
 
   function resetStoredRotation() {
@@ -430,7 +441,7 @@ function throttledMapRedraw() {
   }, 200);
 }
 
-function createNewMap() {  
+function createNewMap() {
   worldDisplay.globe.width = worldDisplay.getContainer().offsetWidth;
   worldDisplay.globe.height = worldDisplay.globe.width / 2;
   if (worldDisplay.globe.height > 600) {
@@ -445,7 +456,7 @@ function createNewMap() {
 
   d3.selectAll("svg").remove();
   setup();
-  callForNewMap()
+  callForNewMap();
 }
 
 function recolorMap() {
@@ -516,8 +527,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
       worldDisplay.map.container.className = "active";
       worldDisplay.globe.container.classList.remove("active");
     }
-    recolorMap();
-    callForNewMap()
+
+    callForNewMap();
   });
 
   visitedSelector.addEventListener("change", function (event) {
@@ -553,9 +564,9 @@ function callForNewMap() {
           }
         };
       });
-    movementObject.storeRotation(rotationChosen)
+    movementObject.storeRotation(rotationChosen);
   } else {
-    movementObject.resetStoredRotation()
+    movementObject.resetStoredRotation();
 
     window.requestAnimationFrame(recolorMap);
   }
@@ -573,9 +584,9 @@ const rotationCoordinates = {
 };
 
 const mapTypes = {
-  'visited': 0,
-  'continent': 1,
-}
+  visited: 0,
+  continent: 1,
+};
 
 const movementObject = createMovementObject();
 const globeMath = createMathObject();
@@ -611,6 +622,9 @@ const worldDisplay = {
   getVisibleSvg: function () {
     return this.isGlobe ? this.globe.svg : this.map.svg;
   },
+  getWidth: function () {
+    return this.isGlobe ? this.globe.width : this.map.width;
+  },
   getHeight: function () {
     return this.isGlobe ? this.globe.height : this.map.height;
   },
@@ -619,17 +633,17 @@ const worldDisplay = {
 function setup() {
   setupGlobe();
   setupMap();
-  
-  // Draw the initial 
-  draw()
-  worldDisplay.isGlobe = !worldDisplay.isGlobe
+
+  // Draw the initial
+  draw();
+  worldDisplay.isGlobe = !worldDisplay.isGlobe;
 
   // Draw the other and then reset the view back to the initial
-  draw()
-  worldDisplay.isGlobe = !worldDisplay.isGlobe
+  draw();
+  worldDisplay.isGlobe = !worldDisplay.isGlobe;
 }
 
-setup()
+setup();
 
 // Hide the map from initial view (selected globe)
 worldDisplay.map.container.classList.remove("active");
