@@ -218,7 +218,6 @@ function rotateMap(newVector) {
 const createMovementObject = function () {
   let initialMousePosition = null;
   let initialRotation;
-  let storedRotation;
 
   function mousemove() {
     if (initialMousePosition) {
@@ -230,7 +229,6 @@ const createMovementObject = function () {
         newMousePosition[0] - initialMousePosition[0],
         newMousePosition[1] - initialMousePosition[1]
       );
-      storedRotation = newRotation;
       rotateMap(newRotation);
     }
   }
@@ -251,20 +249,10 @@ const createMovementObject = function () {
     locationRoller.cancelDemo();
   }
 
-  function storeRotation(rotation) {
-    storedRotation = rotation;
-  }
-
-  function resetStoredRotation() {
-    storedRotation = [0, 0, 0];
-  }
-
   return {
     mousedown,
     mouseup,
     mousemove,
-    storeRotation,
-    resetStoredRotation,
   };
 };
 
@@ -549,8 +537,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 function callForNewMap() {
+  window.requestAnimationFrame(recolorMap);
   if (worldDisplay.isGlobe && locationRoller.getSelectedElement) {
-    window.requestAnimationFrame(recolorMap);
     const rotationChosen =
       rotationCoordinates[locationRoller.getSelectedElement().toLowerCase().replace(" ", "")];
 
@@ -564,11 +552,6 @@ function callForNewMap() {
           }
         };
       });
-    movementObject.storeRotation(rotationChosen);
-  } else {
-    movementObject.resetStoredRotation();
-
-    window.requestAnimationFrame(recolorMap);
   }
 }
 
