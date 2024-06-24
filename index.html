@@ -22,10 +22,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js" defer></script>
     <script src="./js/fetch-world-json.js" defer></script>
     <script src="./js/display-world-map.js" defer></script>
-    <script type="text/javascript" defer>
-        if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent))
-            document.write('<script src="./js/ie-threedimensional-fix.js"><\/script>');
-    </script>
   </head>
   <body>
     <header>
@@ -146,15 +142,13 @@
     <section class="contact-me" id="contact-section">
       <h3>Contact Me</h3>
       <p>Here's how you can reach me:</p>
-      <div class="contact-spinner">
-        <div id="contact" class="scrollable-container">
-          <div class="stage">
-            <div class="shape">
-              <div data-item="LinkedIn" class="contact item" style="transform: rotateX(0deg) translateZ(75px);">LinkedIn<sub class="trademark">™</sub></div>
-              <div data-item="Email" class="contact item" style="transform: rotateX(72deg) translateZ(75px);">Email</div>
-              <div data-item="Phone" class="contact item" style="transform: rotateX(144deg) translateZ(75px);">Phone</div>
-              <div data-item="Skype" class="contact item" style="transform: rotateX(216deg) translateZ(75px);">Skype<sub class="trademark">™</sub></div>
-              <div data-item="GitHub" class="contact item" style="transform: rotateX(288deg) translateZ(75px);">GitHub</div>
+      <div class="contact-page">
+        <div id="contact" class="hoverable-container">
+          <div>
+            <div>
+              <div data-item="LinkedIn" class="contact-item selected">LinkedIn<sub class="trademark">™</sub></div>
+              <div data-item="Email" class="contact-item">Email</div>
+              <div data-item="GitHub" class="contact-item">GitHub</div>
             </div>
           </div>
         </div>
@@ -167,12 +161,12 @@
     </section>
 
     <section class="final-note">
-      <p>This <strong>fully responsive</strong> site was developed by me. If you like this, and want to see more</p>
-      <p>Please contact me or see my resume <a href="./resume.html">here</a></p>
+      <p>This <strong>fully responsive</strong> site was developed by me. If you like this, and want to see more,</p>
+      <p>please contact me or see my resume <a href="./resume.html">here</a></p>
     </section>
     <footer>
       <section>
-        <p>© 2017 Scott Hofman</p>
+        <p>© 2024 Scott Hofman</p>
       </section>
       <ul>
         <li>

@@ -64,6 +64,7 @@ svg {
 
 #globe-container {
   background: none;
+  background-color: #010b19;
 }
 .hidden { 
   display: none; 

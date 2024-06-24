@@ -80,7 +80,7 @@ h1 {
   background-color: #6f6f6f;
 }
 
-.about-me .contact {
+.about-me .contact-item {
   cursor: pointer;
   padding: 15px 20px;
   border-radius: 20px;
@@ -344,10 +344,6 @@ code {
    border-radius: rgba(25, 25, 25, .5);
 }
 
-.item.contact {
-  font-size: 50pt;
-}
-
 .display-contact-wrapper {
   width: 470px;
   background-color: rgba(0,0,0,0.1);
@@ -381,7 +377,38 @@ code {
   margin: auto;
 }
 
+.contact-page {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 30px 0;
+}
+
+.contact-item {
+  cursor: pointer;
+  height: 100px;
+  line-height: 100px;
+  width: 400px;
+  -webkit-border-radius: 12px;
+  -webkit-box-sizing: border-box;
+  border-radius: 12px;
+  box-sizing: border-box;
+  font-size: 30pt;
+  background-color: rgba(255,255,255,0.6);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  margin: 10px 0;
+}
+
+.contact-item.selected {
+  border: 1px rgba(34,34,34,1) solid;
+  font-weight: 600;
+}
+
 @media only screen and (max-width: 500px) {
+  h1 {
+    font-size: 30px;
+  }
   code {
     width: 100%;
   }
@@ -452,7 +479,6 @@ code {
 
   .scrollable-container .item {
     font-size: calc(1vw + 20px);
-    width: auto;
     width: 50vw;
     min-width: 100px;
     padding: 0 5px;
@@ -512,4 +538,14 @@ code {
   .about-me .about-photo {
     display: none;
   }
+
+  .contact-page {
+    flex-direction: column;
+  }
+
+  .contact-item {
+    font-size: calc(1vw + 20px);
+    width: 50vw;
+  }
+
 }
