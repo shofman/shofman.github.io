@@ -8,12 +8,11 @@ body {
 /* Responsive font sizes */
 h1 { 
     font-family: 'Playfair Display', serif;
-    font-size: 16px;
+    font-size: 40px;
     color: #0d0d0d;
-    font-color: #0d0d0d;
     font-weight: 500;
 } /* Older browsers */
-html { font-size: 14px; font-color: #0d0d0d; } /* Older browsers */
+
 @media screen and (min-width: 25em){
   html { font-size: calc( 14px + (18 - 14) * (100vw - 360px) / (1200 - 360) ); }
   h1 { font-size: calc( 16px + (24 - 16) * (100vw - 400px) / (800 - 400) ); }

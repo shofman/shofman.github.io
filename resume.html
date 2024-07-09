@@ -32,12 +32,13 @@
         <div class="languages skill-summary">
           <ul>
             <li class="grid-header"><h3>Languages</h3></li>
-            <li data-item="Javascript">Javascript/Typescript</li>
+            <li data-item="Javascript">Javascript</li>
+            <li data-item="Typescript">Typescript</li>
+            <li data-item="Coffeescript">Coffeescript</li>
             <li data-item="PHP">PHP</li>
             <li data-item="Java">Java</li>
             <li data-item="Kotlin">Kotlin</li>
             <li data-item="Ruby">Ruby/Rails</li>
-            <li data-item="Coffeescript">Coffeescript</li>
             <li data-item="Python">Python</li>
             <li data-item="SCSS">SCSS/CSS</li>
             <li data-item="GraphQL">GraphQL</li>
@@ -55,18 +56,17 @@
             <li data-item="TI">TI-Basic</li>
             <li data-item="Bash">Bash</li>
             <li data-item="Go">Go</li>
-            <li data-item="XML">XML</li>
-            <li data-item="XSLT">XSLT</li>
           </ul>
         </div>
         
         <div class="technologies skill-summary">
-         
           <ul>
             <li class="grid-header"><h3>Technologies</h3></li>
             <li>React</li>
             <li>React Native</li>
             <li>Tailwind</li>
+            <li>Next.js</li>
+            <li>Vercel</li>
             <li>Tauri</li>
             <li>Git</li>
             <li>Redis</li>
@@ -74,6 +74,7 @@
             <li>Android SDK</li>
             <li>AWS S3</li>
             <li>AWS EC2</li>
+            <li>AWS RDS</li>
             <li>HaProxy</li>
             <li>RSpec</li>
             <li>MongoDb</li>
@@ -99,6 +100,15 @@
             <li>Teaspoon</li>
             <li>DC/OS</li>
             <li>SVN</li>
+            <li>Prometheus</li>
+            <li>OpsGenie</li>
+            <li>Jira</li>
+            <li>Splunk</li>
+            <li>Grafana</li>
+            <li>D3</li>
+            <li>Airflow</li>
+            <li>Kafka</li>
+            <li>Cloudinary</li>
           </ul>
         </div>
       </div>
@@ -108,34 +118,29 @@
       <h2>Employment</h2>
       <table>
         <tr>
-          <td>Grand Resonance AB</td>
-          <td>June 2023 - Present</td>
-          <td>Founder - Software Consultant</td>
+          <td><strong>Grand Resonance AB</strong></td>
+          <td>Founder / Software Consultant</td>
+          <td>Jun. 2023 - Present</td>
         </tr>
         <tr>
-          <td>Klarna</td>
-          <td>Senior Software Engineer</td>
-          <td>December 2019 - May 2022</td>
+          <td><strong>Klarna</strong></td>
+          <td>Senior Software Engineer<br><br>Software Engineer</td>
+          <td>Dec. 2019 - May 2022<br><br>Oct. 2017 - Dec. 2019</td>
         </tr>
         <tr>
-          <td>Klarna</td>
+          <td><strong>Getty Images</strong></td>
           <td>Software Engineer</td>
-          <td>October 2017 - December 2019</td>
+          <td>Jan. 2014 - Jun. 2017</td>
         </tr>
         <tr>
-          <td>Getty Images</td>
-          <td>Software Engineer</td>
-          <td>January 2014 - Present</td>
-        </tr>
-        <tr>
-          <td>Basewarp</td>
+          <td><strong>Basewarp</strong></td>
           <td>Contract Software Developer</td>
-          <td>August 2013 - December 2013</td>
+          <td>Aug. 2013 - Dec. 2013</td>
         </tr>
         <tr>
-          <td>Rytmos</td>
+          <td><strong>Rytmos</strong></td>
           <td>Cofounder, Software Developer, Designer</td>
-          <td>June 2012 - August 2012</td>
+          <td>Jun. 2012 - Aug. 2012</td>
         </tr>
       </table>
     </section>
@@ -146,7 +151,7 @@
         <tr>
           <td>University of Edinburgh</td>
           <td class="degree">B.Eng. in Software Engineering <br/>First Class Honours</td>
-          <td>Sept 2009 - July 2013</td>
+          <td>Sep. 2009 - Jul. 2013</td>
         </tr>
       </table>
     </section>
@@ -156,6 +161,180 @@
       <h2>Selected Projects</h2>
 
       <div class="project-list">
+        <div class="project">
+          <div class="project-description">
+            <h3>Travel Map</h3>
+            <h5><a href="https://brentdianatravels.vercel.app/travels">Website</a> created for travel</h5>
+            <p>Independant - March 2024</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> Vercel, Next.js, Javascript, D3, Auth0</li>
+            <li>Website to display the visited countries of a well-travelled couple, as well as dynamic handwritten notes</li>
+            <li>Admin interface for authorized users to allow management of visited countries</li>
+            <li>Previous versions of this site were created with Ruby/Rails and PHP</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Fix Consent Manager for Segment.io</h3>
+            <h5><a href="https://github.com/segmentio/consent-manager/pull/338">Open-source contribution</a></h5>
+            <p>Consultant - May 2023</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> Next.js, React, Typescript, Github</li>
+            <li>As part of consultant work for a client, I created a fix for the Segment.io consent manager to work with Next.js 13</li>
+            <li>Fixed two outstanding issues as a consequence of this change</li>
+          </ul>
+        </div>
+
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Merchant Directory</h3>
+            <h5>Backend Service and Frontend UI for merchants within the Klarna App</h5>
+            <p>Klarna - February 2018 - May 2022</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> React Native, Most.js, Ramda, Redux, ExpressJS, Sequelize, Jenkins, PostgreSQL, Redis, Docker, AWS S3, AWS RDS, AWS EC2, Airflow</li>
+            <li>Create both backend and frontend flows for these stores, featured on the homepage of the app</li>
+            <li>Service provided API for:
+              <ul>
+                <li>Listing merchants associated with Klarna and external online merchants that users could shop at, and api for searching merchants</li>
+                <li>Searching for merchants</li>
+                <li>Identifying merchants based on urls (including homepages, subdomains and CDNs)</li>
+              </ul>
+            </li>
+            <li>Handled de-duplication of merchants, multi-country (23 different markets) support, and personalization for existing users</li>
+            <li>Responsible for identifying merchants based on URLs, used by several other teams as critical infrastructure for their features</li>
+            <li>Implemented feature for allowing users to save merchants and personalize their own lists (alongside flow for streamlining 'right to be forgotten' requests)</li>
+            <li>Created admin overview page integrated into LDAP to decrease customer service requests and ease troubleshooting for team</li>
+            <li>Built Jenkins flow for automating repetitive tasks and high-risk operations</li>
+            <li>Create separate repository for audit trail with authorizations required by security regulations</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>App Homepage</h3>
+            <h5>Iterated on homepage</h5>
+            <p>Klarna - March 2020 - May 2022</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> React Native, GraphQL, NodeJS, ExpressJS, Cloudinary</li>
+            <li>Work on several iterations of homepage. Display content fetched from numerous other teams via GraphQl in grid layout</li>
+            <li>Track and evaluate which content was performing well and making adjustments based off this information</li>
+            <li>Reduce and optimize requests for initial page to be as low as possible to increase TimeToLoad (TTL) for the app</li>
+            <li>Implemented for both web and Klarna application</li>
+            <li>Served 2.8 million daily active users</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Shopping Team On-Call</h3>
+            <h5>Defined and operated the on-call role</h5>
+            <p>Klarna - March 2018 - May 2022</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> Opsgenie, Datadog, Prometheus, Splunk</li>
+            <li>Defined initial on-call team responsibilities and SLAs for services</li>
+            <li>Onboarded dozens of teammates across domain on various services about the shopping service and integrating individuals in the on-call rotation</li>
+            <li>Defined troubleshooting error queries to use in Splunk for teams, alongside error dashboards to dive into technical problems</li>
+            <li>Defined alert thresholds for services to trigger when a problem had occurred</li>
+            <li>Served on the on-call rotation for several years, mitigating several incidents and assisting troubleshooting others</li>
+            <li>Create error runbook for common problems</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Non-Technical Roles</h3>
+            <h5>Work with Interview Pipeline and Architecture Groups</h5>
+            <p>Klarna - May 2018 - May 2022</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> Draw.io, Swimlanes.io, Google Meet, Slack</li>
+            <li>Review technical submissions from prospective candidates</li>
+            <li>Conduct in-person interviews for both full-time employees and consultants</li>
+            <li>Meet with other teams within domain as head of team to ensure alignment and discuss solutions to problems</li>
+            <li>Devise technical architecture documents to present to stakeholders</li>
+          </ul>
+        </div>
+
+
+        <div class="project">
+          <div class="project-description">
+            <h3>Affiliation Service</h3>
+            <h5>Ensure links throughout app were monetized</h5>
+            <p>Klarna - June 2018 - November 2019</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> React Native, NodeJS, Docker, Postgres, AWS RDS</li>
+            <li>Helped create backend service that would allow monetization of links within app</li>
+            <li>Responsible for ensuring that front-end application would use this affiliation service for all links</li>
+            <li>Integrated affiliation links into other services (wishlist and merchants)</li>
+            <li>Large impact on the finacial success of our team - responsible for large part of revenue</li>
+            <li>Responsible for handover to another team</li>
+          </ul>
+        </div>
+        
+        <div class="project">
+          <div class="project-description">
+            <h3>Wishlist Service</h3>
+            <h5>Create backend and frontend for wishlisting items on internet</h5>
+            <p>Klarna - August 2018 - January 2020</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> React Native, Most.js, Ramda, Redux, NodeJS, Express, Redis, Bull, Postgres, AWS RDS, AWS EC2, Docker</li>
+            <li>Allow users to wishlist any project across the internet. Store in database</li>
+            <li>Assist with web scraper to remotely fetch websites and scrape prices</li>
+            <li>Create push notifications to indicate a price drop was detected by our automated scraper</li>
+            <li>Implemented multiple wishlists per user, migrating existing records to new format without downtime, and implemented sharing functionality</li>
+          </ul>
+        </div>
+        
+        <div class="project">
+          <div class="project-description">
+            <h3>One Time Card Creation Flow</h3>
+            <h5>Create UI for Generating Single-Use Credit Cards</h5>
+            <p>Klarna - March 2018 - June 2018</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> React Native, Most.js, Ramda, Redux</li>
+            <li>Created front-end flow for creating and viewing single-use credit cards for the Klarna App</li>
+            <li>Ensured that the flow was PCI compliant</li>
+          </ul>
+        </div>
+          
+        <div class="project">
+          <div class="project-description">
+            <h3>Biometric Login</h3>
+            <h5>Implemented biometric login for Klarna App launch</h5>
+            <p>Klarna - February 2018</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> React Native, Redux</li>
+            <li>Handpicked to deliver biometric login flow for app launch under tight deadline</li>
+            <li>Responsible for handover to next team - code fundamentals still the same two years later</li>
+          </ul>
+        </div>
+        
+        <div class="project">
+          <div class="project-description">
+            <h3>Browser Wrapper</h3>
+            <h5>Wrap WebView with React Native for Klarna App</h5>
+            <p>Klarna - October - December 2017</p>
+          </div>
+          <ul>
+            <li><strong>Technologies Used:</strong> React Native, Java, ObjectiveC, Webview, Redux, Javascript, Jest</li>
+            <li>Create React Native Wrapper to present WebView as functional browser</li>
+            <li>Add logic and UI elements for handling multiple tabs</li>
+            <li>Fetch scripts that would perform automatic checkout when visiting website (based on URL)</li>
+          </ul>
+        </div>
+
+
         <div class="project">
           <div class="project-description">
             <h3>Invision Partnership</h3>
@@ -305,13 +484,13 @@
           <div class="project-description">
             <h3>Independant Android Game</h3>
             <h5>Music and rhythm game, based off user's MP3. Analyze waveform of song, and created game based around it.</h5>
-            <p><a href="http://rytmos-game.com">Rytmos</a> -  June - August 2012</p>
+            <p><a href="https://web.archive.org/web/20160617121746/http://rytmos-game.com/">Rytmos</a> -  June - August 2012</p>
           </div>
           <ul>
             <li><strong>Technologies Used:</strong> C#, Unity, Photoshop, SQLite, C, Java, SVN</li>
             <li>Developed core game mechanics and setup database for tracking player scores.</li>
             <li>Assisted with art creation, sound processing and marketing.</li>
-            <li>Released on <a href="https://play.google.com/store/apps/details?id=com.BiTeraGames.Rytmos.Full&hl=en">Google Play</a> within three-month deadline, using rapid prototyping.</li>
+            <li>Released on Google Play within three-month deadline, employing rapid prototyping to deliver finished result.</li>
           </ul>
         </div>
 
