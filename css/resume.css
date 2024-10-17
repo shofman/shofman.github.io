@@ -130,7 +130,7 @@ section::after {
     grid-column-gap: 10px;
     grid-row-gap: 14px;
     display: inline-grid;
-    padding: 10px;
+    padding: 10px 10px 25px 10px;
     background-color: #bbb;
     border-radius: 15px;
     min-width: 400px;
@@ -152,21 +152,32 @@ section::after {
     margin-bottom: 15px;
 }
 
+.grid-header.grid-header-small {
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+.grid-header.grid-header-small h5 {
+    margin: 10px;
+}
+
 .skill-summary h3 {
     margin: 0;
 }
 
 .skill-summary li {
-    display: inline;
-}
-
-.skill-summary li:last-child {
-    margin-bottom: 15px;
+    display: inline-flex;
+    justify-content: left;
+    align-items: center;
 }
 
 .skill-summary li:after {
     content: "\A";
     white-space: pre;
+}
+
+.icon {
+    padding-right: 5px;
 }
 
 #tooltip {
