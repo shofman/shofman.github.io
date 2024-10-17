@@ -208,7 +208,7 @@ const setupRoller = function (
   };
 
   const getSelectedElement = function () {
-    return itemElements[elementSelected].getAttribute("data-item");
+    return itemElements[elementSelected].getAttribute("data-item").toLowerCase().replace(" ", "");
   };
 
   if (stageElement) {
@@ -248,6 +248,7 @@ const displayHelloWorld = () => {
 };
 
 let locationRoller = {};
+let languageRoller = {};
 
 const languageMapping = {
   PHP: '&lt;?php echo "Hello World!"; ?>',
@@ -271,7 +272,6 @@ const locationMapping = {
   Caribbean: "caribbean",
 };
 
-// TODO - DELETE
 const contactMapping = {
   LinkedIn:
     '<a class="linkedin" href="https://www.linkedin.com/in/scott-hofman-92a36882/"><img src="./images/In-2C-108px-TM.png"/><p>View My LinkedIn<sub>™</sub> Page</p></a>',
@@ -290,16 +290,27 @@ const setupContactHover = () => {
 
     const elemInteraction = () => {
       for (let j = 0; j < contactElements.length; j++) {
-        contactElements[j].classList.remove('selected')
+        contactElements[j].classList.remove("selected");
       }
-      elem.classList.add('selected')
-      displayContact.innerHTML = contactMapping[attribute]
-    }
-    
+      elem.classList.add("selected");
+      displayContact.innerHTML = contactMapping[attribute];
+    };
+
     elem.addEventListener("mouseover", elemInteraction);
     elem.addEventListener("onclick", elemInteraction);
   }
 };
+
+const mediaQuery = window.matchMedia(`(prefers-reduced-motion: reduce)`);
+let isReducedMotion = mediaQuery === true || mediaQuery.matches === true
+let showDemo = !isReducedMotion;
+
+mediaQuery.addEventListener("change", (event) => {
+  showDemo = false;
+  isReducedMotion = event.matches
+  if (languageRoller.cancelDemo) languageRoller.cancelDemo();
+  if (locationRoller.cancelDemo) locationRoller.cancelDemo();
+});
 
 window.onload = function () {
   const locationWrapper = document.getElementsByClassName("location-display-wrapper")[0];
@@ -333,16 +344,21 @@ window.onload = function () {
   const locationRollerElement = document.getElementById("locations");
 
   // Language Roller
-  setupRoller(langaugeRollerElement, { demo: true, speed: 2200 }, codeDisplay, languageMapping);
+  languageRoller = setupRoller(
+    langaugeRollerElement,
+    { demo: showDemo, speed: 2200 },
+    codeDisplay,
+    languageMapping
+  );
 
   // Setup contact
-  setupContactHover()
+  setupContactHover();
 
   if (!locationRoller.getSelectedElement) {
     // Locations Visited
     locationRoller = setupRoller(
       locationRollerElement,
-      { demo: true, speed: 3000 },
+      { demo: showDemo, speed: 3000 },
       locationsDisplay,
       locationMapping,
       adjustHeightOfDisplayElement

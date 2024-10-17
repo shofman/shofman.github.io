@@ -36,180 +36,6 @@ const createDisplay = (params) => {
   };
 };
 
-const createMathObject = function () {
-  const asRadians = Math.PI / 180;
-  const asDegrees = 180 / Math.PI;
-
-  function dragRotate(rotationVector, deltaRoll, deltaPitch) {
-    const roll = rotationVector[0] * asRadians;
-    const pitch = rotationVector[1] * asRadians;
-    const yaw = rotationVector[2] * asRadians;
-    const deltaRollRadians = deltaRoll * asRadians;
-    const deltaPitchRadians = deltaPitch * asRadians;
-
-    const sinRoll = Math.sin(roll);
-    const sinPitch = Math.sin(pitch);
-    const sinYaw = Math.sin(yaw);
-    const cosRoll = Math.cos(roll);
-    const cosPitch = Math.cos(pitch);
-    const cosYaw = Math.cos(yaw);
-
-    const sinDeltaRoll = Math.sin(deltaRollRadians);
-    const sinDeltaPitch = Math.sin(deltaPitchRadians);
-    const cosDeltaRoll = Math.cos(deltaRollRadians);
-    const cosDeltaPitch = Math.cos(deltaPitchRadians);
-
-    const m00 =
-        -sinDeltaRoll * sinRoll * cosPitch +
-        (sinYaw * sinRoll * sinPitch + cosYaw * cosRoll) * cosDeltaRoll,
-      m01 = -sinYaw * cosDeltaRoll * cosPitch - sinDeltaRoll * sinPitch,
-      m10 =
-        -sinDeltaPitch * sinRoll * cosDeltaRoll * cosPitch -
-        (sinYaw * sinRoll * sinPitch + cosYaw * cosRoll) * sinDeltaRoll * sinDeltaPitch -
-        (sinRoll * sinPitch * cosYaw - sinYaw * cosRoll) * cosDeltaPitch,
-      m11 =
-        sinDeltaRoll * sinDeltaPitch * sinYaw * cosPitch -
-        sinDeltaPitch * sinPitch * cosDeltaRoll +
-        cosDeltaPitch * cosYaw * cosPitch,
-      m20 =
-        -sinRoll * cosDeltaRoll * cosDeltaPitch * cosPitch -
-        (sinYaw * sinRoll * sinPitch + cosYaw * cosRoll) * sinDeltaRoll * cosDeltaPitch +
-        (sinRoll * sinPitch * cosYaw - sinYaw * cosRoll) * sinDeltaPitch,
-      m21 =
-        sinDeltaRoll * sinYaw * cosDeltaPitch * cosPitch -
-        sinDeltaPitch * cosYaw * cosPitch -
-        sinPitch * cosDeltaRoll * cosDeltaPitch,
-      m22 =
-        cosDeltaRoll * cosDeltaPitch * cosRoll * cosPitch +
-        (sinYaw * sinPitch * cosRoll - sinRoll * cosYaw) * sinDeltaRoll * cosDeltaPitch -
-        (sinPitch * cosYaw * cosRoll + sinYaw * sinRoll) * sinDeltaPitch;
-
-    let newYaw, newPitch, newRoll;
-    if (m01 != 0 || m11 != 0) {
-      newYaw = Math.atan2(-m01, m11);
-      newPitch = Math.atan2(
-        -m21,
-        Math.sin(newYaw) == 0 ? m11 / Math.cos(newYaw) : -m01 / Math.sin(newYaw)
-      );
-      newRoll = Math.atan2(-m20, m22);
-    } else {
-      newYaw = Math.atan2(m10, m00) - m21 * roll;
-      newPitch = (-m21 * Math.PI) / 2;
-      newRoll = roll;
-    }
-
-    return [newRoll * asDegrees, newPitch * asDegrees, newYaw * asDegrees];
-  }
-
-  function dot(v0, v1) {
-    for (let i = 0, sum = 0; v0.length > i; ++i) {
-      sum += v0[i] * v1[i];
-    }
-    return sum;
-  }
-
-  function convertEulerToQuaternion(eulerAngle) {
-    if (typeof eulerAngle === "undefined") {
-      eulerAngle = [0, 0, 0];
-    }
-    const roll = 0.5 * eulerAngle[0] * asRadians,
-      pitch = 0.5 * eulerAngle[1] * asRadians,
-      yaw = 0.5 * eulerAngle[2] * asRadians,
-      sinRoll = Math.sin(roll),
-      cosRoll = Math.cos(roll),
-      sinPitch = Math.sin(pitch),
-      cosPitch = Math.cos(pitch),
-      sinYaw = Math.sin(yaw),
-      cosYaw = Math.cos(yaw);
-
-    return [
-      cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw,
-      sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw,
-      cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw,
-      cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw,
-    ];
-  }
-
-  function trackballAngles(mousePosition) {
-    const scale = worldDisplay.getProjection().scale();
-    const translation = worldDisplay.getProjection().translate();
-    const x = mousePosition[0] - translation[0];
-    const y = -(mousePosition[1] - translation[1]);
-    const sidesSquared = x * x + y * y;
-
-    const z =
-      scale * scale > 2 * sidesSquared
-        ? Math.sqrt(scale * scale - sidesSquared)
-        : (scale * scale) / 2 / Math.sqrt(sidesSquared);
-
-    const lambda = Math.atan2(x, z) * asDegrees;
-    const phi = Math.atan2(y, z) * asDegrees;
-    return [lambda, phi];
-  }
-
-  function convertQuaternionToEuler(quaternion) {
-    const x = Math.atan2(
-      2 * (quaternion[0] * quaternion[1] + quaternion[2] * quaternion[3]),
-      1 - 2 * (quaternion[1] * quaternion[1] + quaternion[2] * quaternion[2])
-    );
-
-    const yMin = Math.min(1, 2 * (quaternion[0] * quaternion[2] - quaternion[3] * quaternion[1]));
-    const y = Math.asin(Math.max(-1, yMin));
-
-    const z = Math.atan2(
-      2 * (quaternion[0] * quaternion[3] + quaternion[1] * quaternion[2]),
-      1 - 2 * (quaternion[2] * quaternion[2] + quaternion[3] * quaternion[3])
-    );
-
-    return [x * asDegrees, y * asDegrees, z * asDegrees];
-  }
-
-  function slerp(quaternionStart, quaternionEnd, percentChange) {
-    const cosHalfTheta = dot(quaternionStart, quaternionEnd);
-
-    if (Math.abs(cosHalfTheta) >= 1.0) {
-      return quaternionStart;
-    }
-
-    const halfTheta = Math.acos(cosHalfTheta);
-    const sinHalfTheta = Math.sqrt(1 - cosHalfTheta * cosHalfTheta);
-
-    if (Math.abs(sinHalfTheta) < 0.001) {
-      return [
-        quaternionStart[0] * 0.5 + quaternionEnd[0] * 0.5,
-        quaternionStart[1] * 0.5 + quaternionEnd[1] * 0.5,
-        quaternionStart[2] * 0.5 + quaternionEnd[2] * 0.5,
-        quaternionStart[3] * 0.5 + quaternionEnd[3] * 0.5,
-      ];
-    }
-
-    const ratioA = Math.sin((1 - percentChange) * halfTheta) / sinHalfTheta;
-    const ratioB = Math.sin(percentChange * halfTheta) / sinHalfTheta;
-
-    const w = quaternionStart[0] * ratioA + quaternionEnd[0] * ratioB;
-    const x = quaternionStart[1] * ratioA + quaternionEnd[1] * ratioB;
-    const y = quaternionStart[2] * ratioA + quaternionEnd[2] * ratioB;
-    const z = quaternionStart[3] * ratioA + quaternionEnd[3] * ratioB;
-
-    return [w, x, y, z];
-  }
-
-  function getNewRotationVectorViaSlerp(currentRotation, targetRotation, change) {
-    const newQuaternion = slerp(
-      convertEulerToQuaternion(currentRotation),
-      convertEulerToQuaternion(targetRotation),
-      change
-    );
-    return convertQuaternionToEuler(newQuaternion);
-  }
-
-  return {
-    dragRotate: dragRotate,
-    getNewRotationVector: getNewRotationVectorViaSlerp,
-    trackballAngles: trackballAngles,
-  };
-};
-
 function rotateMap(newVector) {
   worldDisplay.getProjection().rotate(newVector);
   worldDisplay.getVisibleSvg().selectAll("path").attr("d", worldDisplay.getPath());
@@ -285,13 +111,36 @@ function setupGlobe() {
     .on("touchend", movementObject.mouseup)
     .on("mouseup", movementObject.mouseup);
 
+  const defs = worldDisplay.globe.svg.append("defs");
+
+  const radialGradient = defs
+    .append("radialGradient")
+    .attr("id", "radialOcean")
+    .attr("cx", "50%")
+    .attr("cy", "50%")
+    .attr("r", "80%");
+
+  radialGradient
+    .append("stop")
+    .attr("offset", "20%")
+    .attr("stop-color", colorFillNames["lightblue"]) // Light blue
+    .attr("stop-opacity", 0.4);
+
+  radialGradient
+    .append("stop")
+    .attr("offset", "100%")
+    .attr("stop-color", colorFillNames["midblue"]) // Mid blue
+    .attr("stop-opacity", 0.3);
+
+  // Apply the radial gradient as the base fill
   worldDisplay.globe.svg
     .append("circle")
     .attr("cx", worldDisplay.globe.width / 2)
     .attr("cy", worldDisplay.globe.height / 2)
     .attr("r", worldDisplay.globe.height / 2.5)
     .attr("stroke", "transparent")
-    .attr("fill", "#F0F8FF");
+    .attr("fill", "url(#radialOcean)");
+
   worldDisplay.globe.g = worldDisplay.globe.svg.append("g");
 }
 
@@ -319,37 +168,11 @@ function getJson() {
 }
 
 const colorFillNames = {
-  defaultFill: "#ABDDA4",
-  nonvisited: "#b4b4b7",
-  visited: "#ff0000",
-  northamerica: "#0fa0fa",
-  southamerica: "#ff0000",
-  africa: "#006400",
-  europe: "#800080",
-  asia: "#f79104",
-  oceania: "#5f9ab7",
-  antarctica: "#d3d3d3",
-  caribbean: "#000000",
-};
-
-const shadeColor = function (color, percent) {
-  const f = parseInt(color.slice(1), 16),
-    quaternion = percent < 0 ? 0 : 255,
-    p = percent < 0 ? percent * -1 : percent,
-    R = f >> 16,
-    G = (f >> 8) & 0x00ff,
-    B = f & 0x0000ff;
-  return (
-    "#" +
-    (
-      0x1000000 +
-      (Math.round((quaternion - R) * p) + R) * 0x10000 +
-      (Math.round((quaternion - G) * p) + G) * 0x100 +
-      (Math.round((quaternion - B) * p) + B)
-    )
-      .toString(16)
-      .slice(1)
-  );
+  lightblue: "#7fcdff",
+  midblue: "#1da2d8",
+  unselected: "#d3d3d3",
+  nonvisited: "#919191",
+  visited: "#38b551",
 };
 
 function draw() {
@@ -401,23 +224,7 @@ function draw() {
       worldDisplay.getTooltip().classed("hidden", true);
     })
     .style("fill", function (d, i) {
-      try {
-        if (countryInfo[d.id]) {
-          if (
-            worldDisplay.selectedMapType === mapTypes.visited &&
-            locationRoller.getSelectedElement &&
-            locationRoller.getSelectedElement().toLowerCase().replace(" ", "") ===
-              countryInfo[d.id].fillKey.toLowerCase()
-          ) {
-            const color = colorFillNames[countryInfo[d.id].fillKey];
-            const percentageChange = visitedArray.indexOf(d.id) > -1 ? -0.5 : 0.5;
-            return shadeColor(color, percentageChange);
-          } else {
-            return colorFillNames[countryInfo[d.id].fillKey];
-          }
-        }
-      } catch (e) {}
-      return "black";
+      return colorFillNames["unselected"];
     });
 }
 
@@ -429,18 +236,17 @@ function throttledMapRedraw() {
   }, 200);
 }
 
-function createNewMap() {
-  worldDisplay.globe.width = worldDisplay.getContainer().offsetWidth;
-  worldDisplay.globe.height = worldDisplay.globe.width / 2;
-  if (worldDisplay.globe.height > 600) {
-    worldDisplay.globe.height = 600;
+function resizeMap(key) {
+  worldDisplay[key].width = worldDisplay.getContainer().offsetWidth;
+  worldDisplay[key].height = worldDisplay[key].width / 2;
+  if (worldDisplay[key].height > 600) {
+    worldDisplay[key].height = 600;
   }
+}
 
-  worldDisplay.map.width = worldDisplay.getContainer().offsetWidth;
-  worldDisplay.map.height = worldDisplay.map.width / 2;
-  if (worldDisplay.map.height > 600) {
-    worldDisplay.map.height = 600;
-  }
+function createNewMap() {
+  resizeMap("globe");
+  resizeMap("map");
 
   d3.selectAll("svg").remove();
   setup();
@@ -463,31 +269,31 @@ function recolorMap() {
       if (worldDisplay.selectedMapType === mapTypes.visited) {
         d3.selectAll("." + element)
           .transition()
-          .style("fill", shadeColor(colorFillNames[element], 0.5));
+          .style("fill", colorFillNames["nonvisited"]);
         d3.selectAll("." + element + ".visited")
           .transition()
-          .style("fill", shadeColor(colorFillNames[element], -0.5));
+          .style("fill", colorFillNames["visited"]);
       } else {
         d3.selectAll("." + element)
           .transition()
-          .style("fill", colorFillNames[element]);
+          .style("fill", colorFillNames["unselected"]);
       }
     });
   } else {
     listOfContinents.forEach(function (element) {
       d3.selectAll("." + element)
         .transition()
-        .style("fill", colorFillNames[element]);
+        .style("fill", colorFillNames["unselected"]);
     });
 
     if (locationRoller.getSelectedElement && worldDisplay.selectedMapType === mapTypes.visited) {
-      const continentSelected = locationRoller.getSelectedElement().toLowerCase().replace(" ", "");
+      const continentSelected = locationRoller.getSelectedElement();
       d3.selectAll("." + continentSelected)
         .transition()
-        .style("fill", shadeColor(colorFillNames[continentSelected], 0.5));
+        .style("fill", colorFillNames["nonvisited"]);
       d3.selectAll("." + continentSelected + ".visited")
         .transition()
-        .style("fill", shadeColor(colorFillNames[continentSelected], -0.5));
+        .style("fill", colorFillNames["visited"]);
     }
   }
 }
@@ -539,11 +345,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 function callForNewMap() {
   window.requestAnimationFrame(recolorMap);
   if (worldDisplay.isGlobe && locationRoller.getSelectedElement) {
-    const rotationChosen =
-      rotationCoordinates[locationRoller.getSelectedElement().toLowerCase().replace(" ", "")];
+    const rotationChosen = rotationCoordinates[locationRoller.getSelectedElement()];
 
     d3.transition()
-      .duration(1000)
+      .duration(isReducedMotion ? 0 : 1000)
       .tween("rotate", function () {
         const r = d3.interpolate(worldDisplay.getProjection().rotate(), rotationChosen);
         return function (t) {

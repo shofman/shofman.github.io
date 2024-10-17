@@ -54,7 +54,23 @@ svg {
   height: initial;
   width: 95%;
   overflow:hidden;
-  background: #F0F8FF;
+  background: radial-gradient(
+    circle at center,
+    #68a4ca00,
+    #0e5774,
+    transparent 1000px
+  ),radial-gradient(
+    circle at top right,
+    #68a5ca62,
+    #0e5774,
+    transparent 2000px
+  )
+  ,radial-gradient(
+    circle at top left,
+    #68a5ca62,
+    #0e5774,
+    transparent 2000px
+  );
   display: none;
 }
 
