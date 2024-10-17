@@ -54,28 +54,20 @@ section::after {
     margin: 0 auto;
     padding-bottom: 20px;
     font-size: 18px;
-  }
+}
 
-  section {
+section {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  section:not(:nth-last-child(-n+2))::after {
+}
+
+section:not(:nth-last-child(-n+2))::after {
     content: '';
     width: 45%;
     border-bottom: 2px solid rgba(34,34,34,1); /* Adjust thickness and color as needed */
     margin-top: 30px; /* Distance from the bottom of the border to the next content */
-  }
-/* 
-#skills > div:last-of-type {
-    border-bottom: 1px solid rgba(0,0,0,0.3);
-    width: 46%;
-    margin: 0 auto;
-    padding-bottom: 20px;
-    font-size: 18px;
-} */
+}
 
 .project:nth-child(even) {
     background-color: #bbbbbb;
