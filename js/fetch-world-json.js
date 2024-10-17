@@ -889,7 +889,7 @@ function getGlobeJson() {
             properties: { name: "Sweden" },
             arcs: [[-473, -271, 559]],
           },
-          { type: "Polygon", id: "SWZ", properties: { name: "Swaziland" }, arcs: [[560, -448]] },
+          { type: "Polygon", id: "SWZ", properties: { name: "Eswatini" }, arcs: [[560, -448]] },
           {
             type: "Polygon",
             id: "SYR",
@@ -947,7 +947,7 @@ function getGlobeJson() {
           {
             type: "MultiPolygon",
             id: "TUR",
-            properties: { name: "Turkey" },
+            properties: { name: "Türkiye" },
             arcs: [[[-291, -36, -358, -365, -563, 572]], [[-308, -83, 573]]],
           },
           {
@@ -12931,7 +12931,7 @@ function getMapJson() {
           {
             type: "Polygon",
             id: "SWZ",
-            properties: { name: "Swaziland", iso: "SWZ" },
+            properties: { name: "Eswatini", iso: "SWZ" },
             arcs: [[1636, -1264]],
           },
           {
@@ -13026,7 +13026,7 @@ function getMapJson() {
           {
             type: "MultiPolygon",
             id: "TUR",
-            properties: { name: "Turkey", iso: "TUR" },
+            properties: { name: "Türkiye", iso: "TUR" },
             arcs: [[[1672]], [[-768, -49, -214, -1059, -1064, -1641, 1673]], [[-832, -248, 1674]]],
           },
           {

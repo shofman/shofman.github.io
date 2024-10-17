@@ -62,7 +62,7 @@ function getCountryInfo () {
       flagName: 'td',
       },
     'SWZ': {
-      countryName: 'Swaziland',
+      countryName: 'Eswatini',
       fillKey: 'africa',
       visited: false,
       lived: false,
@@ -434,7 +434,7 @@ function getCountryInfo () {
       flagName: 'tw',
     },
     'TUR': {
-      countryName: 'Turkey',
+      countryName: 'Türkiye',
       fillKey: 'asia',
       visited: true,
       lived: false,

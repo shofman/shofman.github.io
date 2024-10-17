@@ -209,7 +209,7 @@
   SVK Slovakia
   SVN Slovenia
   SWE Sweden
-  SWZ Swaziland
+  SWZ Eswatini
   SXM Sint Maarten (Dutch part)
   SYC Seychelles
   SYR Syrian Arab Republic
@@ -224,7 +224,7 @@
   TON Tonga
   TTO Trinidad and Tobago
   TUN Tunisia
-  TUR Turkey
+  TUR Türkiye 
   TUV Tuvalu
   TWN Taiwan, Province of China
   TZA Tanzania, United Republic of
