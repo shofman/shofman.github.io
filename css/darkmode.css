@@ -1,0 +1,16 @@
+body, section, label, p, div, h1, h2, h3, h4, h5, code, ul, li, td, tr {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+#dark-mode-toggle {
+  width: 3rem;
+  height: 3rem;
+  position: fixed;
+  border-radius: 50%;
+  right: 10%;
+  bottom: 1rem;
+  background: var(--text-color);
+  user-select: none;
+  z-index: 2;
+}
+

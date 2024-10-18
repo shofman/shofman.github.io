@@ -3,7 +3,7 @@ h1, p {
 }
 
 h1, h2, h3, h5, p, td, li {
-    color: var(--dark-color);
+    color: var(--text-color);
 }
 
 .grid-header h3, .grid-header h5 {
@@ -72,8 +72,9 @@ section {
 section:not(:nth-last-child(-n+2))::after {
     content: '';
     width: 45%;
-    border-bottom: 2px solid var(--dark-color);
+    border-bottom: 2px solid var(--text-color);
     margin-top: 30px;
+    transition: border-bottom-color 0.5s ease;
 }
 
 .project:nth-child(even) h3,
