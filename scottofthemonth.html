@@ -11,7 +11,9 @@
 
       h1,
       h2,
-      h4 {
+      h4,
+      h5,
+      p {
         text-align: center;
       }
 
@@ -385,6 +387,17 @@
         display: none;
       }
 
+      .explain-yourself {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        height: 30%;
+      }
+
+      .give-it-back {
+        flex-direction: column;
+      }
+
       @keyframes ray_anim {
         0% {
           transform: rotate(0deg);
@@ -416,6 +429,7 @@
     <h1 class="rainbow">Scott of the Month - Jättebra</h1>
     <img id="me" src="./images/Michael.jpg" />
     <h4 class="rainbow" id="month"></h4>
+    <h5 class="rainbow">Current Winner: Michael</h5>
     <div id="back-rain" class="back-row rain"></div>
     <h6 id="price">$3.14</h6>
     <script type="application/ld+json">
@@ -518,4 +532,10 @@
         }
       })
   </script>
+  <div class="explain-yourself">
+    <div class="give-it-back">
+      <h5>Explanation</h5>
+      <p>Scott of the Month was created by my colleagues as a) a testing ground for scraping price details on pages, and b) a way to honour an individual. It evolved from there. Blame Adam Sambrink</p>
+    </div>
+  </div>
 </html>
