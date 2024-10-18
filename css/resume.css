@@ -2,8 +2,15 @@ h1, p {
     text-align: center;
 }
 
+h1, h2, h3, h5, p, td, li {
+    color: var(--dark-color);
+}
+
+.grid-header h3, .grid-header h5 {
+    color: var(--secondary-color);
+}
+
 #projects a, .download-link {
-    color: royalblue;
     font-weight: 600;
 }
 
@@ -65,12 +72,19 @@ section {
 section:not(:nth-last-child(-n+2))::after {
     content: '';
     width: 45%;
-    border-bottom: 2px solid rgba(34,34,34,1); /* Adjust thickness and color as needed */
-    margin-top: 30px; /* Distance from the bottom of the border to the next content */
+    border-bottom: 2px solid var(--dark-color);
+    margin-top: 30px;
+}
+
+.project:nth-child(even) h3,
+.project:nth-child(even) h5,
+.project:nth-child(even) li,
+.project:nth-child(even) p {
+    color: var(--secondary-color);
 }
 
 .project:nth-child(even) {
-    background-color: #bbbbbb;
+    background-color: var(--tertiary-color);
 }
 
 .project {
@@ -123,7 +137,7 @@ section:not(:nth-last-child(-n+2))::after {
     grid-row-gap: 14px;
     display: inline-grid;
     padding: 10px 10px 25px 10px;
-    background-color: #bbb;
+    background-color: var(--primary-color);
     border-radius: 15px;
     min-width: 400px;
     width: fit-content;
@@ -136,7 +150,7 @@ section:not(:nth-last-child(-n+2))::after {
 
 .skill-summary .grid-header {
     grid-column: 1/-1;
-    background-color: #ddd;
+    background-color: var(--tertiary-color);
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -172,19 +186,6 @@ section:not(:nth-last-child(-n+2))::after {
     padding-right: 5px;
 }
 
-#tooltip {
-    position: absolute;
-    left: 10px;
-    background-color: lightgrey;
-    opacity: 0;
-    transition: opacity .5s ease-in-out;
-}
-
-#tooltip.active {
-    opacity: 1;
-    transition: opacity .5s ease-in-out, left .2s ease-in-out, top .2s ease-in-out;
-}
-
 #employment {
     overflow-x: auto;
 }
@@ -204,13 +205,33 @@ th, td {
 
 
 tr:nth-child(even) {
-    background-color: #bbbbbb;
+    background-color: var(--tertiary-color);
     border-bottom: 1px solid;
     border-top: 1px solid;
 }
 
+tr:nth-child(even) td {
+    color: var(--secondary-color);
+}
+
+td {
+    text-align: center;
+}
+
+td:first-child {
+    text-align: left;
+}
+
+td:last-child {
+    text-align: right;
+}
+
 #education tr {
-    background-color: #bbbbbb;
+    background-color: var(--tertiary-color);
+}
+
+#education td {
+    color: var(--secondary-color);
 }
 
 .degree {
