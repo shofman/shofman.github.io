@@ -956,7 +956,7 @@ function getCountryInfo () {
     'LIE': {
       countryName: 'Liechtenstein',
       fillKey: 'europe',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'li',
     },
