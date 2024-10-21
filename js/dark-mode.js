@@ -1,24 +1,38 @@
 const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
-const toggleButton = document.getElementById("dark-mode-toggle");
+const savedDarkMode = localStorage.getItem("darkMode");
 
-if (prefersDarkMode && prefersDarkMode.matches) {
-  document.body.classList.add("dark-mode");
+const setDMButtonText = (isDarkMode) => {
+  const toggleButtonText = document.getElementById("dark-mode-text");
+  if (isDarkMode) {
+    toggleButtonText.innerText = "Light";
+  } else {
+    toggleButtonText.innerText = "Dark";
+  }
 }
 
-let isExpanding = false;
+// savedDarkMode === false only when the user has intentionally set the value to true. Ignore 
+if ((prefersDarkMode && prefersDarkMode.matches && savedDarkMode !== "false") || savedDarkMode === "true") {
+  document.body.classList.add("dark-mode");
+  setDMButtonText(true)
+} else if (savedDarkMode === 'false') {
+  // User has set value to light-mode
+  document.body.classList.add('light-mode')
+}
+
+const toggleButton = document.getElementById("dark-mode-toggle");
+let isChanging = false;
 toggleButton.addEventListener("click", () => {
-  if (isExpanding) return;
-  isExpanding = true;
+  if (isChanging) return;
+  isChanging = true;
   const isDarkMode = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("darkMode", isDarkMode);
+
+  setDMButtonText(isDarkMode)
+  if (!isDarkMode || document.body.classList.contains('light-mode')) {
+    document.body.classList.toggle('light-mode')
+  }
 
   setTimeout(() => {
-    isExpanding = false;
-    localStorage.setItem("darkMode", isDarkMode);
-    toggleButton.classList.remove("expand");
+    isChanging = false;
   }, 500); // Delay duration matches the CSS transition time
 });
-
-const savedDarkMode = localStorage.getItem("darkMode");
-if (savedDarkMode === "true") {
-  document.body.classList.add("dark-mode");
-}

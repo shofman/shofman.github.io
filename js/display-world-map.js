@@ -171,7 +171,7 @@ const colorFillNames = {
   lightblue: "#7fcdff",
   midblue: "#1da2d8",
   unselected: "#d3d3d3",
-  nonvisited: "#919191",
+  nonvisited: "#b4b4b4",
   visited: "#38b551",
 };
 

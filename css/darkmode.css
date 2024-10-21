@@ -12,5 +12,14 @@ body, section, label, p, div, h1, h2, h3, h4, h5, code, ul, li, td, tr {
   background: var(--text-color);
   user-select: none;
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 10px; 
 }
 
+#dark-mode-text {
+  color: var(--secondary-color);
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+}
