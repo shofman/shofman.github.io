@@ -14,6 +14,7 @@ const createDisplay = (params) => {
       .scaleExtent(params.zoom)
       .on("zoom", function zoom() {
         if (worldDisplay.isGlobe) {
+          console.log('here')
           const { k: zoomLevel } = d3.event.transform;
           const center = [worldDisplay.getWidth() / 2, worldDisplay.getHeight() / 2];
 

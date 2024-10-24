@@ -9,8 +9,10 @@
     <link href="./css/darkmode.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg" href="./favicon-128x128.png" sizes="128x128">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Kurale" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Raleway&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway&display=swap">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     <script src="./js/dark-mode.js" defer></script>
   </head>
@@ -31,7 +33,8 @@
 
     <h1>Resume</h1>
 
-    <p>Click to download resume as PDF <a class="download-link" href="files/Resume.pdf">here</a></p>
+    <p class="link-cta resume-download">Click to <a class="download-link" href="files/Resume.pdf">download my resume as PDF</a></p>
+    <div class="line-segment" ></div>
     <section id="skills">
       <h2>Programming Languages and Technologies</h2>
       <div class="languages skill-summary">
@@ -237,7 +240,7 @@
       <h2>Education</h2>
       <table>
         <tr>
-          <td>University of Edinburgh</td>
+          <td><strong>University of Edinburgh</strong></td>
           <td class="degree">B.Eng. in Software Engineering <br/>First Class Honours</td>
           <td>Sep. 2009 - Jul. 2013</td>
         </tr>
@@ -252,7 +255,7 @@
         <div class="project">
           <div class="project-description">
             <h3>Travel Map</h3>
-            <h5><a href="https://brentdianatravels.vercel.app/travels">Website</a> created for travel</h5>
+            <h5 class="link-cta"><a href="https://brentdianatravels.vercel.app/travels">Website created to track travels</a></h5>
             <p>Independant - March 2024</p>
           </div>
           <ul>
@@ -266,7 +269,7 @@
         <div class="project">
           <div class="project-description">
             <h3>Fix Consent Manager for Segment.io</h3>
-            <h5><a href="https://github.com/segmentio/consent-manager/pull/338">Open-source contribution</a></h5>
+            <h5 class="link-cta dark-background"><a href="https://github.com/segmentio/consent-manager/pull/338">Open-source contribution</a></h5>
             <p>Consultant - May 2023</p>
           </div>
           <ul>
@@ -430,7 +433,7 @@
           </div>
           <ul>
             <li><strong>Technologies Used:</strong> SCSS, Autonomy TeamSite, Coffeescript</li>
-            <li>Created responsive <a href="http://www.istockphoto.com/invision">web page</a> for promotional component</li>
+            <li class="link-cta dark-background">Created responsive <a class="inner-link dark-background" href="http://www.istockphoto.com/invision">web page</a> for promotional component</li>
             <li>Delivered prototypes of download buttons and modals under a changing set of requirements</li>
           </ul>
         </div>
@@ -464,7 +467,7 @@
 
         <div class="project">
           <div class="project-description">
-            <h3>Moving <a href="http://www.istockphoto.com/photo/mountain-landscape-gm517188688-89380423">Asset View Page</a> from iStockphoto to Getty Images</h3>
+            <h3 class="link-cta">Moving <a class="inner-link" href="http://www.istockphoto.com/photo/mountain-landscape-gm517188688-89380423">Asset View Page</a> from iStockphoto to Getty Images</h3>
             <h5>Migrate the iStockphoto asset page from PHP to Rails</h5>
             <p>iStockphoto - April - November 2016</p>
           </div>
@@ -501,7 +504,12 @@
           <ul>
             <li><strong>Technologies Used:</strong> Autonomy TeamSite, PHP, phpunit, CSS, XML, XSLT, C#</li>
             <li>Designed system to fetch complete webpages, and to show fallback content on error.</li>
-            <li>Delivered design of key pages under tight deadlines - <a href="http://www.istockphoto.com">Homepage</a>, <a href="http://www.istockphoto.com/plugins">Plugins Promo</a>, <a href="http://www.istockphoto.com/plans-and-pricing">Pricing</a>.</li>
+            <li class="link-cta">Delivered design of key pages under tight deadlines - 
+              <a class="inner-link" href="http://www.istockphoto.com">Homepage,</a>
+              <a class="inner-link" href="http://www.istockphoto.com/plugins">Plugins Promo,</a> 
+              and
+              <a class="inner-link" href="http://www.istockphoto.com/plans-and-pricing">Pricing</a>
+            </li>
             <li>Deployed system to update prices on a per-user basis.</li>
             <li>Took responsibility for training individuals on CMS implementation.</li>
           </ul>
@@ -525,7 +533,7 @@
         <div class="project">
           <div class="project-description">
             <h3>Allow Anonymous Users to Purchase</h3>
-            <h5>Update <a href="http://www.istockphoto.com/ca/plans-and-pricing/buy-credits?credit-pack=362">checkout flow</a> to allow anonymous users to sign-up and purchase</h5>
+            <h5 class="link-cta">Update <a class="inner-link" href="http://www.istockphoto.com/ca/plans-and-pricing/buy-credits?credit-pack=362">checkout flow</a> to allow anonymous users to sign-up and purchase</h5>
             <p>iStockphoto - December 2014 - March 2015</p>
           </div>
           <ul>
@@ -554,7 +562,7 @@
 
         <div class="project">
           <div class="project-description">
-            <h3><a href="https://github.com/shofman/LinuxWordStorm">Project Dissertation</a></h3>
+            <h3 class="link-cta"><a href="https://github.com/shofman/LinuxWordStorm">Project Dissertation</a></h3>
             <h5>Take existing dissertation work about Word Storms and build scalable website around it</h5>
             <p>University of Edinburgh - September 2012 - April 2013</p>
           </div>
@@ -570,8 +578,8 @@
         <div class="project">
           <div class="project-description">
             <h3>Independant Android Game</h3>
-            <h5>Music and rhythm game, based off user's MP3. Analyze waveform of song, and created game based around it.</h5>
-            <p><a href="https://web.archive.org/web/20160617121746/http://rytmos-game.com/">Rytmos</a> -  June - August 2012</p>
+            <h5>Music and rhythm game, based off user-submitted MP3. Analyzed waveform of song, and created game based around it.</h5>
+            <p class="link-cta dark-background"><a class="inner-link dark-background" href="https://web.archive.org/web/20160617121746/http://rytmos-game.com/">Rytmos</a> -  June - August 2012</p>
           </div>
           <ul>
             <li><strong>Technologies Used:</strong> C#, Unity, Photoshop, SQLite, C, Java, SVN</li>
@@ -583,7 +591,7 @@
 
         <div class="project">
           <div class="project-description">
-            <h3>Design Football (Soccer) <a href="https://github.com/shofman/UniversityCoursework/tree/master/3rd%20Year/System%20Design%20Project">Lego Robot</a></h3>
+            <h3 class="link-cta">Design Football (Soccer) <a class="inner-link" href="https://github.com/shofman/UniversityCoursework/tree/master/3rd%20Year/System%20Design%20Project">Lego Robot</a></h3>
             <h5>One of 12 teams competing in tournament</h5>
             <p>University of Edinburgh - January 2012 - May 2012</p>
           </div>
@@ -597,7 +605,7 @@
 
         <div class="project">
           <div class="project-description">
-            <h3>University <a href="https://github.com/shofman/UniversityCoursework/tree/master/3rd%20Year/Android%20Individual%20Practical">Android Application</a></h3>
+            <h3 class="link-cta dark-background">University <a class="inner-link dark-background" href="https://github.com/shofman/UniversityCoursework/tree/master/3rd%20Year/Android%20Individual%20Practical">Android Application</a></h3>
             <h5>Individual Practical - Create Android application for tourism</h5>
             <p>University of Edinburgh - September - December 2011</p>
           </div>

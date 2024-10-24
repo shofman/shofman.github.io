@@ -6,6 +6,10 @@ h1, h2, h3, h5, p, td, li {
     color: var(--text-color);
 }
 
+h2 {
+    font-family: "Playfair Display", serif;
+}
+
 .grid-header h3, .grid-header h5 {
     color: var(--secondary-color);
 }
@@ -14,29 +18,59 @@ h1, h2, h3, h5, p, td, li {
     font-weight: 600;
 }
 
-#projects a:visited, .download-link:visited {
-    color: darkblue;
+body:not(.dark-mode) .inner-link.dark-background {
+    padding: 5px 10px !important;
+    margin: 0 5px !important;
+}
+
+body.dark-mode .inner-link.dark-background {
+    margin: 0;
+}
+
+body.dark-mode .inner-link:not(.dark-background) {
+    padding: 5px 10px !important;
+    margin: 0 5px !important;
+}
+
+#projects h3 {
+    line-height: 26px;
+    margin: 0 0 10px 0;
+    font-family: "Playfair Display", serif;
+}
+
+#projects h5 {
+    font-style: italic;
 }
 
 #projects h3, #projects h5, #projects ul {
     max-width: 500px;
     text-align: left;
+}
+
+#projects h5, #projects ul {
     margin: 0 0 5px 0;
-    line-height: 26px;
 }
 
 #projects ul {
     font-size: 14px;
 }
 
+#projects ul li strong {
+    font-family: "Playfair Display", serif;
+}
+
 #projects li {
     line-height: 20px;
     margin-bottom: 10px;
+    list-style: inside;
 }
 
-#projects, #skills, #education, #employment {
-    text-align: center;
-    margin-top: 2vw;
+#projects li:first-of-type {
+    list-style: none;
+}
+
+.resume-download {
+    height: 50px;
 }
 
 .project-list {
@@ -44,10 +78,13 @@ h1, h2, h3, h5, p, td, li {
     flex-direction: column;
     max-width: 75%;
     width: 60%;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, .5);
+    border-radius: 20px;
 }
 
 .project:last-child {
-    border-bottom: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .skill-summary li {
@@ -67,9 +104,19 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    margin-top: 2vw;
 }
 
-section:not(:nth-last-child(-n+2))::after {
+section:first-of-type {
+    margin-top: 1vw;
+}
+
+.line-segment {
+    margin: 0 auto;
+}
+
+section:not(:nth-last-child(-n+2))::after, .line-segment {
     content: '';
     width: 45%;
     border-bottom: 2px solid var(--text-color);
@@ -84,6 +131,14 @@ section:not(:nth-last-child(-n+2))::after {
     color: var(--secondary-color);
 }
 
+body.dark-mode .project:nth-child(even) h3,
+body.dark-mode .project:nth-child(even) h5,
+body.dark-mode .project:nth-child(even) li,
+body.dark-mode .project:nth-child(even) p {
+    color: var(--primary-color);
+}
+
+
 .project:nth-child(even) {
     background-color: var(--tertiary-color);
 }
@@ -93,7 +148,7 @@ section:not(:nth-last-child(-n+2))::after {
     text-align: left;
     justify-content: space-between;
     border-bottom: 1px solid rgba(0,0,0,.4);
-    padding: 25px 20px;
+    padding: 40px 50px;
 }
 
 .project-description {
@@ -110,6 +165,7 @@ section:not(:nth-last-child(-n+2))::after {
 
 .project a {
     text-decoration: none;
+    margin: 0;
 }
 
 .project-description .first-entry {
@@ -215,6 +271,10 @@ tr:nth-child(even) td {
     color: var(--secondary-color);
 }
 
+body.dark-mode tr:nth-child(even) td {
+    color: var(--primary-color);
+}
+
 td {
     text-align: center;
 }
@@ -231,8 +291,12 @@ td:last-child {
     background-color: var(--tertiary-color);
 }
 
-#education td {
+body:not(.dark-mode) #education td {
     color: var(--secondary-color);
+}
+
+body.dark-mode #education td {
+    color: var(--primary-color);
 }
 
 .degree {

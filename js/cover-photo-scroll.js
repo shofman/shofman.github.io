@@ -302,12 +302,12 @@ const setupContactHover = () => {
 };
 
 const mediaQuery = window.matchMedia(`(prefers-reduced-motion: reduce)`);
-let isReducedMotion = mediaQuery === true || mediaQuery.matches === true
+let isReducedMotion = mediaQuery === true || mediaQuery.matches === true;
 let showDemo = !isReducedMotion;
 
 mediaQuery.addEventListener("change", (event) => {
   showDemo = false;
-  isReducedMotion = event.matches
+  isReducedMotion = event.matches;
   if (languageRoller.cancelDemo) languageRoller.cancelDemo();
   if (locationRoller.cancelDemo) locationRoller.cancelDemo();
 });

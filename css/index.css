@@ -43,6 +43,11 @@ h1, h2, h3, p, div, label {
     background-size: cover;
     opacity: 1;
     background-position: center;
+    user-select: none;
+}
+
+.code-cta {
+  height: 50px;
 }
 
 #calgary {
@@ -226,8 +231,16 @@ code {
   margin: 0 20px;
 }
 
+body.dark-mode code {
+  background-color: #0a0a0a;
+}
+
 .final-note p {
   margin: 0 30px;
+}
+
+body.dark-mode .final-note p {
+  margin: 10px 30px;
 }
 
 .display-contact-wrapper {
@@ -251,12 +264,20 @@ code {
   height: 100%;
 }
 
-.display-contact-details a.linkedin {
-  margin-left: 10px;
+.display-contact-details a p {
+  margin-left: -5px;
 }
 
 .display-contact-details img {
   margin: auto;
+}
+
+.display-contact-details a.keep-text img {
+  padding-left: 10px;
+}
+
+.display-contact-details a.keep-text p {
+  margin-left: 0px;
 }
 
 .display-contact-details p {

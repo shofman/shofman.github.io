@@ -1,4 +1,4 @@
-#map-container circle {
+#globe-container circle, #map-container {
   cursor: move;
 }
 
@@ -61,6 +61,7 @@ svg {
 .location-display-wrapper .header {
   font-weight: 600;
   font-size: 16px;
+  line-height: 16px;
   text-align: left;
   margin-left: 50px;
   padding-top: 15px;

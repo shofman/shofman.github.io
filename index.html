@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Scott Hofman</title>
     <meta name="keywords" content="Developer, Software Engineer, Personal">
@@ -13,10 +13,11 @@
     <link href="./css/darkmode.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg" href="./favicon-128x128.png" sizes="128x128">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Kurale" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Raleway&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway&display=swap">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap">
     <link rel="stylesheet" type="text/css" href="./css/flag.css" />
     <script src="./js/dark-mode.js" defer></script>
     <script src="./js/math-helper.js" defer></script>
@@ -49,7 +50,7 @@
         <h3>My name is <strong>Scott Hofman</strong></h3>
       </div>
       <div class="about-photo">
-        <img src="./images/me.png" alt="A picture of me"/>
+        <img src="./images/me.png" alt="A picture of me" height="200px" width="160px"/>
       </div>
     </section>
 
@@ -81,7 +82,7 @@
           </div>
         </code>
       </div>
-      <p class="code-cta">See more of my coding <a href="https://github.com/shofman">here</a></p>
+      <p class="link-cta code-cta"><a href="https://github.com/shofman">See more of my coding here</a></p>
     </section>
 
     <section class="cover-photo">
@@ -162,7 +163,9 @@
         </div>
         <div class="display-contact-wrapper">
           <div class="display-contact-details">
-            <a class="linkedin" href="https://www.linkedin.com/in/scott-hofman-92a36882/"><img src="./images/In-2C-108px-TM.png"/><p>View My LinkedIn<sub>™</sub> Page</p></a>
+            <a class="linkedin" href="https://www.linkedin.com/in/scott-hofman-92a36882/">
+              <img src="./images/In-2C-108px-TM.png" width="120px" height="108px" alt="LinkedIn Icon"/><p>View My LinkedIn<sub>™</sub> Page</p>
+            </a>
           </div>
         </div>
       </div>
@@ -170,11 +173,11 @@
 
     <section class="final-note">
       <p>This site was developed by me. If you like this, and want to see more,</p>
-      <p>please contact me or see my resume <a href="./resume.html">here</a></p>
+      <p class="link-cta">please contact me or <a href="./resume.html">see my resume here</a></p>
     </section>
     <footer>
       <section>
-        <p>© 2024 <a href="./scottofthemonth.html">Scott Hofman</a></p>
+        <p class="link-cta">© 2024 <a href="./scottofthemonth.html">Scott Hofman</a></p>
       </section>
       <ul>
         <li>
