@@ -274,11 +274,11 @@ const locationMapping = {
 
 const contactMapping = {
   LinkedIn:
-    '<a class="linkedin" href="https://www.linkedin.com/in/scott-hofman-92a36882/"><img src="./images/In-2C-108px-TM.png"/><p>View My LinkedIn<sub>™</sub> Page</p></a>',
+    '<a class="linkedin" href="https://www.linkedin.com/in/scott-hofman-92a36882/"><img src="./images/In-2C-108px-TM.webp"/><p>View My LinkedIn<sub>™</sub> Page</p></a>',
   GitHub:
-    '<a href="https://github.com/shofman"><img src="./images/GitHub-Mark-120px-plus.png"/><p>View My GitHub Page</p></a>',
+    '<a href="https://github.com/shofman"><img src="./images/GitHub-Mark-120px-plus.webp"/><p>View My GitHub Page</p></a>',
   Email:
-    '<a class="keep-text" href="mailto:scott.a.hofman@gmail.com"><img src="./images/email-icon.png"/><p>scott.a.hofman@gmail.com</p></a>',
+    '<a class="keep-text" href="mailto:scott.a.hofman@gmail.com"><img src="./images/email-icon.webp"/><p>scott.a.hofman@gmail.com</p></a>',
 };
 
 const setupContactHover = () => {

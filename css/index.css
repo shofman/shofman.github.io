@@ -51,12 +51,12 @@ h1, h2, h3, p, div, label {
 }
 
 #calgary {
-  background-image: url('../calgary_cover.jpg');
+  background-image: url('../images/calgary_cover.webp');
 
 }
 
 #antarctica {
-  background-image: url('../cover_photo.jpg');
+  background-image: url('../images/antarctica_cover.webp');
 }
 
 .about-me {
@@ -90,6 +90,10 @@ h1, h2, h3, p, div, label {
 
 .about-me h1, .about-me h3 {
   color: var(--secondary-color);
+}
+
+body.dark-mode .about-me h1, body.dark-mode .about-me h3 {
+  color: var(--primary-color);
 }
 
 section {
