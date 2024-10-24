@@ -239,13 +239,14 @@ body.dark-mode code {
   background-color: #0a0a0a;
 }
 
-.final-note p {
-  margin: 0 30px;
+.final-note {
+  min-height: 70px;
 }
 
-body.dark-mode .final-note p {
-  margin: 10px 30px;
+.final-note p {
+  margin: 0;
 }
+
 
 .display-contact-wrapper {
   width: 470px;

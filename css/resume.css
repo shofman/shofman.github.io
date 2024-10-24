@@ -18,20 +18,6 @@ h2 {
     font-weight: 600;
 }
 
-body:not(.dark-mode) .inner-link.dark-background {
-    padding: 5px 10px !important;
-    margin: 0 5px !important;
-}
-
-body.dark-mode .inner-link.dark-background {
-    margin: 0;
-}
-
-body.dark-mode .inner-link:not(.dark-background) {
-    padding: 5px 10px !important;
-    margin: 0 5px !important;
-}
-
 #projects h3 {
     line-height: 26px;
     margin: 0 0 10px 0;

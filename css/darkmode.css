@@ -23,3 +23,18 @@ body, section, label, p, div, h1, h2, h3, h4, h5, code, ul, li, td, tr, a {
   display: inline-flex;
   align-items: center;
 }
+
+body.dark-mode .link-cta:not(.dark-background) a {
+  padding: 10px 20px;
+  background-color: var(--text-color);
+}
+
+body:not(.dark-mode) .link-cta.dark-background a {
+  padding: 10px 20px;
+  background-color: var(--secondary-color);
+}
+
+body:not(.dark-mode) .inner-link.dark-background, body.dark-mode .inner-link:not(.dark-background) {
+  padding: 5px 10px !important;
+  margin: 0 5px !important;
+}
