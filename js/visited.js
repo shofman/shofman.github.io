@@ -1244,7 +1244,7 @@ function getCountryInfo () {
     'DOM': {
       countryName: 'Dominican Republic',
       fillKey: 'caribbean',
-      visited: false,
+      visited: true,
       lived: false,
       flagName: 'do',
     },
